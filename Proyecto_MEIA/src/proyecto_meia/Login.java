@@ -27,26 +27,29 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txtpassword = new javax.swing.JPasswordField();
         lblinformacion = new javax.swing.JLabel();
         lblforgotpassword = new javax.swing.JLabel();
         lblnewuser = new javax.swing.JLabel();
-        txtpassword = new javax.swing.JTextField();
         txtuser = new javax.swing.JTextField();
         btnlogin = new javax.swing.JButton();
         Fondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, 210, 30));
 
+        lblinformacion.setForeground(new java.awt.Color(255, 255, 255));
         lblinformacion.setText("¿No tienes una cuenta? ");
         getContentPane().add(lblinformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, -1, -1));
 
+        lblforgotpassword.setForeground(new java.awt.Color(255, 255, 255));
         lblforgotpassword.setText("Olvidaste tu contraseña?");
         getContentPane().add(lblforgotpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 450, -1, -1));
 
+        lblnewuser.setForeground(new java.awt.Color(255, 255, 255));
         lblnewuser.setText("Crea una");
         getContentPane().add(lblnewuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, -1, -1));
-        getContentPane().add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, 210, 30));
         getContentPane().add(txtuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 210, 30));
 
         btnlogin.setText("Login");
@@ -99,7 +102,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel lblforgotpassword;
     private javax.swing.JLabel lblinformacion;
     private javax.swing.JLabel lblnewuser;
-    private javax.swing.JTextField txtpassword;
+    private javax.swing.JPasswordField txtpassword;
     private javax.swing.JTextField txtuser;
     // End of variables declaration//GEN-END:variables
 }
