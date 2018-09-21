@@ -27,18 +27,33 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        lblinformacion = new javax.swing.JLabel();
+        lblforgotpassword = new javax.swing.JLabel();
+        lblnewuser = new javax.swing.JLabel();
+        txtpassword = new javax.swing.JTextField();
+        txtuser = new javax.swing.JTextField();
+        btnlogin = new javax.swing.JButton();
+        Fondo = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblinformacion.setText("¿No tienes una cuenta? ");
+        getContentPane().add(lblinformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, -1, -1));
+
+        lblforgotpassword.setText("Olvidaste tu contraseña?");
+        getContentPane().add(lblforgotpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 450, -1, -1));
+
+        lblnewuser.setText("Crea una");
+        getContentPane().add(lblnewuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, -1, -1));
+        getContentPane().add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, 210, 30));
+        getContentPane().add(txtuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 210, 30));
+
+        btnlogin.setText("Login");
+        getContentPane().add(btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, 210, -1));
+
+        Fondo.setIcon(new javax.swing.ImageIcon("C:\\Users\\josue\\Desktop\\Logos Correo MA\\CloudMail.jpg")); // NOI18N
+        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -79,5 +94,12 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Fondo;
+    private javax.swing.JButton btnlogin;
+    private javax.swing.JLabel lblforgotpassword;
+    private javax.swing.JLabel lblinformacion;
+    private javax.swing.JLabel lblnewuser;
+    private javax.swing.JTextField txtpassword;
+    private javax.swing.JTextField txtuser;
     // End of variables declaration//GEN-END:variables
 }
