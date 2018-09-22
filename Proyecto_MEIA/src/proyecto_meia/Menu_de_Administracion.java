@@ -27,21 +27,154 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        btnGuardar = new javax.swing.JButton();
+        lblPassword = new javax.swing.JLabel();
+        lblCorreo = new javax.swing.JLabel();
+        lblFechaNac = new javax.swing.JLabel();
+        lblTelefono = new javax.swing.JLabel();
+        btnMenuPrincipal = new javax.swing.JButton();
+        btnNuevoUsuario = new javax.swing.JButton();
+        btnCargarFoto = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        btnEstado = new javax.swing.JToggleButton();
+        txtPassword = new javax.swing.JTextField();
+        ComboBoxSeleccionarUsuario = new javax.swing.JComboBox<>();
+        txtCorreo = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
+        txtFecha = new javax.swing.JTextField();
+        PanelEstado = new javax.swing.JPanel();
+        btnBuscar = new javax.swing.JButton();
+        lblAdministracion = new javax.swing.JLabel();
+        panel1 = new java.awt.Panel();
+        lblFondo = new javax.swing.JLabel();
+        panel2 = new java.awt.Panel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnGuardar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnGuardar.setText("Guardar");
+        getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, 170, -1));
+
+        lblPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblPassword.setForeground(new java.awt.Color(255, 255, 255));
+        lblPassword.setText("Contraseña:");
+        getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
+
+        lblCorreo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblCorreo.setForeground(new java.awt.Color(255, 255, 255));
+        lblCorreo.setText("Correo:");
+        getContentPane().add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, -1, -1));
+
+        lblFechaNac.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblFechaNac.setForeground(new java.awt.Color(255, 255, 255));
+        lblFechaNac.setText("Fecha de Nacimiento:");
+        getContentPane().add(lblFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
+
+        lblTelefono.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTelefono.setForeground(new java.awt.Color(255, 255, 255));
+        lblTelefono.setText("Telefono:");
+        getContentPane().add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, -1, -1));
+
+        btnMenuPrincipal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnMenuPrincipal.setText("Menu Principal");
+        btnMenuPrincipal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuPrincipalActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMenuPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 440, 170, -1));
+
+        btnNuevoUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnNuevoUsuario.setText("Ingresar Nuevo Usuario");
+        getContentPane().add(btnNuevoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, -1, -1));
+
+        btnCargarFoto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnCargarFoto.setText("Cargar Foto");
+        getContentPane().add(btnCargarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 280, 150, -1));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Foto");
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 150, 150));
+
+        btnEstado.setText("Activado");
+        getContentPane().add(btnEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 380, 210, -1));
+        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 160, -1));
+
+        ComboBoxSeleccionarUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(ComboBoxSeleccionarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 160, -1));
+        getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 160, -1));
+        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 160, -1));
+        getContentPane().add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 160, -1));
+
+        PanelEstado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 102), 3));
+
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnBuscar.setText("Buscar");
+
+        javax.swing.GroupLayout PanelEstadoLayout = new javax.swing.GroupLayout(PanelEstado);
+        PanelEstado.setLayout(PanelEstadoLayout);
+        PanelEstadoLayout.setHorizontalGroup(
+            PanelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelEstadoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        PanelEstadoLayout.setVerticalGroup(
+            PanelEstadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelEstadoLayout.createSequentialGroup()
+                .addContainerGap(127, Short.MAX_VALUE)
+                .addComponent(btnBuscar)
+                .addGap(22, 22, 22))
         );
+
+        getContentPane().add(PanelEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 210, 180));
+
+        lblAdministracion.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        lblAdministracion.setForeground(new java.awt.Color(255, 255, 255));
+        lblAdministracion.setText("Administracion");
+        getContentPane().add(lblAdministracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, -1, -1));
+
+        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
+        panel1.setLayout(panel1Layout);
+        panel1Layout.setHorizontalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 790, Short.MAX_VALUE)
+        );
+        panel1Layout.setVerticalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 790, 10));
+
+        lblFondo.setIcon(new javax.swing.ImageIcon("C:\\Users\\josue\\Desktop\\Logos Correo MA\\Diseño sin título.jpg")); // NOI18N
+        lblFondo.setText("jLabel1");
+        getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 500));
+
+        javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
+        panel2.setLayout(panel2Layout);
+        panel2Layout.setHorizontalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 790, Short.MAX_VALUE)
+        );
+        panel2Layout.setVerticalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(panel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 790, 10));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnMenuPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMenuPrincipalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +212,26 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBoxSeleccionarUsuario;
+    private javax.swing.JPanel PanelEstado;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCargarFoto;
+    private javax.swing.JToggleButton btnEstado;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnMenuPrincipal;
+    private javax.swing.JButton btnNuevoUsuario;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblAdministracion;
+    private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblFechaNac;
+    private javax.swing.JLabel lblFondo;
+    private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblTelefono;
+    private java.awt.Panel panel1;
+    private java.awt.Panel panel2;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

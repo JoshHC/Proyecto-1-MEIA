@@ -5,6 +5,14 @@
  */
 package proyecto_meia;
 
+import java.awt.Image;
+import java.io.File;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author josue
@@ -27,6 +35,9 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        canvas2 = new java.awt.Canvas();
+        btnCargarFoto = new javax.swing.JButton();
+        lblFoto = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblApellido = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
@@ -46,53 +57,110 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 153, 255));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(canvas2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 360, 200, 140));
+
+        btnCargarFoto.setText("Cargar Foto");
+        btnCargarFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarFotoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCargarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 200, -1));
+
+        lblFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFoto.setText("Foto");
+        lblFoto.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), null));
+        getContentPane().add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, 200, 170));
 
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblNombre.setText("Nombre:");
-        getContentPane().add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 60, 20));
+        getContentPane().add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 130, 60, 20));
 
         lblApellido.setForeground(new java.awt.Color(255, 255, 255));
         lblApellido.setText("Apellido:");
-        getContentPane().add(lblApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 60, 20));
+        getContentPane().add(lblApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 60, 20));
 
         lblPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblPassword.setText("Contraseña:");
-        getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 80, -1));
+        getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 80, -1));
 
         lblCorreo.setForeground(new java.awt.Color(255, 255, 255));
         lblCorreo.setText("Correo:");
-        getContentPane().add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, -1, -1));
+        getContentPane().add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 370, -1, -1));
 
         lblFechaNac.setForeground(new java.awt.Color(255, 255, 255));
         lblFechaNac.setText("Fecha de Nacimiento:");
-        getContentPane().add(lblFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 130, 20));
+        getContentPane().add(lblFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 130, 20));
 
         lblTelefono.setForeground(new java.awt.Color(255, 255, 255));
         lblTelefono.setText("Telefono:");
-        getContentPane().add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 430, 60, 20));
+        getContentPane().add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, 60, 20));
 
         btnCrear.setForeground(new java.awt.Color(51, 51, 51));
         btnCrear.setText("Crear Usuario");
-        getContentPane().add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 480, 190, -1));
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 260, -1));
-        getContentPane().add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 260, -1));
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 260, -1));
-        getContentPane().add(txtFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, 260, -1));
-        getContentPane().add(txtCorreoAlterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 370, 260, -1));
-        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 430, 260, -1));
+        getContentPane().add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 480, 260, -1));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, 260, -1));
+        getContentPane().add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 260, -1));
+        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 260, -1));
+        getContentPane().add(txtFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 260, -1));
+        getContentPane().add(txtCorreoAlterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 430, 260, -1));
+        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 260, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Crea un Nuevo Usuario");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, 560, -1));
 
         jLabel1.setForeground(new java.awt.Color(51, 204, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\josue\\Desktop\\Logos Correo MA\\Diseño sin título.jpg")); // NOI18N
         jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 524));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    File fichero;
+    
+    private void btnCargarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarFotoActionPerformed
+        
+        int resultado;
+
+
+        CargarFoto ventana = new CargarFoto();
+
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("JPG y PNG","jpg","png");
+
+        ventana.jfchCargarFoto.setFileFilter(filtro);
+
+        resultado= ventana.jfchCargarFoto.showOpenDialog(null);
+
+
+        if (JFileChooser.APPROVE_OPTION == resultado){
+
+
+        fichero = ventana.jfchCargarFoto.getSelectedFile();
+
+        try{
+
+               ImageIcon icon = new ImageIcon(fichero.toString());
+
+               Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+
+               lblFoto.setText(null);
+               
+               lblFoto.setIcon( icono );
+
+
+        }catch(Exception ex){
+
+           
+        JOptionPane.showMessageDialog(null, "Error abriendo la imagen "+ ex);
+                 
+        }
+    
+        }
+        
+    }//GEN-LAST:event_btnCargarFotoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,12 +198,15 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCargarFoto;
     private javax.swing.JButton btnCrear;
+    private java.awt.Canvas canvas2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblFechaNac;
+    private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblTelefono;
