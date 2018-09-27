@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -135,8 +136,8 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         getContentPane().add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 440, 260, -1));
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 260, -1));
         getContentPane().add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 260, -1));
-        getContentPane().add(txtFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 260, -1));
-        getContentPane().add(txtCorreoAlterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, 260, -1));
+        getContentPane().add(txtFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, 260, -1));
+        getContentPane().add(txtCorreoAlterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 260, -1));
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 260, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
@@ -227,7 +228,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                    SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
                    Date Fecha;
                    Fecha = formatofecha.parse(fecha);
-                   Usuario NewUser;
+                   Usuario NewUser = new Usuario();
                    
      
                    String pathRuta = "C:\\MEIA\\usuario.txt";
@@ -277,14 +278,13 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         String pathRuta = "C:\\MEIA\\usuario.txt";
         
         File Archivo = new File(pathRuta);
-        FileReader Leer = new FileReader(Archivo);
-        BufferedReader leerArchivo = new BufferedReader(Leer);
-        String Linea = leerArchivo.readLine();
+        RandomAccessFile File = new RandomAccessFile(pathRuta, "rw");
+        String Linea = File.readLine();
         int ContadorLineas = 0;    
         
         if(Archivo.length() == 0)
         {
-            
+            File.writeBytes(Nuevo.Usuario+"|"+Nuevo.Nombre+"|"+Nuevo.Apellido+"|"+Nuevo.Password+"|"+Nuevo.rol+"|"+Nuevo.Fecha+"|"+Nuevo.CorreoAlterno+"|"+Nuevo.Telefono+"|"+Nuevo.PathFotografia+"|"+Nuevo.status);
         }
         else
         {
@@ -297,14 +297,20 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                     break;
                 }
          
+               Linea = File.readLine();
             } 
-        leerArchivo.close();
-        Leer.close();
+        File.close();
+              
+        RandomAccessFile FileSustitucion = new RandomAccessFile(pathRuta, "rw");
+        String LineaSustitucion = FileSustitucion.readLine();
+        for (int i = 0; i < ContadorLineas; i++) 
+        {
+            LineaSustitucion = FileSustitucion.readLine();
         }
-        
-        
-        
-        
+        String UsuarioSustituto = Nuevo.Usuario+"|"+Nuevo.Nombre+"|"+Nuevo.Apellido+"|"+Nuevo.Password+"|"+Nuevo.rol+"|"+Nuevo.Fecha+"|"+Nuevo.CorreoAlterno+"|"+Nuevo.Telefono+"|"+Nuevo.PathFotografia+"|"+Nuevo.status;
+        FileSustitucion.skipBytes(LineaSustitucion.getBytes().length);
+        FileSustitucion.writeBytes(UsuarioSustituto);    
+        }
         
     }
    
@@ -332,7 +338,6 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
             Puntuacion++;
             aux = 0;
         }
-        aux = TotaldeLetras(Password);
         Puntuacion = Puntuacion + aux; 
         
         return Puntuacion;
