@@ -5,6 +5,17 @@
  */
 package proyecto_meia;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author josue
@@ -27,6 +38,7 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         txtpassword = new javax.swing.JPasswordField();
         lblinformacion = new javax.swing.JLabel();
         lblforgotpassword = new javax.swing.JLabel();
@@ -37,6 +49,11 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Mail");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, -1, -1));
         getContentPane().add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, 210, 30));
 
         lblinformacion.setForeground(new java.awt.Color(255, 255, 255));
@@ -45,25 +62,104 @@ public class Login extends javax.swing.JFrame {
 
         lblforgotpassword.setForeground(new java.awt.Color(255, 255, 255));
         lblforgotpassword.setText("Olvidaste tu contraseña?");
+        lblforgotpassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblforgotpasswordMouseClicked(evt);
+            }
+        });
         getContentPane().add(lblforgotpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 450, -1, -1));
 
         lblnewuser.setForeground(new java.awt.Color(255, 255, 255));
         lblnewuser.setText("Crea una");
+        lblnewuser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblnewuserMouseClicked(evt);
+            }
+        });
         getContentPane().add(lblnewuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, -1, -1));
         getContentPane().add(txtuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 210, 30));
 
         btnlogin.setText("Login");
+        btnlogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnloginActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, 210, -1));
 
-        Fondo.setIcon(new javax.swing.ImageIcon("C:\\Users\\josue\\Desktop\\Logos Correo MA\\CloudMail.jpg")); // NOI18N
-        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 500));
+        Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/LOGO_MEIA2 .png"))); // NOI18N
+        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 40, -1, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+  
+    
+    
+    private void lblforgotpasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblforgotpasswordMouseClicked
+        ReestablecerPassword PassUser = new ReestablecerPassword();
+        PassUser.show();
+        this.dispose();
+    }//GEN-LAST:event_lblforgotpasswordMouseClicked
 
+    private void lblnewuserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblnewuserMouseClicked
+        Nuevo_Usuario NewUser = new Nuevo_Usuario();
+        NewUser.show();
+        this.dispose();
+    }//GEN-LAST:event_lblnewuserMouseClicked
+
+    private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
+        
+        String Password = txtpassword.getText();
+        String User = txtuser.getText();
+        
+        if(Password.length() < 8)
+        {
+          JOptionPane.showMessageDialog(null, "La contraseña debe contener al menos 8 caracteres, intente de nuevo");
+        }else
+        {
+        try {
+            ValidarPassword(User,Password);
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+    }//GEN-LAST:event_btnloginActionPerformed
+
+    private void ValidarPassword(String User, String Password) throws FileNotFoundException, IOException
+    {
+        String pathRuta = "C:\\MEIA\\usuario.txt";
+        
+        File Archivo = new File(pathRuta);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        boolean Hallazgo = false;
+                
+        while(Linea != null)
+        {
+            if(Linea.contains(User) && Linea.contains(Password))
+            {
+                Principal Menu = new Principal();
+                Menu.show();
+                Hallazgo = true;
+                this.dispose();
+            }
+            Linea = leerArchivo.readLine();
+        } 
+        leerArchivo.close();
+        Leer.close();
+        if(Hallazgo == false)
+        {
+        JOptionPane.showMessageDialog(null, "El Usuario o la Contraseña es incorrecta, intente de Nuevo");
+        }
+        
+    }
     /**
      * @param args the command line arguments
      */
+    
+    
+  
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -99,6 +195,7 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Fondo;
     private javax.swing.JButton btnlogin;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblforgotpassword;
     private javax.swing.JLabel lblinformacion;
     private javax.swing.JLabel lblnewuser;

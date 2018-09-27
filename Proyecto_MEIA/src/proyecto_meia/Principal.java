@@ -52,13 +52,13 @@ public class Principal extends javax.swing.JFrame {
         lblRol.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblRol.setForeground(new java.awt.Color(255, 255, 255));
         lblRol.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblRol.setText("Rol");
+        lblRol.setText("Rol:");
         getContentPane().add(lblRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 200, 30));
 
         lblBienvenido.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblBienvenido.setForeground(new java.awt.Color(255, 255, 255));
         lblBienvenido.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblBienvenido.setText("Bienvenido");
+        lblBienvenido.setText("Bienvenido:");
         getContentPane().add(lblBienvenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 200, 30));
 
         lblNiveldeAcceso.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -70,7 +70,7 @@ public class Principal extends javax.swing.JFrame {
         lblUsuario.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblUsuario.setForeground(new java.awt.Color(255, 255, 255));
         lblUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblUsuario.setText("Usuario");
+        lblUsuario.setText("Usuario:");
         getContentPane().add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 200, 30));
 
         btnBackup.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

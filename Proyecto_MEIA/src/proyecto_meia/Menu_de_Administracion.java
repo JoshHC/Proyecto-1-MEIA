@@ -5,6 +5,14 @@
  */
 package proyecto_meia;
 
+import java.awt.Image;
+import java.io.File;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author josue
@@ -35,7 +43,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         btnMenuPrincipal = new javax.swing.JButton();
         btnNuevoUsuario = new javax.swing.JButton();
         btnCargarFoto = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblFoto = new javax.swing.JLabel();
         btnEstado = new javax.swing.JToggleButton();
         txtPassword = new javax.swing.JTextField();
         ComboBoxSeleccionarUsuario = new javax.swing.JComboBox<>();
@@ -91,14 +99,19 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
 
         btnCargarFoto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnCargarFoto.setText("Cargar Foto");
+        btnCargarFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarFotoActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnCargarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 280, 150, -1));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Foto");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 150, 150));
+        lblFoto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblFoto.setForeground(new java.awt.Color(255, 255, 255));
+        lblFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFoto.setText("Foto");
+        lblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        getContentPane().add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 150, 150));
 
         btnEstado.setText("Activado");
         getContentPane().add(btnEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 380, 210, -1));
@@ -176,6 +189,46 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMenuPrincipalActionPerformed
 
+    File fichero;
+    private void btnCargarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarFotoActionPerformed
+
+        int resultado;
+        
+        CargarFoto ventana = new CargarFoto();
+
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("JPG y PNG","jpg","png");
+
+        ventana.jfchCargarFoto.setFileFilter(filtro);
+
+        resultado= ventana.jfchCargarFoto.showOpenDialog(null);
+
+
+        if (JFileChooser.APPROVE_OPTION == resultado){
+
+
+        fichero = ventana.jfchCargarFoto.getSelectedFile();
+
+        try{
+
+               ImageIcon icon = new ImageIcon(fichero.toString());
+
+               Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+
+               lblFoto.setText(null);
+               
+               lblFoto.setIcon( icono );
+
+
+        }catch(Exception ex){
+
+           
+        JOptionPane.showMessageDialog(null, "Error abriendo la imagen "+ ex);
+                 
+        }
+        
+        } 
+    }//GEN-LAST:event_btnCargarFotoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -220,11 +273,11 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnMenuPrincipal;
     private javax.swing.JButton btnNuevoUsuario;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblAdministracion;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblFechaNac;
     private javax.swing.JLabel lblFondo;
+    private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblTelefono;
     private java.awt.Panel panel1;
