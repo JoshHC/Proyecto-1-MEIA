@@ -254,7 +254,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                 
                 
                 Usuario NewUser = new Usuario();
-                String pathRuta = "C:\\MEIA\\usuario.txt";
+                String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
                 File Archivo = new File(pathRuta);
                 if (Archivo.length() == 0)
                 {
@@ -412,7 +412,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     
     public void IngresarUsuarioNuevo(Usuario Nuevo) throws FileNotFoundException, IOException
     {
-        String pathRuta = "C:\\MEIA\\usuario.txt";
+        String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
         
         File Archivo = new File(pathRuta);
         RandomAccessFile File = new RandomAccessFile(pathRuta, "rw");

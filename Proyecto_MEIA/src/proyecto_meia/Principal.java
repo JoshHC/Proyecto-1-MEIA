@@ -5,21 +5,66 @@
  */
 package proyecto_meia;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
  *
- * @author josue
+ * @author josue && pablo
  */
 public class Principal extends javax.swing.JFrame {
 
+    Procesos procesos = new Procesos();
     String usuario;
     
-    public Principal(String usuario) {
+    public Principal(String usuario) throws IOException {
         initComponents();
         this.usuario = usuario;
+        
+        LlenarDatos();
     }
 
     private Principal() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    private void LlenarDatos() throws FileNotFoundException, IOException
+    {
+            String Ubicacion = "";
+            Ubicacion = procesos.EncontrarUsuario(usuario);
+            
+            if (Ubicacion.equals("Usuarios"))
+            {
+                String pathRuta = "C:\\MEIA\\Usuarios.txt";
+                File Archivo = new File(pathRuta);
+                FileReader Leer = new FileReader(Archivo);
+                BufferedReader leerArchivo = new BufferedReader(Leer);
+                String Linea = leerArchivo.readLine();
+                
+                while(Linea != null)
+                {
+                    if(Linea.contains(usuario))
+                    {
+                        String[] SegmentosInfo = Linea.split("|");
+                        
+                        String pathImagen = SegmentosInfo[8];
+                        
+                        
+                        //lblFoto
+                    }
+
+                    Linea = leerArchivo.readLine();
+                } 
+                leerArchivo.close();
+                Leer.close();
+            }
+            else if (Ubicacion.equals("Bitacora_Usuarios"))
+            {
+
+            }
     }
 
     /**
