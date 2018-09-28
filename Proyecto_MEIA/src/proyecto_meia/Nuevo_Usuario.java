@@ -455,11 +455,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     
     public void IngresarUsuarioBitacora(Usuario Nuevo) throws FileNotFoundException, IOException
     {
-<<<<<<< HEAD
         String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
-=======
-        String pathRuta = "C:\\MEIA\\Bitacora_Usuario.txt";
->>>>>>> 410103602c00736818a0135b310d23de6bd9b385
         
         File Archivo = new File(pathRuta);
         FileWriter Escribir = new FileWriter(Archivo,true);
