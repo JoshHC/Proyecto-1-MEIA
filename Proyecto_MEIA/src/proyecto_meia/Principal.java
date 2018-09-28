@@ -11,11 +11,15 @@ package proyecto_meia;
  */
 public class Principal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Principal
-     */
-    public Principal() {
+    String usuario;
+    
+    public Principal(String usuario) {
         initComponents();
+        this.usuario = usuario;
+    }
+
+    private Principal() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**

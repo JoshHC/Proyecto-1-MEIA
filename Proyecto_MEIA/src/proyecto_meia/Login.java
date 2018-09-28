@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author josue
+ * @author josue && pablo
  */
 public class Login extends javax.swing.JFrame {
 
@@ -94,66 +94,102 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
   
     
-    
     private void lblforgotpasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblforgotpasswordMouseClicked
         ReestablecerPassword PassUser = new ReestablecerPassword();
+        PassUser.setLocationRelativeTo(null);
         PassUser.show();
         this.dispose();
     }//GEN-LAST:event_lblforgotpasswordMouseClicked
 
     private void lblnewuserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblnewuserMouseClicked
         Nuevo_Usuario NewUser = new Nuevo_Usuario();
+        NewUser.setLocationRelativeTo(null);
         NewUser.show();
         this.dispose();
     }//GEN-LAST:event_lblnewuserMouseClicked
 
     private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
-        
+
         String Password = txtpassword.getText();
         String User = txtuser.getText();
         
-        if(Password.length() < 8)
+        if (ExisteArchivo())
         {
-          JOptionPane.showMessageDialog(null, "La contraseña debe contener al menos 8 caracteres, intente de nuevo");
-        }else
+            try 
+            {
+                boolean Existe;
+                Existe = ValidarPassword(User,Password);
+                
+                if (Existe)
+                {
+                    Principal Menu = new Principal(User);
+                    Menu.setLocationRelativeTo(null);
+                    Menu.show();
+                    this.dispose();
+                }
+                else
+                    JOptionPane.showMessageDialog(null, "Error\n"
+                            + "El usuario o contraseña ingresados no son validos\n"
+                            + "Intenta de nuevo");
+            }
+            catch (IOException ex) 
+            {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else
         {
-        try {
-            ValidarPassword(User,Password);
-        } catch (IOException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "En este momento aun no existe ningun usuario registrado por lo "
+                    + "que tu seras registrado como administrador. \n"
+                    + "Unicamente debes de ingresar tu informacion en la siguiente ventana");
+            
+            Nuevo_Usuario NewUser = new Nuevo_Usuario();
+            NewUser.setLocationRelativeTo(null);
+            NewUser.show();
+            this.dispose();
         }
-        }
+
     }//GEN-LAST:event_btnloginActionPerformed
 
-    private void ValidarPassword(String User, String Password) throws FileNotFoundException, IOException
+    // Metodo que verifica si existe el archivo de usuarios
+    private boolean ExisteArchivo()
     {
+        String pathRuta = "C:\\MEIA\\usuario.txt";
+        File Archivo = new File(pathRuta);
+        
+        if (Archivo.exists())
+            return true;
+        else
+            return false;
+    }
+    
+    // Método que verifica si el usuario y contraseña ingresados son correctos
+    private boolean ValidarPassword(String User, String Password) throws FileNotFoundException, IOException
+    {
+        boolean Hallazgo = false;
         String pathRuta = "C:\\MEIA\\usuario.txt";
         
         File Archivo = new File(pathRuta);
+        
         FileReader Leer = new FileReader(Archivo);
         BufferedReader leerArchivo = new BufferedReader(Leer);
         String Linea = leerArchivo.readLine();
-        boolean Hallazgo = false;
-                
+
         while(Linea != null)
         {
             if(Linea.contains(User) && Linea.contains(Password))
-            {
-                Principal Menu = new Principal();
-                Menu.show();
                 Hallazgo = true;
-                this.dispose();
-            }
+            
             Linea = leerArchivo.readLine();
         } 
         leerArchivo.close();
         Leer.close();
-        if(Hallazgo == false)
-        {
-        JOptionPane.showMessageDialog(null, "El Usuario o la Contraseña es incorrecta, intente de Nuevo");
-        }
-        
+
+        return Hallazgo;
     }
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -185,6 +221,7 @@ public class Login extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);

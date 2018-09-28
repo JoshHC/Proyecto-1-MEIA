@@ -16,6 +16,7 @@ public class Proyecto_MEIA {
      */
     public static void main(String[] args) {
         Login MenuPrincipal = new Login();
+        MenuPrincipal.setLocationRelativeTo(null);
         MenuPrincipal.show();
     }
     

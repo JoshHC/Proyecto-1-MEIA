@@ -212,9 +212,6 @@
     </Container>
     <Component class="javax.swing.JLabel" name="lblFondo">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\josue\Desktop\Logos Correo MA\Dise&#xf1;o sin t&#xed;tulo.jpg"/>
-        </Property>
         <Property name="text" type="java.lang.String" value="jLabel1"/>
       </Properties>
       <Constraints>
