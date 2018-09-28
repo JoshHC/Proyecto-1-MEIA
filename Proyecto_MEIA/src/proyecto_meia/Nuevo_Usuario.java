@@ -7,9 +7,11 @@ package proyecto_meia;
 
 import java.awt.Image;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.text.ParseException;
@@ -48,6 +50,9 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panel1 = new java.awt.Panel();
+        txtTelefono = new javax.swing.JFormattedTextField();
+        txtFechaNac = new javax.swing.JFormattedTextField();
         txtPassword = new javax.swing.JPasswordField();
         txtUserName = new javax.swing.JTextField();
         txtmostrador = new javax.swing.JTextField();
@@ -64,19 +69,48 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         btnCrear = new javax.swing.JButton();
         txtNombre = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
-        txtFechaNac = new javax.swing.JTextField();
         txtCorreoAlterno = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(51, 153, 255));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
+        panel1.setLayout(panel1Layout);
+        panel1Layout.setHorizontalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 790, Short.MAX_VALUE)
+        );
+        panel1Layout.setVerticalGroup(
+            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 790, 10));
+
+        try {
+            txtTelefono.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 260, -1));
+
+        try {
+            txtFechaNac.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        getContentPane().add(txtFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, 260, -1));
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 260, -1));
         getContentPane().add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 260, -1));
-        getContentPane().add(txtmostrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 350, 200, 120));
+
+        txtmostrador.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        getContentPane().add(txtmostrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 350, 210, 120));
 
         lblUserName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblUserName.setForeground(new java.awt.Color(255, 255, 255));
         lblUserName.setText("Nombre de Usuario:");
         getContentPane().add(lblUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
 
@@ -94,34 +128,41 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                 btnCargarFotoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCargarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 200, -1));
+        getContentPane().add(btnCargarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 210, -1));
 
+        lblFoto.setForeground(new java.awt.Color(255, 255, 255));
         lblFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFoto.setText("Foto");
         lblFoto.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), null));
-        getContentPane().add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, 200, 170));
+        getContentPane().add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, 210, 170));
 
         lblNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblNombre.setText("Nombre:");
         getContentPane().add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 60, 20));
 
         lblApellido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblApellido.setForeground(new java.awt.Color(255, 255, 255));
         lblApellido.setText("Apellido:");
         getContentPane().add(lblApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 60, 20));
 
         lblPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblPassword.setText("Contraseña:");
         getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 80, -1));
 
         lblCorreo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblCorreo.setForeground(new java.awt.Color(255, 255, 255));
         lblCorreo.setText("Correo:");
         getContentPane().add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, -1, -1));
 
         lblFechaNac.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblFechaNac.setForeground(new java.awt.Color(255, 255, 255));
         lblFechaNac.setText("Fecha de Nacimiento:");
         getContentPane().add(lblFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 140, 20));
 
         lblTelefono.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTelefono.setForeground(new java.awt.Color(255, 255, 255));
         lblTelefono.setText("Telefono:");
         getContentPane().add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 60, 20));
 
@@ -135,14 +176,16 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         getContentPane().add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 440, 260, -1));
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 260, -1));
         getContentPane().add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 260, -1));
-        getContentPane().add(txtFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, 260, -1));
         getContentPane().add(txtCorreoAlterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 260, -1));
-        getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 260, -1));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Crea un Nuevo Usuario");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 560, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Diseño sin título.jpg"))); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 520));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -272,25 +315,25 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                     case 0:
                         Resultado = "Apenas Aceptable";
                         txtmostrador.setText("Nivel de Seguridad de la Contraseña: "+Resultado);
-                        IngresarUsuarioNuevo(NewUser);
+                        IngresarUsuarioBitacora(NewUser);
                         break;
                         
                     case 1:
                         Resultado = "Intermedio";
                         txtmostrador.setText("Nivel de Seguridad de la Contraseña: "+Resultado);
-                        IngresarUsuarioNuevo(NewUser);
+                        IngresarUsuarioBitacora(NewUser);
                         break;
                         
                     case 2:
                         Resultado = "Bueno";
                         txtmostrador.setText("Nivel de Seguridad de la Contraseña: "+Resultado);
-                        IngresarUsuarioNuevo(NewUser);
+                        IngresarUsuarioBitacora(NewUser);
                         break;
                         
                     case 3:
                         Resultado = "Fuerte";
                         txtmostrador.setText("Nivel de Seguridad de la Contraseña: "+Resultado);
-                        IngresarUsuarioNuevo(NewUser);
+                        IngresarUsuarioBitacora(NewUser);
                         break;
                 }
             }
@@ -365,7 +408,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     }
     
     
-    // Retorna la linea de las condiciones o la linea de los punteos del archivo de contraseña en MEIA
+    // Ryetorna la linea de las condiciones o la linea de los punteos del archivo de contraseña en MEIA
     private String ObtenerContenidoArchivo(String obligatorias) throws FileNotFoundException, IOException
     {
         String path = "C:\\MEIA\\ValidacionContraseña.txt";
@@ -410,35 +453,37 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         return Mayusculas;
     }
     
-    public void IngresarUsuarioNuevo(Usuario Nuevo) throws FileNotFoundException, IOException
+    public void IngresarUsuarioBitacora(Usuario Nuevo) throws FileNotFoundException, IOException
     {
-        String pathRuta = "C:\\MEIA\\usuario.txt";
+        String pathRuta = "C:\\MEIA\\Bitacora_Usuario.txt";
         
         File Archivo = new File(pathRuta);
-        RandomAccessFile File = new RandomAccessFile(pathRuta, "rw");
-        String Linea = File.readLine();
-        int ContadorLineas = 0;    
+        FileWriter Escribir = new FileWriter(Archivo,true);
+        BufferedWriter bw = new BufferedWriter(Escribir);
         
-        if(Archivo.length() == 0)
+        RandomAccessFile File = new RandomAccessFile(pathRuta, "rw");
+        String NuevoUsuario = Nuevo.Usuario+"|"+Nuevo.Nombre+"|"+Nuevo.Apellido+"|"+Nuevo.Password+"|"+Nuevo.rol+"|"+Nuevo.Fecha+"|"+Nuevo.CorreoAlterno+"|"+Nuevo.Telefono+"|"+Nuevo.PathFotografia+"|"+Nuevo.status;
+        
+        if(File.length() == 0)
         {
-            File.writeBytes(Nuevo.Usuario+"|"+Nuevo.Nombre+"|"+Nuevo.Apellido+"|"+Nuevo.Password+"|"+Nuevo.rol+"|"+Nuevo.Fecha+"|"+Nuevo.CorreoAlterno+"|"+Nuevo.Telefono+"|"+Nuevo.PathFotografia+"|"+Nuevo.status);
+         bw.write(NuevoUsuario);
+         bw.close();   
+         Escribir.close();
         }
         else
         {
-            while(Linea != null)
-            {
-                String [] Auxiliar = Linea.split("|");
-                ContadorLineas++;
-               if (Auxiliar[0].compareTo(Nuevo.Nombre) == 1)
-                {
-                    break;
-                }
-         
-               Linea = File.readLine();
-            } 
-        File.close();
-              
-        RandomAccessFile FileSustitucion = new RandomAccessFile(pathRuta, "rw");
+         bw.newLine();
+         bw.write(NuevoUsuario);
+         bw.close();
+         Escribir.close();
+        }
+        
+        JOptionPane.showMessageDialog(null, "Usuario Ingresado con Exito");
+        Login Regreso = new Login();
+        Regreso.show();
+        this.dispose();
+       
+        /*RandomAccessFile FileSustitucion = new RandomAccessFile(pathRuta, "rw");
         String LineaSustitucion = FileSustitucion.readLine();
         for (int i = 0; i < ContadorLineas; i++) 
         {
@@ -447,7 +492,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         String UsuarioSustituto = Nuevo.Usuario+"|"+Nuevo.Nombre+"|"+Nuevo.Apellido+"|"+Nuevo.Password+"|"+Nuevo.rol+"|"+Nuevo.Fecha+"|"+Nuevo.CorreoAlterno+"|"+Nuevo.Telefono+"|"+Nuevo.PathFotografia+"|"+Nuevo.status;
         FileSustitucion.skipBytes(LineaSustitucion.getBytes().length);
         FileSustitucion.writeBytes(UsuarioSustituto);    
-        }
+       */
         
     }
    
@@ -492,6 +537,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     private javax.swing.JButton btnCargarFoto;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnRegresar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblApellido;
     private javax.swing.JLabel lblCorreo;
@@ -501,12 +547,13 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblTelefono;
     private javax.swing.JLabel lblUserName;
+    private java.awt.Panel panel1;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCorreoAlterno;
-    private javax.swing.JTextField txtFechaNac;
+    private javax.swing.JFormattedTextField txtFechaNac;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JTextField txtTelefono;
+    private javax.swing.JFormattedTextField txtTelefono;
     private javax.swing.JTextField txtUserName;
     private javax.swing.JTextField txtmostrador;
     // End of variables declaration//GEN-END:variables
