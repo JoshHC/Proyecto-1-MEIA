@@ -116,11 +116,6 @@ public class Procesos {
         BufferedReader bs = new BufferedReader(Leer);*/
         String Auxiliar = ArchivoSustitucion.readLine();
         String [] AuxTamaño = Auxiliar.split("\\|");
-       
-        /*
-        FileWriter Escribir = new FileWriter(Archivo);
-        BufferedWriter bw = new BufferedWriter(Escribir);
-*/
         
         
         if(AuxTamaño.length == 1)
@@ -186,42 +181,39 @@ public class Procesos {
     
     public void DescriptorUsuario(Descriptor_Usuario Descriptor) throws IOException
     {
-        String pathRuta = "C:\\MEIA\\desc_Bitacora_Usuarios.txt";
+        String pathRuta = "C:\\MEIA\\desc_Usuarios.txt";
         
         File Archivo = new File(pathRuta);
-        FileWriter Escribir = new FileWriter(Archivo,true);
-        BufferedWriter bw = new BufferedWriter(Escribir);
+        RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+        String Auxiliar = ArchivoSustitucion.readLine();
+        String [] AuxTamaño = Auxiliar.split("\\|");
         
-        RandomAccessFile File = new RandomAccessFile(pathRuta, "rw");
         
-        if(Archivo.length() == 0)
+        if(AuxTamaño.length == 1)
         {
-         bw.write("Nombre Simbolico"+"|"+Descriptor.Nombre_Simbolico);
-         bw.newLine();
-         bw.write("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion);
-         bw.newLine();
-         bw.write("Usuario que lo Creo"+"|"+Descriptor.Usuario_Creacion);
-         bw.newLine();
-         bw.write("Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion);
-         bw.newLine();
-         bw.write("Usuario que lo Modifico"+"|"+Descriptor.Usuario_modificacion);
-         bw.newLine();
-         bw.write("No. Registros"+"|"+Descriptor.NumerodeRegistros);
-         bw.newLine();
-         bw.write("Registros Activos"+"|"+Descriptor.RegistrosActivos);
-         bw.newLine();
-         bw.write("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos);
-         bw.newLine();
-         bw.close();   
-         Escribir.close();
+         ArchivoSustitucion.seek(0);
+         ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_Simbolico);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Usuario que lo creo"+"|"+Descriptor.Usuario_Creacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Usuario que lo Modifico"+"|"+Descriptor.Fecha_Modificacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Numero de Registros"+"|"+Descriptor.NumerodeRegistros);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Registros Activos"+"|"+Descriptor.RegistrosActivos);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.close();
         }
         else
         {
-            RandomAccessFile ArchivoSustitucion = new RandomAccessFile(pathRuta, "rw");
             String Sustitucion;
             String Linea = ArchivoSustitucion.readLine();
-            Linea = ArchivoSustitucion.readLine();
-            Linea = ArchivoSustitucion.readLine();
             Linea = ArchivoSustitucion.readLine();
             
             Sustitucion = "Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion;
@@ -230,6 +222,7 @@ public class Procesos {
              Linea = ArchivoSustitucion.readLine();
              
             Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_modificacion;
+            ArchivoSustitucion.skipBytes(Linea.length());
             ArchivoSustitucion.writeBytes(Sustitucion);
             
             Linea = ArchivoSustitucion.readLine();
@@ -245,10 +238,62 @@ public class Procesos {
             Linea = ArchivoSustitucion.readLine();
             
             Sustitucion = "Registros Inactivos"+"|"+Descriptor.RegistrosInactivos;
-            ArchivoSustitucion.writeBytes(Sustitucion);    
+            ArchivoSustitucion.writeBytes(Sustitucion);
+            
+            Linea = ArchivoSustitucion.readLine();   
         }
         
     }
+    
+    public void DescriptorBakcup(Descriptor_Backup Descriptor) throws IOException
+    {
+        String pathRuta = "C:\\MEIA\\desc_Bitacora_Backup.txt";
+        
+        File Archivo = new File(pathRuta);
+        RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+        String Auxiliar = ArchivoSustitucion.readLine();
+        String [] AuxTamaño = Auxiliar.split("\\|");
+        
+        
+        if(AuxTamaño.length == 1)
+        {
+         ArchivoSustitucion.seek(0);
+         ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_Simbolico);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Usuario que lo creo"+"|"+Descriptor.Usuario_Creacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Usuario que lo Modifico"+"|"+Descriptor.Fecha_Modificacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Numero de Registros"+"|"+Descriptor.NumerodeRegistros);
+         ArchivoSustitucion.close();
+        }
+        else
+        {
+            String Sustitucion;
+            String Linea = ArchivoSustitucion.readLine();
+            Linea = ArchivoSustitucion.readLine();
+            
+            Sustitucion = "Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion;
+            ArchivoSustitucion.writeBytes(Sustitucion);
+            
+             Linea = ArchivoSustitucion.readLine();
+             
+            Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_modificacion;
+            ArchivoSustitucion.skipBytes(Linea.length());
+            ArchivoSustitucion.writeBytes(Sustitucion);
+            
+            Linea = ArchivoSustitucion.readLine();
+            
+            Sustitucion = "No. Registros"+"|"+Descriptor.NumerodeRegistros;
+            ArchivoSustitucion.writeBytes(Sustitucion); 
+        }
+        
+    }
+    
      
      
     public boolean ValidarCaracteres (String Texto, int cod)

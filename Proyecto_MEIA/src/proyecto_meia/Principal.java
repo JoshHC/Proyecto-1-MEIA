@@ -7,16 +7,29 @@ package proyecto_meia;
 
 import java.awt.Image;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import static proyecto_meia.Nuevo_Usuario.fichero;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -30,12 +43,21 @@ public class Principal extends javax.swing.JFrame {
     public Principal(String usuario) throws IOException {
         initComponents();
         this.usuario = usuario;
+         LlenarDatos();
+        if(lblRol.getText().contains("Rol -> Administrador") == true)
+        {
+            btnBackup.show();
+        }
+        else
+        {
+            btnBackup.hide();
+        }
         
-        LlenarDatos();
+       
     }
 
     private Principal() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     private void LlenarDatos() throws FileNotFoundException, IOException
@@ -270,11 +292,16 @@ public class Principal extends javax.swing.JFrame {
 
         btnBackup.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnBackup.setText("Respaldo de Informacion");
-        getContentPane().add(btnBackup, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 220, 50));
+        btnBackup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackupActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBackup, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, 220, 50));
 
         btnMenudeAdministracion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMenudeAdministracion.setText("Menu de Administracion");
-        getContentPane().add(btnMenudeAdministracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 220, 50));
+        getContentPane().add(btnMenudeAdministracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, 220, 50));
 
         lblMenu.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lblMenu.setForeground(new java.awt.Color(255, 255, 255));
@@ -284,16 +311,12 @@ public class Principal extends javax.swing.JFrame {
 
         btnSalir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnSalir.setText("Log Out");
-<<<<<<< HEAD
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 350, 100, 30));
-=======
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 420, 100, 30));
->>>>>>> 0757b737a046e7ceba8748aa07130ccf69f68454
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, 100, 30));
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -322,7 +345,7 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().add(panel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 660, 10));
 
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Diseño sin título.jpg"))); // NOI18N
-        getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 400));
+        getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 450));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -330,9 +353,55 @@ public class Principal extends javax.swing.JFrame {
     
     
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        if (JOptionPane.showConfirmDialog(null, "Quieres Salir de Mail", "Confirmar Salida", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+    if (JOptionPane.showConfirmDialog(null, "Quieres Salir de Mail", "Confirmar Salida", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackupActionPerformed
+        JFileChooser dialogo = new JFileChooser();
+        File Backup;
+        File Direccion = new File("C:\\MEIA");
+        dialogo.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int valor = dialogo.showOpenDialog(this);
+        if (valor == JFileChooser.APPROVE_OPTION) {
+            Backup = dialogo.getSelectedFile();
+            File Backupfile = new File(Backup.getPath()+"\\BackupMEIA");
+            try {
+                FileUtils.copyDirectory(Direccion, Backupfile);
+                String pathRuta = "C:\\MEIA\\Bitacora_Backup.txt";
+                File Archivo = new File(pathRuta);
+                FileWriter Escribir = new FileWriter(Archivo,true);
+                BufferedWriter bw = new BufferedWriter(Escribir);
+                Date Fecha = new Date();
+                
+                 bw.write("Ruta Absoluta|"+Backupfile.getPath());
+                 bw.write("Usuario|"+usuario);
+                 bw.write("Fecha de Transaccion|"+Fecha.toString());
+                 bw.close();   
+                 Escribir.close();
+                 
+                FileReader Leer = new FileReader(Archivo);
+                BufferedReader bs = new BufferedReader(Leer);
+                int contador = 0;
+                String Linea = bs.readLine();
+                
+                while(Linea != null)
+                {   contador++;
+                    Linea = bs.readLine();
+                }
+                 
+                contador = contador/3;
+
+                 Procesos NuevoProceso = new Procesos();
+                 Descriptor_Backup NuevoBackup = new Descriptor_Backup("Bitacora_Backup",Fecha.toString(),usuario,Fecha.toString(),usuario,String.valueOf(contador));
+                 NuevoProceso.DescriptorBakcup(NuevoBackup);
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        
+    }//GEN-LAST:event_btnBackupActionPerformed
 
     /**
      * @param args the command line arguments
