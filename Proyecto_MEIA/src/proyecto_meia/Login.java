@@ -48,6 +48,7 @@ public class Login extends javax.swing.JFrame {
         txtuser = new javax.swing.JTextField();
         btnlogin = new javax.swing.JButton();
         Fondo = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -91,6 +92,9 @@ public class Login extends javax.swing.JFrame {
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/LOGO_MEIA2 .png"))); // NOI18N
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 40, -1, 500));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo.png"))); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 520));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -210,6 +214,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel Fondo;
     private javax.swing.JButton btnlogin;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblforgotpassword;
     private javax.swing.JLabel lblinformacion;
     private javax.swing.JLabel lblnewuser;
