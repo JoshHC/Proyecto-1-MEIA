@@ -22,6 +22,8 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 
+    static String Usuario;
+    static String Password;
     /**
      * Creates new form Login
      */
@@ -124,6 +126,7 @@ public class Login extends javax.swing.JFrame {
                 {
                     Principal Menu = new Principal(User);
                     Menu.setLocationRelativeTo(null);
+                    Usuario = User;
                     Menu.show();
                     this.dispose();
                 }
@@ -186,6 +189,11 @@ public class Login extends javax.swing.JFrame {
         Leer.close();
 
         return Hallazgo;
+    }
+    
+    public String UsuarioLogeado()
+    {
+        return Usuario;
     }
     
     
