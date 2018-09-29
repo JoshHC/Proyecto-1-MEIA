@@ -5,11 +5,18 @@
  */
 package proyecto_meia;
 
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import static proyecto_meia.Nuevo_Usuario.fichero;
 
 /**
  *
@@ -63,10 +70,47 @@ public class Principal extends javax.swing.JFrame {
             }
             else if (Ubicacion.equals("Bitacora_Usuarios"))
             {
+                String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
+                File Archivo = new File(pathRuta);
+                FileReader Leer = new FileReader(Archivo);
+                BufferedReader leerArchivo = new BufferedReader(Leer);
+                String Linea = leerArchivo.readLine();
+                
+                while(Linea != null)
+                {
+                    if(Linea.contains(usuario))
+                    {
+                        String[] SegmentosInfo = procesos.ImplementacionSplit(Linea);
+                        
+                        String pathImagen = SegmentosInfo[8];
+                        
+                        ImageIcon icon = new ImageIcon(pathImagen);
+                        Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+                        lblFoto.setText(null);
+                        lblFoto.setIcon( icono );
+                        
+                        lblBienvenido.setText("Bienvenido " + SegmentosInfo[1]);
+                        lblUsuario.setText("Usuario: " + SegmentosInfo[0]);
+                        
+                        if(SegmentosInfo[4].equals("1"))
+                        {
+                            lblNiveldeAcceso.setText("Nivel de acceso -> Maestro");
+                            lblRol.setText("Rol -> Administrador");
+                        }
+                        else
+                        {
+                            lblNiveldeAcceso.setText("Nivel de acceso -> Estandar");
+                            lblRol.setText("Rol -> Usuario");
+                        }
+                    }
 
+                    Linea = leerArchivo.readLine();
+                } 
+                leerArchivo.close();
+                Leer.close();
             }
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,79 +142,89 @@ public class Principal extends javax.swing.JFrame {
         lblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         getContentPane().add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 130, 120));
 
-        lblRol.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblRol.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblRol.setForeground(new java.awt.Color(255, 255, 255));
         lblRol.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblRol.setText("Rol:");
-        getContentPane().add(lblRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 90, 200, 30));
+        getContentPane().add(lblRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 190, 30));
 
-        lblBienvenido.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblBienvenido.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblBienvenido.setForeground(new java.awt.Color(255, 255, 255));
         lblBienvenido.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblBienvenido.setText("Bienvenido:");
         getContentPane().add(lblBienvenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 200, 30));
 
-        lblNiveldeAcceso.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblNiveldeAcceso.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblNiveldeAcceso.setForeground(new java.awt.Color(255, 255, 255));
         lblNiveldeAcceso.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblNiveldeAcceso.setText("Nivel de Acceso:");
-        getContentPane().add(lblNiveldeAcceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 200, 30));
+        getContentPane().add(lblNiveldeAcceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 270, 30));
 
-        lblUsuario.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblUsuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblUsuario.setForeground(new java.awt.Color(255, 255, 255));
         lblUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblUsuario.setText("Usuario:");
-        getContentPane().add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 200, 30));
+        getContentPane().add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, 190, 30));
 
         btnBackup.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnBackup.setText("Respaldo de Informacion");
-        getContentPane().add(btnBackup, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, 220, 50));
+        getContentPane().add(btnBackup, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 220, 50));
 
         btnMenudeAdministracion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnMenudeAdministracion.setText("Menu de Administracion");
-        getContentPane().add(btnMenudeAdministracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 220, 50));
+        getContentPane().add(btnMenudeAdministracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 220, 50));
 
-        lblMenu.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblMenu.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         lblMenu.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblMenu.setText("Elija una Opcion del Menu");
-        getContentPane().add(lblMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, -1, -1));
+        lblMenu.setText("Menu");
+        getContentPane().add(lblMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, -1, -1));
 
         btnSalir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnSalir.setText("Log Out");
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 420, 100, 30));
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 350, 100, 30));
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
+            .addGap(0, 660, Short.MAX_VALUE)
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        getContentPane().add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 610, 10));
+        getContentPane().add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 660, 10));
 
         javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
         panel2.setLayout(panel2Layout);
         panel2Layout.setHorizontalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
+            .addGap(0, 660, Short.MAX_VALUE)
         );
         panel2Layout.setVerticalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        getContentPane().add(panel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 610, 10));
+        getContentPane().add(panel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 660, 10));
 
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Diseño sin título.jpg"))); // NOI18N
-        getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 480));
+        getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 400));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "Quieres Salir de Mail", "Confirmar Salida", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+            System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments

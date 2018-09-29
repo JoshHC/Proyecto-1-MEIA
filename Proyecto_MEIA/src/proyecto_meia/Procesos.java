@@ -81,5 +81,25 @@ public class Procesos {
         else
             return "No Existe";
     }
+    
+    public String[] ImplementacionSplit(String condiciones)
+    {
+        String[] porciones = new String[10];
+        int contador = 0;
+        
+        char[] Caracteres = condiciones.toCharArray();
+        
+        for(int i = 0; i < Caracteres.length; i++)
+        {
+            if (Caracteres[i] != '|' && porciones[contador] == null)
+                porciones[contador] = Character.toString(Caracteres[i]);
+            else if (Caracteres[i] != '|')
+                porciones[contador] += Character.toString(Caracteres[i]);
+            else
+                contador++;
+        }
+        
+        return porciones;
+    }
             
 }
