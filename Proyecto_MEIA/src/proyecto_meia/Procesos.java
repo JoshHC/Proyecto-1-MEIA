@@ -86,7 +86,6 @@ public class Procesos {
             return "No Existe";
     }
     
-<<<<<<< HEAD
     public String[] ImplementacionSplit(String condiciones)
     {
         String[] porciones = new String[10];
@@ -106,7 +105,8 @@ public class Procesos {
         
         return porciones;
     }
-=======
+
+    
     public void DescriptorBitacoraUsuario(Descriptor_Bitacora Descriptor) throws IOException
     {
         String pathRuta = "C:\\MEIA\\desc_Bitacora_Usuarios.txt";
@@ -156,7 +156,6 @@ public class Procesos {
              
             Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion;
             ArchivoSustitucion.writeBytes(Sustitucion);
->>>>>>> 0757b737a046e7ceba8748aa07130ccf69f68454
             
             Linea = ArchivoSustitucion.readLine();
             
