@@ -184,7 +184,7 @@ public class Procesos {
         
     }
     
-     public void DescriptorUsuario(Descriptor_Usuario Descriptor) throws IOException
+    public void DescriptorUsuario(Descriptor_Usuario Descriptor) throws IOException
     {
         String pathRuta = "C:\\MEIA\\desc_Bitacora_Usuarios.txt";
         
@@ -248,5 +248,34 @@ public class Procesos {
             ArchivoSustitucion.writeBytes(Sustitucion);    
         }
         
+    }
+     
+     
+    public boolean ValidarCaracteres (String Texto, int cod)
+    {
+        // Max 30 caracteres
+        if (cod == 1)
+        {
+            if (Texto.length() < 30)
+                return false;
+            else
+                return true;
+        }
+        // Max 40 caracteres
+        else if (cod == 2)
+        {
+            if (Texto.length() < 40)
+                return false;
+            else
+                return true;
+        }
+        // Max 200 caracteres
+        else
+        {
+            if (Texto.length() < 200)
+                return false;
+            else
+                return true;
+        }
     }
 }

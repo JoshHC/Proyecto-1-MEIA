@@ -258,6 +258,51 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                 byte rol = 1;
                 byte Status = 1;
                 
+                if (Acceso.ValidarCaracteres(txtNombre.getText(), 1))
+                {                    
+                    JOptionPane.showConfirmDialog(null, "Según investigaciones extensas hemos determinado que "
+                            + "no existe ningun nombre con más de 30 caracteres.\n"
+                            + "Debes ingresar un nombre válido", "Inválido", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    txtNombre.setText("");
+                    return;
+                }
+                
+                if (Acceso.ValidarCaracteres(txtApellido.getText(), 1))
+                {                    
+                    JOptionPane.showConfirmDialog(null, "Según investigaciones extensas hemos determinado que "
+                            + "no existe ningun apellido con más de 30 caracteres.\n"
+                            + "Debes ingresar un apellido válido", "Inválido", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    txtApellido.setText("");
+                    return;
+                }
+                
+                if (Acceso.ValidarCaracteres(txtPassword.getText(), 2))
+                {                    
+                    JOptionPane.showConfirmDialog(null, "Para evitar complicaciones a futuro no podemos registrar una clave tan larga.\n"
+                            + "Debes ingresar una contraseña que tenga como máximo 40 caracteres.", "Inválido", 
+                            JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    txtPassword.setText("");
+                    return;
+                }
+                
+                if (Acceso.ValidarCaracteres(txtCorreoAlterno.getText(), 2))
+                {                    
+                    JOptionPane.showConfirmDialog(null, "Lamentablemente no es posible registrar un correo tan largo!\n"
+                            + "Debes ingresar un correo que tenga como máximo 40 caracteres.\n"
+                            + "Debes ingresar un e-mail válido", "Inválido", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    txtCorreoAlterno.setText("");
+                    return;
+                }
+                
+                if (Acceso.ValidarCaracteres(fichero.getAbsolutePath(), 3))
+                {                    
+                    JOptionPane.showConfirmDialog(null, "La URL de tu fotografía es demasiado larga!.\n"
+                            + "Debes seleccionar una fotografia de otra ubicación.", "Inválido", 
+                            JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    txtPassword.setText("");
+                    return;
+                }
+                
                 try
                 {
                     int numero = Integer.parseInt(txtTelefono.getText());
@@ -327,25 +372,25 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                 {
                     case 0:
                         Resultado = "Apenas Aceptable";
-                        txtmostrador.setText("Nivel de Seguridad de la Contraseña: "+Resultado);
+                        txtmostrador.setText("Nivel de Seguridad \nde la Contraseña: "+Resultado);
                         IngresarUsuarioBitacora(NewUser);
                         break;
                         
                     case 1:
                         Resultado = "Intermedio";
-                        txtmostrador.setText("Nivel de Seguridad de la Contraseña: "+Resultado);
+                        txtmostrador.setText("Nivel de Seguridad \nde la Contraseña: "+Resultado);
                         IngresarUsuarioBitacora(NewUser);
                         break;
                         
                     case 2:
                         Resultado = "Bueno";
-                        txtmostrador.setText("Nivel de Seguridad de la Contraseña: "+Resultado);
+                        txtmostrador.setText("Nivel de Seguridad \nde la Contraseña: "+Resultado);
                         IngresarUsuarioBitacora(NewUser);
                         break;
                         
                     case 3:
                         Resultado = "Fuerte";
-                        txtmostrador.setText("Nivel de Seguridad de la Contraseña: "+Resultado);
+                        txtmostrador.setText("Nivel de Seguridad \nde la Contraseña: "+Resultado);
                         IngresarUsuarioBitacora(NewUser);
                         break;
                 }
@@ -365,7 +410,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     private String ValidarContraseña(String Password) throws FileNotFoundException, IOException
     {
         String error = "";
-        String texto = ObtenerContenidoArchivo("Obligatorias");
+        String texto = ObtenerContenidoArchivo();
         String[] Condiciones = texto.split(" ");
         
         // Si la cadena tiene mas de n caracteres puede seguir
@@ -386,7 +431,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     {
         int Punteo = 0;
         
-        String[] Condiciones = ObtenerContenidoArchivo("Obligatorias").split(" ");
+        String[] Condiciones = ObtenerContenidoArchivo().split(" ");
         
         if (Boolean.valueOf(Condiciones[2]))
         {
@@ -414,13 +459,12 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         {
             Punteo++;
         }
-            
-        
+
         return Punteo;
     }
     
-    // Ryetorna la linea de las condiciones o la linea de los punteos del archivo de contraseña en MEIA
-    private String ObtenerContenidoArchivo(String obligatorias) throws FileNotFoundException, IOException
+    // Retorna la linea de las condiciones o la linea de los punteos del archivo de contraseña en MEIA
+    private String ObtenerContenidoArchivo() throws FileNotFoundException, IOException
     {
         String path = "C:\\MEIA\\ValidacionContraseña.txt";
         File Archivo = new File(path);
