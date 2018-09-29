@@ -5,13 +5,29 @@
  */
 package proyecto_meia;
 
+import java.awt.Color;
 import java.awt.Image;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import static proyecto_meia.Nuevo_Usuario.fichero;
 
 /**
  *
@@ -118,6 +134,11 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 160, -1));
 
         ComboBoxSeleccionarUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboBoxSeleccionarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxSeleccionarUsuarioActionPerformed(evt);
+            }
+        });
         getContentPane().add(ComboBoxSeleccionarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 160, -1));
         getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 160, -1));
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 160, -1));
@@ -228,6 +249,89 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         
         } 
     }//GEN-LAST:event_btnCargarFotoActionPerformed
+
+    private void ComboBoxSeleccionarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxSeleccionarUsuarioActionPerformed
+        
+        try {                                                           
+            
+            String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
+            
+            File Archivo = new File(pathRuta);
+            FileReader Lectura = null;
+            try {
+                Lectura = new FileReader(Archivo);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            BufferedReader Leer = new BufferedReader(Lectura);
+            List<Usuario> ListaUsuarios = new ArrayList<Usuario>();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+            String Linea = "";
+            Linea = Leer.readLine();
+            String [] Auxiliar;
+            Usuario Nuevo;
+           
+            
+            while(Linea != null)
+            {
+                Auxiliar = Linea.split("|");
+                byte [] Aux = Auxiliar[4].getBytes();
+                byte [] Aux2 = Auxiliar[9].getBytes();
+                Date Fecha = formatter.parse(Auxiliar[5]);
+                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux[0],Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2[0]);
+                ListaUsuarios.add(Nuevo);
+                
+                Linea = Leer.readLine();
+            }
+            
+            Leer.close();
+            Lectura.close();
+            
+          
+        for(Usuario item : ListaUsuarios)
+        {
+                 ComboBoxSeleccionarUsuario.addItem(item.Usuario);
+        }
+            
+        String Seleccion = (String)ComboBoxSeleccionarUsuario.getSelectedItem();
+       
+         for(Usuario item : ListaUsuarios)
+        {
+            if(item.Usuario == Seleccion)
+            {
+                ImageIcon icon = new ImageIcon(item.PathFotografia);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+                txtPassword.setText(item.Password);
+                txtCorreo.setText(item.CorreoAlterno);
+                txtTelefono.setText(Integer.toString(item.Telefono));
+                txtFecha.setText(item.Fecha.toString());
+                lblFoto.setText(null);
+                lblFoto.setIcon( icono );
+                if(item.status == 1)
+                {
+                     btnEstado.setSelected(true);
+                     btnEstado.setBackground(Color.GREEN);
+                }
+                else
+                {
+                    btnEstado.setSelected(false);
+                    btnEstado.setBackground(Color.RED);
+                }
+               
+            }
+                 
+        }
+        
+        
+        } catch (IOException ex) {
+            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+       
+   
+    }//GEN-LAST:event_ComboBoxSeleccionarUsuarioActionPerformed
 
     /**
      * @param args the command line arguments

@@ -91,7 +91,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         getContentPane().add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 790, 10));
 
         try {
-            txtTelefono.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
+            txtTelefono.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -191,6 +191,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public static File fichero;
+    Procesos Acceso = new Procesos();
     
     private void btnCargarFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarFotoActionPerformed
         
@@ -295,6 +296,18 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                     return;
                 }
                 
+                if (fichero == null)
+                {
+                    JOptionPane.showMessageDialog(null, "Debe Seleccionar una Foto de Perfil");
+                    return;
+                }
+                
+                if(txtCorreoAlterno.getText().contains("@") == false)
+                {
+                    JOptionPane.showMessageDialog(null, "El Campo de Correo debe contener el Símbolo @");
+                    txtCorreoAlterno.setText("");
+                    return;
+                }
                 
                 Usuario NewUser = new Usuario();
                 String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
@@ -368,7 +381,6 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         return error;
     }
     
-    
     // Devuelve el punteo adicional de la contraseña
     private int obtenerNivelSeguridad (String Password) throws IOException
     {
@@ -406,7 +418,6 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         
         return Punteo;
     }
-    
     
     // Ryetorna la linea de las condiciones o la linea de los punteos del archivo de contraseña en MEIA
     private String ObtenerContenidoArchivo(String obligatorias) throws FileNotFoundException, IOException
@@ -453,6 +464,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         return Mayusculas;
     }
     
+    //Ingresa el usuario al archivo bitacora_usuarios
     public void IngresarUsuarioBitacora(Usuario Nuevo) throws FileNotFoundException, IOException
     {
         String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
@@ -464,7 +476,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         RandomAccessFile File = new RandomAccessFile(pathRuta, "rw");
         String NuevoUsuario = Nuevo.Usuario+"|"+Nuevo.Nombre+"|"+Nuevo.Apellido+"|"+Nuevo.Password+"|"+Nuevo.rol+"|"+Nuevo.Fecha+"|"+Nuevo.CorreoAlterno+"|"+Nuevo.Telefono+"|"+Nuevo.PathFotografia+"|"+Nuevo.status;
         
-        if(File.length() == 0)
+        if(Archivo.length() == 0)
         {
          bw.write(NuevoUsuario);
          bw.close();   
@@ -482,6 +494,8 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         Login Regreso = new Login();
         Regreso.show();
         this.dispose();
+        
+        DescriptorBitácora();
        
         /*RandomAccessFile FileSustitucion = new RandomAccessFile(pathRuta, "rw");
         String LineaSustitucion = FileSustitucion.readLine();
@@ -495,6 +509,120 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
        */
         
     }
+    
+    //método donde se crea el Descriptor del Usuario y se Actualiza
+    public void DescriptorUsuario() throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        Login ObtenerDatos = new Login();
+        String UsuarioActivo = ObtenerDatos.UsuarioLogeado();
+        if(UsuarioActivo == null)
+        {
+            UsuarioActivo = txtUserName.getText();
+        }
+        
+        
+        String path = "C:\\MEIA\\Usuario.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = "";
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[9].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[9].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        Descriptor_Usuario Nuevo = new Descriptor_Usuario("Usuario",Fecha.toString(),UsuarioActivo,Fecha.toString(),UsuarioActivo,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        Acceso.DescriptorUsuario(Nuevo);
+    }
+    
+    //método donde se crea el Descriptor de la Bitacora y se Actualiza
+    public void DescriptorBitácora() throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        Login ObtenerDatos = new Login();
+        String UsuarioActivo = ObtenerDatos.UsuarioLogeado();
+        if(UsuarioActivo == null)
+        {
+            UsuarioActivo = txtUserName.getText();
+        }
+        
+        
+        String path = "C:\\MEIA\\Bitacora_Usuarios.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = "";
+         Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;  
+        String MaxRepeticiones = "";
+        String AuxLinea = "";
+        
+        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[9].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[9].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            NoRegistros++;
+            Linea = leerArchivo.readLine();
+        }
+
+        Leer.close();
+        leerArchivo.close();
+        
+        String paths = "C:\\MEIA\\desc_Bitacora_Usuarios.txt";
+        File Archivos = new File(paths);
+        FileReader Leers = new FileReader(Archivos);
+        BufferedReader leerArchivos = new BufferedReader(Leers);
+        String Lineas = "";
+        Lineas = leerArchivos.readLine();
+        
+        while(Lineas != null)
+        {
+            AuxLinea = Lineas;
+            Lineas = leerArchivos.readLine();
+            if(Lineas == null)
+            {
+                String[] Separador = AuxLinea.split("\\|");
+                MaxRepeticiones = Separador[1];
+            }
+        }
+        
+        Descriptor_Bitacora Nuevo = new Descriptor_Bitacora("Usuario",Fecha.toString(),UsuarioActivo,Fecha.toString(),UsuarioActivo,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),MaxRepeticiones); 
+        Acceso.DescriptorBitacoraUsuario(Nuevo);
+    }   
+    
    
     
     
