@@ -38,7 +38,6 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         txtmostrador.setEditable(false);
         
         txtUserName.requestFocus();
-        txtUserName.setBackground(Color.LIGHT_GRAY);
     }
 
     /**
@@ -800,7 +799,9 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         leerArchivo.close();
         
         
-        Descriptor_Usuario Nuevo = new Descriptor_Usuario("Usuario",Fecha.toString(),UsuarioActivo,Fecha.toString(),UsuarioActivo,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        Descriptor_Usuario Nuevo = new Descriptor_Usuario("Usuarios",Fecha.toString(),
+                Acceso.RellenarCaracteres(UsuarioActivo, 0) ,Fecha.toString(),Acceso.RellenarCaracteres(UsuarioActivo, 0),
+                Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
         Acceso.DescriptorUsuario(Nuevo);
     }
     
@@ -866,7 +867,9 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
             }
         }
         
-        Descriptor_Bitacora Nuevo = new Descriptor_Bitacora("Usuario",Fecha.toString(),UsuarioActivo,Fecha.toString(),UsuarioActivo,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),MaxRepeticiones); 
+        Descriptor_Bitacora Nuevo = new Descriptor_Bitacora("Usuarios",Fecha.toString(),
+                Acceso.RellenarCaracteres(UsuarioActivo, 0) ,Fecha.toString(),Acceso.RellenarCaracteres(UsuarioActivo, 0),
+                Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),MaxRepeticiones); 
         Acceso.DescriptorBitacoraUsuario(Nuevo);
     }   
     
