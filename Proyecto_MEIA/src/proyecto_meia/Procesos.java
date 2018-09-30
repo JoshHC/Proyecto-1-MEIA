@@ -118,7 +118,7 @@ public class Procesos {
         String [] AuxTamaño = Auxiliar.split("\\|");
         
         
-        if(AuxTamaño.length == 1)
+        if(AuxTamaño[1].equals("        "))
         {
          ArchivoSustitucion.seek(0);
          ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_simbolico);
@@ -137,43 +137,38 @@ public class Procesos {
          ArchivoSustitucion.writeBytes("\r\n");
          ArchivoSustitucion.writeBytes("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos);
          ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Max.Reorganizacion"+"|"+Descriptor.Max_Reorganizacion);
-         ArchivoSustitucion.writeBytes("\r\n");
          ArchivoSustitucion.close();
         }
         else
         {
+            ArchivoSustitucion.seek(0);
             String Sustitucion;
-            String Linea = ArchivoSustitucion.readLine();
-            Linea = ArchivoSustitucion.readLine();
+            ArchivoSustitucion.readLine();
+            ArchivoSustitucion.readLine();
             
+            ArchivoSustitucion.readLine();            
             Sustitucion = "Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion;
             ArchivoSustitucion.writeBytes(Sustitucion);
             
-             Linea = ArchivoSustitucion.readLine();
-             
+            ArchivoSustitucion.readLine();
             Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion;
             ArchivoSustitucion.writeBytes(Sustitucion);
             
-            Linea = ArchivoSustitucion.readLine();
-            
+            ArchivoSustitucion.readLine();
             Sustitucion = "Numero de Registros"+"|"+Descriptor.NumerodeRegistros;
             ArchivoSustitucion.writeBytes(Sustitucion);
             
-            Linea = ArchivoSustitucion.readLine();
-            
+            ArchivoSustitucion.readLine();
             Sustitucion = "Registros Activos"+"|"+Descriptor.RegistrosActivos;
             ArchivoSustitucion.writeBytes(Sustitucion);
             
-            Linea = ArchivoSustitucion.readLine();
-            
+            ArchivoSustitucion.readLine();
             Sustitucion = "Registros Inactivos"+"|"+Descriptor.RegistrosInactivos;
             ArchivoSustitucion.writeBytes(Sustitucion);
             
-            Linea = ArchivoSustitucion.readLine();
-            
+            ArchivoSustitucion.readLine();
             Sustitucion = "Max. Reorganizacion"+"|"+Descriptor.Max_Reorganizacion;
-            ArchivoSustitucion.writeBytes(Sustitucion);     
+            ArchivoSustitucion.writeBytes(Sustitucion);
         }
         
     }
@@ -188,7 +183,7 @@ public class Procesos {
         String [] AuxTamaño = Auxiliar.split("\\|");
         
         
-        if(AuxTamaño.length == 1)
+        if(AuxTamaño[1].equals("        "))
         {
          ArchivoSustitucion.seek(0);
          ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_Simbolico);
@@ -212,34 +207,28 @@ public class Procesos {
         else
         {
             String Sustitucion;
-            String Linea = ArchivoSustitucion.readLine();
-            Linea = ArchivoSustitucion.readLine();
+            ArchivoSustitucion.readLine();
+            ArchivoSustitucion.readLine();
             
+            ArchivoSustitucion.readLine();
             Sustitucion = "Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion;
             ArchivoSustitucion.writeBytes(Sustitucion);
             
-             Linea = ArchivoSustitucion.readLine();
-             
+            ArchivoSustitucion.readLine();
             Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_modificacion;
-            ArchivoSustitucion.skipBytes(Linea.length());
             ArchivoSustitucion.writeBytes(Sustitucion);
             
-            Linea = ArchivoSustitucion.readLine();
-            
+            ArchivoSustitucion.readLine();
             Sustitucion = "No. Registros"+"|"+Descriptor.NumerodeRegistros;
             ArchivoSustitucion.writeBytes(Sustitucion);
             
-            Linea = ArchivoSustitucion.readLine();
-            
+            ArchivoSustitucion.readLine();
             Sustitucion = "Registros Activos"+"|"+Descriptor.RegistrosActivos;
             ArchivoSustitucion.writeBytes(Sustitucion);
             
-            Linea = ArchivoSustitucion.readLine();
-            
+            ArchivoSustitucion.readLine();
             Sustitucion = "Registros Inactivos"+"|"+Descriptor.RegistrosInactivos;
             ArchivoSustitucion.writeBytes(Sustitucion);
-            
-            Linea = ArchivoSustitucion.readLine();   
         }
         
     }
@@ -254,7 +243,7 @@ public class Procesos {
         String [] AuxTamaño = Auxiliar.split("\\|");
         
         
-        if(AuxTamaño.length == 1)
+        if(AuxTamaño[1].equals("        "))
         {
          ArchivoSustitucion.seek(0);
          ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_Simbolico);
@@ -273,26 +262,25 @@ public class Procesos {
         else
         {
             String Sustitucion;
-            String Linea = ArchivoSustitucion.readLine();
-            Linea = ArchivoSustitucion.readLine();
+            ArchivoSustitucion.readLine();
+            ArchivoSustitucion.readLine();
             
+            ArchivoSustitucion.readLine();
             Sustitucion = "Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion;
             ArchivoSustitucion.writeBytes(Sustitucion);
             
-             Linea = ArchivoSustitucion.readLine();
-             
+            ArchivoSustitucion.readLine();
             Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_modificacion;
-            ArchivoSustitucion.skipBytes(Linea.length());
             ArchivoSustitucion.writeBytes(Sustitucion);
             
-            Linea = ArchivoSustitucion.readLine();
-            
+            ArchivoSustitucion.readLine();
             Sustitucion = "No. Registros"+"|"+Descriptor.NumerodeRegistros;
-            ArchivoSustitucion.writeBytes(Sustitucion); 
+            ArchivoSustitucion.writeBytes(Sustitucion);
         }
         
     }
      
+    
     public boolean ValidarCaracteres (String Texto, int cod)
     {
         // Max 30 caracteres
