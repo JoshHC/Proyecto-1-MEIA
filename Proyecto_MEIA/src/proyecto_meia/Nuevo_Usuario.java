@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package proyecto_meia;
 
+import com.sun.glass.events.KeyEvent;
+import java.awt.Color;
 import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -39,6 +36,9 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     public Nuevo_Usuario() {
         initComponents();
         txtmostrador.setEditable(false);
+        
+        txtUserName.requestFocus();
+        txtUserName.setBackground(Color.LIGHT_GRAY);
     }
 
     /**
@@ -95,6 +95,16 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtTelefono.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTelefonoMouseClicked(evt);
+            }
+        });
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyPressed(evt);
+            }
+        });
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 260, -1));
 
         try {
@@ -102,8 +112,46 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtFechaNac.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtFechaNacMouseClicked(evt);
+            }
+        });
+        txtFechaNac.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFechaNacKeyPressed(evt);
+            }
+        });
         getContentPane().add(txtFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, 260, -1));
+
+        txtPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPasswordMouseClicked(evt);
+            }
+        });
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, 260, -1));
+
+        txtUserName.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtUserNameMouseClicked(evt);
+            }
+        });
+        txtUserName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUserNameKeyPressed(evt);
+            }
+        });
         getContentPane().add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 260, -1));
 
         txtmostrador.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -174,8 +222,41 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 440, 260, -1));
+
+        txtNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtNombreMouseClicked(evt);
+            }
+        });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNombreKeyPressed(evt);
+            }
+        });
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 260, -1));
+
+        txtApellido.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtApellidoMouseClicked(evt);
+            }
+        });
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtApellidoKeyPressed(evt);
+            }
+        });
         getContentPane().add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 260, -1));
+
+        txtCorreoAlterno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCorreoAlternoMouseClicked(evt);
+            }
+        });
+        txtCorreoAlterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCorreoAlternoKeyPressed(evt);
+            }
+        });
         getContentPane().add(txtCorreoAlterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 340, 260, -1));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -425,6 +506,106 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
        
     }//GEN-LAST:event_btnCrearActionPerformed
 
+    
+    
+    private void txtUserNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserNameKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+            txtNombre.requestFocus();
+    }//GEN-LAST:event_txtUserNameKeyPressed
+
+    private void txtNombreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+            txtApellido.requestFocus();
+    }//GEN-LAST:event_txtNombreKeyPressed
+
+    private void txtApellidoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+            txtPassword.requestFocus();
+    }//GEN-LAST:event_txtApellidoKeyPressed
+
+    private void txtPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+            txtTelefono.requestFocus();
+    }//GEN-LAST:event_txtPasswordKeyPressed
+
+    private void txtTelefonoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+            txtCorreoAlterno.requestFocus();
+    }//GEN-LAST:event_txtTelefonoKeyPressed
+
+    private void txtCorreoAlternoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCorreoAlternoKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+            txtFechaNac.requestFocus();
+    }//GEN-LAST:event_txtCorreoAlternoKeyPressed
+
+    private void txtFechaNacKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaNacKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+            btnCargarFoto.requestFocus();
+    }//GEN-LAST:event_txtFechaNacKeyPressed
+
+    
+    
+    private void txtUserNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUserNameMouseClicked
+
+    }//GEN-LAST:event_txtUserNameMouseClicked
+
+    private void txtNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtNombreMouseClicked
+
+    }//GEN-LAST:event_txtNombreMouseClicked
+
+    private void txtApellidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtApellidoMouseClicked
+
+    }//GEN-LAST:event_txtApellidoMouseClicked
+
+    private void txtPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPasswordMouseClicked
+
+    }//GEN-LAST:event_txtPasswordMouseClicked
+
+    private void txtTelefonoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTelefonoMouseClicked
+
+    }//GEN-LAST:event_txtTelefonoMouseClicked
+
+    private void txtCorreoAlternoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCorreoAlternoMouseClicked
+
+    }//GEN-LAST:event_txtCorreoAlternoMouseClicked
+
+    private void txtFechaNacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtFechaNacMouseClicked
+
+    }//GEN-LAST:event_txtFechaNacMouseClicked
+
+    private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
+        // El de abajo lo hace mejor
+    }//GEN-LAST:event_txtPasswordKeyTyped
+
+    private void txtPasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyReleased
+        String password = txtPassword.getText();
+        
+        try {
+            if (ValidarContraseña(password).equals(""))
+            {
+                if (obtenerNivelSeguridad(password) == 0)
+                    txtPassword.setBackground(Color.PINK);
+                else if(obtenerNivelSeguridad(password) == 1)
+                    txtPassword.setBackground(Color.ORANGE);
+                else if (obtenerNivelSeguridad(password) == 2)
+                    txtPassword.setBackground(Color.CYAN);
+                else if (obtenerNivelSeguridad(password) == 3)
+                    txtPassword.setBackground(Color.GREEN);
+
+            }
+            else 
+            {
+                txtPassword.setBackground(Color.RED);
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Nuevo_Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_txtPasswordKeyReleased
+
+    
+    
+    
     // Retorna "" Si la contraseña es valida
     // Retorna "1" Si la contraseña tiene menos de n caracteres
     // Retorna "2" Si la contraseña no tiene mayusculas
