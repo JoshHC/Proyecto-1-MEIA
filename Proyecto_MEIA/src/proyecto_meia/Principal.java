@@ -168,7 +168,7 @@ public class Principal extends javax.swing.JFrame {
 
         getContentPane().add(panel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 660, 10));
 
-        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Diseño sin título.jpg"))); // NOI18N
+        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
         getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 450));
 
         pack();

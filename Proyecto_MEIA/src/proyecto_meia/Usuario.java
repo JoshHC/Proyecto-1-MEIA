@@ -14,6 +14,8 @@ import java.util.Date;
 public class Usuario 
 {
    String Usuario;
+
+    
    String Nombre;
    String Apellido;
    String Password;
@@ -43,5 +45,8 @@ public class Usuario
      
  }
 
+ public String getUsuario() {
+        return Usuario;
+    }
    
 }

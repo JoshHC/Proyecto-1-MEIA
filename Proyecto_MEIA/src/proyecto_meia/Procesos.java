@@ -4,11 +4,19 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
+import static proyecto_meia.Nuevo_Usuario.fichero;
 
 /**
  *
@@ -338,5 +346,126 @@ public class Procesos {
             tetsto += " ";
         
         return tetsto;
+    }
+    
+    public String Validador() throws FileNotFoundException, IOException
+    {
+        String pathRuta = "C:\\MEIA\\desc_Bitacora_Usuarios.txt";
+        File Archivo = new File(pathRuta);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader bw = new BufferedReader(Leer);
+
+        String Linea = bw.readLine();
+        String Auxiliar = "";
+        String ObtenerRegistros = "";
+        int contadorregistros = 0;
+        
+        while(Linea != null)
+        {
+            Auxiliar = Linea;
+            Linea = bw.readLine();
+            
+            if(Linea == null)
+            {
+                ObtenerRegistros = Auxiliar;
+            }
+            
+        }
+        Leer.close();
+        bw.close();
+        
+        String [] AuxRegistros = ObtenerRegistros.split("\\|");
+        
+        String path = "C:\\MEIA\\Bitacora_Usuarios.txt";
+        File Archivou = new File(path);
+        FileReader Leeru = new FileReader(Archivou);
+        BufferedReader bs = new BufferedReader(Leeru);
+
+        String Lineau = bs.readLine();
+        
+        while(Lineau != null)
+        {
+            contadorregistros++;
+            Lineau = bs.readLine();
+        }
+        Leer.close();
+        bw.close();
+        
+        if(Integer.toString(contadorregistros).equals(AuxRegistros[1]) == true)
+        {
+            return "Reorganizar";
+        }
+        else
+        {
+            return "Estable";
+        }       
+    }
+    
+    public void Reorganizar() throws FileNotFoundException, IOException
+    {
+        
+        String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
+        File Archivo = new File(pathRuta);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader bw = new BufferedReader(Leer);
+        Usuario usuarioaux = new Usuario();
+        List<Usuario> Lista = new ArrayList<Usuario>();
+
+        String Linea = bw.readLine();
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+             byte [] Aux = Auxiliar[4].getBytes();
+             byte [] Aux2 = Auxiliar[9].getBytes();
+            Date Fecha = new Date(Auxiliar[5]);
+            usuarioaux = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux[0],Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2[0]);
+            Lista.add(usuarioaux);
+            Linea = bw.readLine(); 
+        }
+        Leer.close();
+        bw.close();
+        
+        String path = "C:\\MEIA\\Usuarios.txt";
+        File Archivou = new File(path);
+        if(Archivou.exists() == true)
+        {
+        FileReader Leeru = new FileReader(Archivou);
+        BufferedReader bs = new BufferedReader(Leeru);
+        
+        String Lineau = bs.readLine();
+        while(Lineau != null)
+        {
+            String [] Auxiliar = Lineau.split("\\|");
+             byte [] Aux = Auxiliar[4].getBytes();
+             byte [] Aux2 = Auxiliar[9].getBytes();
+            Date Fecha = new Date(Auxiliar[5]);
+            usuarioaux = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux[0],Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2[0]);
+            Lista.add(usuarioaux);
+            Lineau = bs.readLine(); 
+        }
+        Leer.close();
+        bw.close();
+        }
+        Collections.sort(Lista, new Comparator<Usuario>() {
+        public int compare(Usuario obj1, Usuario obj2) {
+        return obj1.getUsuario().compareTo(obj2.getUsuario());
+        }
+        });
+        
+        FileOutputStream writer = new FileOutputStream(Archivo);
+        writer.write(("").getBytes());
+        writer.close(); 
+       
+        FileWriter Escribir = new FileWriter(Archivou);
+        BufferedWriter wr = new BufferedWriter(Escribir);
+        
+        for(int i = 0; i<= Lista.size()-1; i++)
+        { 
+            wr.write(Lista.get(i).Usuario+"|"+Lista.get(i).Nombre+"|"+Lista.get(i).Apellido+"|"+Lista.get(i).Password+"|"+Lista.get(i).rol+"|"+Lista.get(i).Fecha+"|"+Lista.get(i).CorreoAlterno+"|"+Lista.get(i).Telefono+"|"+Lista.get(i).PathFotografia+"|"+Lista.get(i).status);
+            wr.write("\r\n");
+        }
+        wr.close();
+        Escribir.close();
+        
     }
 }

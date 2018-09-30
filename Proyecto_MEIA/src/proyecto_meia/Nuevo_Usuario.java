@@ -511,7 +511,6 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearActionPerformed
 
     
-    
     private void txtUserNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserNameKeyPressed
         if(evt.getKeyCode()==KeyEvent.VK_ENTER)
             txtNombre.requestFocus();
@@ -723,6 +722,8 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         FileWriter Escribir = new FileWriter(Archivo,true);
         BufferedWriter bw = new BufferedWriter(Escribir);
         
+        if(Acceso.Validador() == "Estable")
+        {
         RandomAccessFile File = new RandomAccessFile(pathRuta, "rw");
         String NuevoUsuario = Nuevo.Usuario+"|"+Nuevo.Nombre+"|"+Nuevo.Apellido+"|"+Nuevo.Password+"|"+Nuevo.rol+"|"+Nuevo.Fecha+"|"+Nuevo.CorreoAlterno+"|"+Nuevo.Telefono+"|"+Nuevo.PathFotografia+"|"+Nuevo.status;
         
@@ -747,18 +748,37 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         this.dispose();
         
         DescriptorBitácora();
-       
-        /*RandomAccessFile FileSustitucion = new RandomAccessFile(pathRuta, "rw");
-        String LineaSustitucion = FileSustitucion.readLine();
-        for (int i = 0; i < ContadorLineas; i++) 
-        {
-            LineaSustitucion = FileSustitucion.readLine();
         }
-        String UsuarioSustituto = Nuevo.Usuario+"|"+Nuevo.Nombre+"|"+Nuevo.Apellido+"|"+Nuevo.Password+"|"+Nuevo.rol+"|"+Nuevo.Fecha+"|"+Nuevo.CorreoAlterno+"|"+Nuevo.Telefono+"|"+Nuevo.PathFotografia+"|"+Nuevo.status;
-        FileSustitucion.skipBytes(LineaSustitucion.getBytes().length);
-        FileSustitucion.writeBytes(UsuarioSustituto);    
-       */
+        else if(Acceso.Validador() == "Reorganizar")
+        {
+         Acceso.Reorganizar();
+            
+        RandomAccessFile File = new RandomAccessFile(pathRuta, "rw");
+        String NuevoUsuario = Nuevo.Usuario+"|"+Nuevo.Nombre+"|"+Nuevo.Apellido+"|"+Nuevo.Password+"|"+Nuevo.rol+"|"+Nuevo.Fecha+"|"+Nuevo.CorreoAlterno+"|"+Nuevo.Telefono+"|"+Nuevo.PathFotografia+"|"+Nuevo.status;
         
+        if(Archivo.length() == 0)
+        {
+         bw.write(NuevoUsuario);
+         bw.close();   
+         Escribir.close();
+        }
+        else
+        {
+         bw.newLine();
+         bw.write(NuevoUsuario);
+         bw.close();
+         Escribir.close();
+        }
+        
+        JOptionPane.showMessageDialog(null, "Usuario Ingresado con Exito");
+        Login Regreso = new Login();
+        Regreso.setLocationRelativeTo(null);
+        Regreso.show();
+        this.dispose();
+        
+        DescriptorBitácora();
+            
+        }
     }
     
     //método donde se crea el Descriptor del Usuario y se Actualiza
@@ -821,61 +841,60 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
             UsuarioActivo = txtUserName.getText();
         }
         
-        
-        String path = "C:\\MEIA\\Bitacora_Usuarios.txt";
-        File Archivo = new File(path);
-        FileReader Leer = new FileReader(Archivo);
-        BufferedReader leerArchivo = new BufferedReader(Leer);
-        String Linea = "";
-         Linea = leerArchivo.readLine();
-        int NoRegistros = 0;
-        int Activos = 0;
-        int Inactivos = 0;  
-        String MaxRepeticiones = "";
-        String AuxLinea = "";
-        
-        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
-        while(Linea != null)
-        {
-            String [] Auxiliar = Linea.split("\\|");
-            
-            if(Auxiliar[9].equals("1"))
-            {
-                Activos++;
-            }
-            else if (Auxiliar[9].equals("0") == true)
-            {
-                Inactivos++;
-            }
-            NoRegistros++;
-            Linea = leerArchivo.readLine();
-        }
+            String path = "C:\\MEIA\\Bitacora_Usuarios.txt";
+            File Archivo = new File(path);
+            FileReader Leer = new FileReader(Archivo);
+            BufferedReader leerArchivo = new BufferedReader(Leer);
+            String Linea = "";
+             Linea = leerArchivo.readLine();
+            int NoRegistros = 0;
+            int Activos = 0;
+            int Inactivos = 0;  
+            String MaxRepeticiones = "";
+            String AuxLinea = "";
 
-        Leer.close();
-        leerArchivo.close();
-        
-        String paths = "C:\\MEIA\\desc_Bitacora_Usuarios.txt";
-        File Archivos = new File(paths);
-        FileReader Leers = new FileReader(Archivos);
-        BufferedReader leerArchivos = new BufferedReader(Leers);
-        String Lineas = "";
-        Lineas = leerArchivos.readLine();
-        
-        while(Lineas != null)
-        {
-            AuxLinea = Lineas;
-            Lineas = leerArchivos.readLine();
-            if(Lineas == null)
+            //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+            while(Linea != null)
             {
-                String[] Separador = AuxLinea.split("\\|");
-                MaxRepeticiones = Separador[1];
+                String [] Auxiliar = Linea.split("\\|");
+
+                if(Auxiliar[9].equals("1"))
+                {
+                    Activos++;
+                }
+                else if (Auxiliar[9].equals("0") == true)
+                {
+                    Inactivos++;
+                }
+                NoRegistros++;
+                Linea = leerArchivo.readLine();
             }
-        }
+
+            Leer.close();
+            leerArchivo.close();
         
-        Descriptor_Bitacora Nuevo = new Descriptor_Bitacora("Usuarios",Fecha.toString(),
-                Acceso.RellenarCaracteres(UsuarioActivo, 0) ,Fecha.toString(),Acceso.RellenarCaracteres(UsuarioActivo, 0),
-                Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),MaxRepeticiones); 
-        Acceso.DescriptorBitacoraUsuario(Nuevo);
+            String paths = "C:\\MEIA\\desc_Bitacora_Usuarios.txt";
+            File Archivos = new File(paths);
+            FileReader Leers = new FileReader(Archivos);
+            BufferedReader leerArchivos = new BufferedReader(Leers);
+            String Lineas = "";
+            Lineas = leerArchivos.readLine();
+
+            while(Lineas != null)
+            {
+                AuxLinea = Lineas;
+                Lineas = leerArchivos.readLine();
+                if(Lineas == null)
+                {
+                    String[] Separador = AuxLinea.split("\\|");
+                    MaxRepeticiones = Separador[1];
+                }
+            }
+
+            Descriptor_Bitacora Nuevo = new Descriptor_Bitacora("Usuarios",Fecha.toString(),
+                    Acceso.RellenarCaracteres(UsuarioActivo, 0) ,Fecha.toString(),Acceso.RellenarCaracteres(UsuarioActivo, 0),
+                    Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),MaxRepeticiones); 
+            Acceso.DescriptorBitacoraUsuario(Nuevo);     
     }   
     
    

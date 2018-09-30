@@ -178,22 +178,22 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         });
         getContentPane().add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 370, 160, 30));
 
-        lblPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblPassword.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblPassword.setText("Contraseña:");
         getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
 
-        lblCorreo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblCorreo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblCorreo.setForeground(new java.awt.Color(255, 255, 255));
         lblCorreo.setText("Correo:");
         getContentPane().add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, -1, -1));
 
-        lblFechaNac.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblFechaNac.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblFechaNac.setForeground(new java.awt.Color(255, 255, 255));
         lblFechaNac.setText("Fecha de Nacimiento:");
-        getContentPane().add(lblFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
+        getContentPane().add(lblFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, -1, -1));
 
-        lblTelefono.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTelefono.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTelefono.setForeground(new java.awt.Color(255, 255, 255));
         lblTelefono.setText("Telefono:");
         getContentPane().add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, -1, -1));
@@ -325,7 +325,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
 
         getContentPane().add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 830, 10));
 
-        lblFondo.setIcon(new javax.swing.ImageIcon("C:\\Users\\josue\\Desktop\\Logos Correo MA\\Diseño sin título.jpg")); // NOI18N
+        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
         lblFondo.setText("jLabel1");
         getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 520));
 
