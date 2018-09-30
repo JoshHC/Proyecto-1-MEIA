@@ -56,7 +56,7 @@ public class Principal extends javax.swing.JFrame {
        
     }
 
-    private Principal() {
+    public Principal() {
          throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
