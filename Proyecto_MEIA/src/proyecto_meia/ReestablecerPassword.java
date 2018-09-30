@@ -77,7 +77,7 @@ public class ReestablecerPassword extends javax.swing.JFrame {
         lblnewpassword.setText("Nueva Contraseña:");
         getContentPane().add(lblnewpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, -1));
 
-        lblfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Diseño sin título.jpg"))); // NOI18N
+        lblfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
         getContentPane().add(lblfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 340));
 
         pack();

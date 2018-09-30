@@ -156,11 +156,12 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         txtmostrador.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         getContentPane().add(txtmostrador, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 350, 210, 120));
 
-        lblUserName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblUserName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblUserName.setForeground(new java.awt.Color(255, 255, 255));
         lblUserName.setText("Nombre de Usuario:");
-        getContentPane().add(lblUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, -1, -1));
+        getContentPane().add(lblUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
+        btnRegresar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,6 +170,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         });
         getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 100, -1));
 
+        btnCargarFoto.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnCargarFoto.setText("Cargar Foto");
         btnCargarFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -177,42 +179,44 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         });
         getContentPane().add(btnCargarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 210, -1));
 
+        lblFoto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblFoto.setForeground(new java.awt.Color(255, 255, 255));
         lblFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFoto.setText("Foto");
         lblFoto.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), null));
         getContentPane().add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, 210, 170));
 
-        lblNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblNombre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblNombre.setText("Nombre:");
-        getContentPane().add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 60, 20));
+        getContentPane().add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 70, 20));
 
-        lblApellido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblApellido.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblApellido.setForeground(new java.awt.Color(255, 255, 255));
         lblApellido.setText("Apellido:");
         getContentPane().add(lblApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 60, 20));
 
-        lblPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblPassword.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblPassword.setText("Contraseña:");
-        getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, 80, -1));
+        getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 240, 90, -1));
 
-        lblCorreo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblCorreo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblCorreo.setForeground(new java.awt.Color(255, 255, 255));
         lblCorreo.setText("Correo:");
-        getContentPane().add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, -1, -1));
+        getContentPane().add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(123, 340, 60, -1));
 
-        lblFechaNac.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblFechaNac.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblFechaNac.setForeground(new java.awt.Color(255, 255, 255));
         lblFechaNac.setText("Fecha de Nacimiento:");
-        getContentPane().add(lblFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 140, 20));
+        getContentPane().add(lblFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 390, 150, 20));
 
-        lblTelefono.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTelefono.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblTelefono.setForeground(new java.awt.Color(255, 255, 255));
         lblTelefono.setText("Telefono:");
-        getContentPane().add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, 60, 20));
+        getContentPane().add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 70, 20));
 
+        btnCrear.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnCrear.setForeground(new java.awt.Color(51, 51, 51));
         btnCrear.setText("Crear Usuario");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -261,10 +265,11 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Crea un Nuevo Usuario");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 560, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, -1));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Diseño sin título.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 520));
 
         pack();
