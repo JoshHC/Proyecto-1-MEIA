@@ -149,21 +149,12 @@ public class Procesos {
             ArchivoSustitucion.readLine();            
             Sustitucion = "Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion;
             ArchivoSustitucion.writeBytes(Sustitucion);
-<<<<<<< HEAD
-             Linea = ArchivoSustitucion.readLine();
-             
-            Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion;
-            ArchivoSustitucion.writeBytes(Sustitucion);
-            Linea = ArchivoSustitucion.readLine();
-            
-=======
             
             ArchivoSustitucion.readLine();
             Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion;
-            ArchivoSustitucion.writeBytes(Sustitucion);
+            ArchivoSustitucion.writeBytes(Sustitucion);  
             
             ArchivoSustitucion.readLine();
->>>>>>> 4d1dfe9d88947d7073de5327ee5582828ab7ac46
             Sustitucion = "Numero de Registros"+"|"+Descriptor.NumerodeRegistros;
             ArchivoSustitucion.writeBytes(Sustitucion);
             

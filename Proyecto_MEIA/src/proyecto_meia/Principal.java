@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -292,9 +293,16 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackupActionPerformed
 
     private void btnMenudeAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenudeAdministracionActionPerformed
-        Menu_de_Administracion Usuario = new Menu_de_Administracion();
-        Usuario.show();
-        this.dispose();
+        Menu_de_Administracion Usuario;
+        try {
+            Usuario = new Menu_de_Administracion(usuario);
+            Usuario.show();
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }//GEN-LAST:event_btnMenudeAdministracionActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed

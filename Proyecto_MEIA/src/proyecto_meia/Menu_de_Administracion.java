@@ -38,11 +38,9 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
     /**
      * Creates new form Menu_de_Administracion
      */
-    public Menu_de_Administracion() {
+    public Menu_de_Administracion(String usuario) throws IOException, ParseException {
         initComponents();
         
-        try {                                                           
-            
             String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
             
             File Archivo = new File(pathRuta);
@@ -54,19 +52,22 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             }
             BufferedReader Leer = new BufferedReader(Lectura);
             List<Usuario> ListaUsuarios = new ArrayList<Usuario>();
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
             String Linea = "";
             Linea = Leer.readLine();
             String [] Auxiliar;
             Usuario Nuevo;
+            boolean Admin = false;
+            Procesos Acceso = new Procesos();
+            
            
             
             while(Linea != null)
             {
-                Auxiliar = Linea.split("|");
+                Auxiliar = Linea.split("\\|");
                 byte [] Aux = Auxiliar[4].getBytes();
                 byte [] Aux2 = Auxiliar[9].getBytes();
-                Date Fecha = formatter.parse(Auxiliar[5]);
+                Date Fecha = new Date(Auxiliar[5]);
                 Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux[0],Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2[0]);
                 ListaUsuarios.add(Nuevo);
                 
@@ -75,51 +76,44 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             
             Leer.close();
             Lectura.close();
-            
-          
-        for(Usuario item : ListaUsuarios)
+        
+        for(Usuario i: ListaUsuarios)
         {
-                 ComboBoxSeleccionarUsuario.addItem(item.Usuario);
-        }
-            
-        String Seleccion = (String)ComboBoxSeleccionarUsuario.getSelectedItem();
-       
-         for(Usuario item : ListaUsuarios)
-        {
-            if(item.Usuario == Seleccion)
+            if(Acceso.RellenarCaracteres(usuario, 0).equals(i.Usuario))
             {
-                ImageIcon icon = new ImageIcon(item.PathFotografia);
-                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
-                txtPassword.setText(item.Password);
-                txtCorreo.setText(item.CorreoAlterno);
-                txtTelefono.setText(Integer.toString(item.Telefono));
-                txtFecha.setText(item.Fecha.toString());
-                lblFoto.setText(null);
-                lblFoto.setIcon( icono );
-                if(item.status == 1)
+                if(i.rol == 49)
                 {
-                     btnEstado.setSelected(true);
-                     btnEstado.setBackground(Color.GREEN);
-                     btnEstado.setText("Activo");
+                    Admin = true;
                 }
                 else
                 {
-                    btnEstado.setSelected(false);
-                    btnEstado.setBackground(Color.RED);
-                    btnEstado.setText("Inactivo");
+                    Admin = false;
                 }
-               
             }
-                 
         }
-        
-        
-        } catch (IOException ex) {
-            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+            
+            
+        if (Admin == true)
+        {
+            for(Usuario item : ListaUsuarios)
+            {
+                 ComboBoxSeleccionarUsuario.addItem(item.Usuario);
+            }         
         }
-        
+        else
+        {
+            for(Usuario item : ListaUsuarios)
+            {
+                if(item.Usuario == usuario)
+                {
+                 ComboBoxSeleccionarUsuario.addItem(item.Usuario);
+                }
+            }      
+        }
+    }
+
+    private Menu_de_Administracion() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -248,7 +242,6 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         getContentPane().add(btnEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 370, 190, 30));
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 160, -1));
 
-        ComboBoxSeleccionarUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboBoxSeleccionarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboBoxSeleccionarUsuarioActionPerformed(evt);
@@ -413,7 +406,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             }
             BufferedReader Leer = new BufferedReader(Lectura);
             List<Usuario> ListaUsuarios = new ArrayList<Usuario>();
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             String Linea = "";
             Linea = Leer.readLine();
             String [] Auxiliar;
@@ -422,10 +415,10 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             
             while(Linea != null)
             {
-                Auxiliar = Linea.split("|");
+                Auxiliar = Linea.split("\\|");
                 byte [] Aux = Auxiliar[4].getBytes();
                 byte [] Aux2 = Auxiliar[9].getBytes();
-                Date Fecha = formatter.parse(Auxiliar[5]);
+                Date Fecha = new Date(Auxiliar[5]);
                 Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux[0],Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2[0]);
                 ListaUsuarios.add(Nuevo);
                 
@@ -435,17 +428,11 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             Leer.close();
             Lectura.close();
             
-          
-        for(Usuario item : ListaUsuarios)
-        {
-                 ComboBoxSeleccionarUsuario.addItem(item.Usuario);
-        }
-            
         String Seleccion = (String)ComboBoxSeleccionarUsuario.getSelectedItem();
        
          for(Usuario item : ListaUsuarios)
         {
-            if(item.Usuario == Seleccion)
+            if(item.Usuario.equals(Seleccion))
             {
                 ImageIcon icon = new ImageIcon(item.PathFotografia);
                 Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
@@ -455,10 +442,10 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                 txtFecha.setText(item.Fecha.toString());
                 lblFoto.setText(null);
                 lblFoto.setIcon( icono );
-                if(item.status == 1)
+                if(item.status == 49)
                 {
                      btnEstado.setSelected(true);
-                     btnEstado.setBackground(Color.GREEN);
+                     btnEstado.setBackground(Color.BLUE);
                      btnEstado.setText("Activo");
                 }
                 else
@@ -474,8 +461,6 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         
         
         } catch (IOException ex) {
-            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
             Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -538,6 +523,13 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         Procesos Busqueda = new Procesos();
         String Usuario = txtBusqueda.getText();
+        
+        if(txtBusqueda.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Ingrese un Nombre de Usuario Valido para Buscar");
+        }
+        else
+        {
         try {
             String Resultado = Busqueda.EncontrarUsuario(Usuario);
             
@@ -553,6 +545,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             }
         } catch (IOException ex) {
             Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
