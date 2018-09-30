@@ -293,8 +293,6 @@ public class Procesos {
         }
         
     }
-    
-     
      
     public boolean ValidarCaracteres (String Texto, int cod)
     {
