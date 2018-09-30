@@ -152,9 +152,9 @@ public class Procesos {
             
              Linea = ArchivoSustitucion.readLine();
              
-            Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion+"\r\n";
+            Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion;
             ArchivoSustitucion.writeBytes(Sustitucion);
-            /*
+            
             Linea = ArchivoSustitucion.readLine();
             
             Sustitucion = "Numero de Registros"+"|"+Descriptor.NumerodeRegistros;
@@ -174,7 +174,6 @@ public class Procesos {
             
             Sustitucion = "Max. Reorganizacion"+"|"+Descriptor.Max_Reorganizacion;
             ArchivoSustitucion.writeBytes(Sustitucion);     
-*/
         }
         
     }
