@@ -129,7 +129,7 @@ public class Procesos {
          ArchivoSustitucion.writeBytes("\r\n");
          ArchivoSustitucion.writeBytes("Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion);
          ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Usuario que lo Modifico"+"|"+Descriptor.Fecha_Modificacion);
+         ArchivoSustitucion.writeBytes("Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion);
          ArchivoSustitucion.writeBytes("\r\n");
          ArchivoSustitucion.writeBytes("Numero de Registros"+"|"+Descriptor.NumerodeRegistros);
          ArchivoSustitucion.writeBytes("\r\n");
@@ -152,13 +152,12 @@ public class Procesos {
             
              Linea = ArchivoSustitucion.readLine();
              
-            Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion;
-            ArchivoSustitucion.skipBytes(Linea.length());
+            Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion+"\r\n";
             ArchivoSustitucion.writeBytes(Sustitucion);
-            
+            /*
             Linea = ArchivoSustitucion.readLine();
             
-            Sustitucion = "No. Registros"+"|"+Descriptor.NumerodeRegistros;
+            Sustitucion = "Numero de Registros"+"|"+Descriptor.NumerodeRegistros;
             ArchivoSustitucion.writeBytes(Sustitucion);
             
             Linea = ArchivoSustitucion.readLine();
@@ -175,6 +174,7 @@ public class Procesos {
             
             Sustitucion = "Max. Reorganizacion"+"|"+Descriptor.Max_Reorganizacion;
             ArchivoSustitucion.writeBytes(Sustitucion);     
+*/
         }
         
     }
