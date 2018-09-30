@@ -299,7 +299,15 @@ public class Procesos {
     public boolean ValidarCaracteres (String Texto, int cod)
     {
         // Max 30 caracteres
-        if (cod == 1)
+        if (cod == 0)
+        {
+            if (Texto.length() < 20)
+                return false;
+            else
+                return true;
+        }
+        // Max 30 caracteres
+        else if (cod == 1)
         {
             if (Texto.length() < 30)
                 return false;
@@ -322,5 +330,28 @@ public class Procesos {
             else
                 return true;
         }
+    }
+    
+    public String RellenarCaracteres (String Texto, int cod)
+    {
+        String tetsto = Texto;
+        int cantidad = 0;
+        
+        switch(cod)
+        {
+            // Max 30 caracteres
+            case 0: cantidad = 20 - Texto.length(); break;
+            // Max 30 caracteres
+            case 1: cantidad = 30 - Texto.length(); break;
+            // Max 40 caracteres
+            case 2: cantidad = 40 - Texto.length(); break;
+            // Max 200 caracteres
+            case 3: cantidad = 200 - Texto.length(); break;
+        }
+        
+        for (int i = 0; i < cantidad; i++)
+            tetsto += " ";
+        
+        return tetsto;
     }
 }

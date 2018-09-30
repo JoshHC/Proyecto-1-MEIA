@@ -258,38 +258,52 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                 byte rol = 1;
                 byte Status = 1;
                 
+                if (Acceso.ValidarCaracteres(txtUserName.getText(), 0))
+                {                    
+                    JOptionPane.showConfirmDialog(null, "Según investigaciones extensas hemos \n"
+                            + "determinado que un username mayor de \n"
+                            + "20 caracteres no es eficiente.\n\n"
+                            + "Debes ingresar un UserName válido", "Inválido", JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);
+                    txtUserName.setText("");
+                    return;
+                }
+                
                 if (Acceso.ValidarCaracteres(txtNombre.getText(), 1))
                 {                    
-                    JOptionPane.showConfirmDialog(null, "Según investigaciones extensas hemos determinado que "
-                            + "no existe ningun nombre con más de 30 caracteres.\n"
-                            + "Debes ingresar un nombre válido", "Inválido", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.showConfirmDialog(null, "Según investigaciones extensas hemos \n"
+                            + "determinado que no existe ningun nombre \n"
+                            + "con más de 30 caracteres.\n\n"
+                            + "Debes ingresar un nombre válido", "Inválido", JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);
                     txtNombre.setText("");
                     return;
                 }
                 
                 if (Acceso.ValidarCaracteres(txtApellido.getText(), 1))
                 {                    
-                    JOptionPane.showConfirmDialog(null, "Según investigaciones extensas hemos determinado que "
-                            + "no existe ningun apellido con más de 30 caracteres.\n"
-                            + "Debes ingresar un apellido válido", "Inválido", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.showConfirmDialog(null, "Según investigaciones extensas hemos \n"
+                            + "determinado que no existe ningun apellido \n"
+                            + "con más de 30 caracteres.\n\n"
+                            + "Debes ingresar un apellido válido", "Inválido", JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);
                     txtApellido.setText("");
                     return;
                 }
                 
                 if (Acceso.ValidarCaracteres(txtPassword.getText(), 2))
                 {                    
-                    JOptionPane.showConfirmDialog(null, "Para evitar complicaciones a futuro no podemos registrar una clave tan larga.\n"
+                    JOptionPane.showConfirmDialog(null, "Para evitar complicaciones a futuro no podemos \n"
+                            + "registrar una clave tan larga.\n\n"
                             + "Debes ingresar una contraseña que tenga como máximo 40 caracteres.", "Inválido", 
-                            JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+                            JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);
                     txtPassword.setText("");
                     return;
                 }
                 
                 if (Acceso.ValidarCaracteres(txtCorreoAlterno.getText(), 2))
                 {                    
-                    JOptionPane.showConfirmDialog(null, "Lamentablemente no es posible registrar un correo tan largo!\n"
-                            + "Debes ingresar un correo que tenga como máximo 40 caracteres.\n"
-                            + "Debes ingresar un e-mail válido", "Inválido", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.showConfirmDialog(null, "Lamentablemente no es posible registrar \n"
+                            + "un correo tan largo!\n"
+                            + "Debes ingresar un correo que tenga como máximo 40 caracteres.\n",
+                            "Inválido", JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);
                     txtCorreoAlterno.setText("");
                     return;
                 }
@@ -298,7 +312,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                 {                    
                     JOptionPane.showConfirmDialog(null, "La URL de tu fotografía es demasiado larga!.\n"
                             + "Debes seleccionar una fotografia de otra ubicación.", "Inválido", 
-                            JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE);
+                            JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);
                     txtPassword.setText("");
                     return;
                 }
@@ -359,12 +373,19 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                 File Archivo = new File(pathRuta);
                 if (Archivo.length() == 0)
                 {
-                    NewUser = new Usuario(txtUserName.getText(),txtNombre.getText(),txtApellido.getText(),Password,rol,Fecha,txtCorreoAlterno.getText(),Integer.parseInt(txtTelefono.getText()),fichero.getAbsolutePath(),Status);
+                    NewUser = new Usuario(Acceso.RellenarCaracteres(txtUserName.getText(), 0) , Acceso.RellenarCaracteres(txtNombre.getText(), 1) , 
+                            Acceso.RellenarCaracteres(txtApellido.getText(), 1) , Acceso.RellenarCaracteres(Password, 2) , rol , Fecha , 
+                            Acceso.RellenarCaracteres(txtCorreoAlterno.getText(), 2) , Integer.parseInt(txtTelefono.getText()) , 
+                            Acceso.RellenarCaracteres(fichero.getAbsolutePath(), 3) , Status);
                 }
                 else
                 {
                     rol = 0;
-                    NewUser = new Usuario(txtUserName.getText(),txtNombre.getText(),txtApellido.getText(),Password,rol,Fecha,txtCorreoAlterno.getText(),Integer.parseInt(txtTelefono.getText()),fichero.getAbsolutePath(),Status);
+                    NewUser = new Usuario(Acceso.RellenarCaracteres(txtUserName.getText(), 0) , Acceso.RellenarCaracteres(txtNombre.getText(), 1) , 
+                            Acceso.RellenarCaracteres(txtApellido.getText(), 1) , Acceso.RellenarCaracteres(Password, 2) , rol , Fecha , 
+                            Acceso.RellenarCaracteres(txtCorreoAlterno.getText(), 2) , Integer.parseInt(txtTelefono.getText()) , 
+                            Acceso.RellenarCaracteres(fichero.getAbsolutePath(), 3) , Status);
+                    //NewUser = new Usuario(txtUserName.getText(),txtNombre.getText(),txtApellido.getText(),Password,rol,Fecha,txtCorreoAlterno.getText(),Integer.parseInt(txtTelefono.getText()),fichero.getAbsolutePath(),Status);
                     
                 }
                 //Usuario NewUser = new Usuario(txtUserName.getText(),txtNombre.getText(),Password,);
@@ -536,6 +557,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         
         JOptionPane.showMessageDialog(null, "Usuario Ingresado con Exito");
         Login Regreso = new Login();
+        Regreso.setLocationRelativeTo(null);
         Regreso.show();
         this.dispose();
         
