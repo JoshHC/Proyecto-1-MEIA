@@ -40,6 +40,86 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
      */
     public Menu_de_Administracion() {
         initComponents();
+        
+        try {                                                           
+            
+            String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
+            
+            File Archivo = new File(pathRuta);
+            FileReader Lectura = null;
+            try {
+                Lectura = new FileReader(Archivo);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            BufferedReader Leer = new BufferedReader(Lectura);
+            List<Usuario> ListaUsuarios = new ArrayList<Usuario>();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+            String Linea = "";
+            Linea = Leer.readLine();
+            String [] Auxiliar;
+            Usuario Nuevo;
+           
+            
+            while(Linea != null)
+            {
+                Auxiliar = Linea.split("|");
+                byte [] Aux = Auxiliar[4].getBytes();
+                byte [] Aux2 = Auxiliar[9].getBytes();
+                Date Fecha = formatter.parse(Auxiliar[5]);
+                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux[0],Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2[0]);
+                ListaUsuarios.add(Nuevo);
+                
+                Linea = Leer.readLine();
+            }
+            
+            Leer.close();
+            Lectura.close();
+            
+          
+        for(Usuario item : ListaUsuarios)
+        {
+                 ComboBoxSeleccionarUsuario.addItem(item.Usuario);
+        }
+            
+        String Seleccion = (String)ComboBoxSeleccionarUsuario.getSelectedItem();
+       
+         for(Usuario item : ListaUsuarios)
+        {
+            if(item.Usuario == Seleccion)
+            {
+                ImageIcon icon = new ImageIcon(item.PathFotografia);
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+                txtPassword.setText(item.Password);
+                txtCorreo.setText(item.CorreoAlterno);
+                txtTelefono.setText(Integer.toString(item.Telefono));
+                txtFecha.setText(item.Fecha.toString());
+                lblFoto.setText(null);
+                lblFoto.setIcon( icono );
+                if(item.status == 1)
+                {
+                     btnEstado.setSelected(true);
+                     btnEstado.setBackground(Color.GREEN);
+                     btnEstado.setText("Activo");
+                }
+                else
+                {
+                    btnEstado.setSelected(false);
+                    btnEstado.setBackground(Color.RED);
+                    btnEstado.setText("Inactivo");
+                }
+               
+            }
+                 
+        }
+        
+        
+        } catch (IOException ex) {
+            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**
