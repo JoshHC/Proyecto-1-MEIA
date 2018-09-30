@@ -765,7 +765,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         String UsuarioActivo = ObtenerDatos.UsuarioLogeado();
         if(UsuarioActivo == null)
         {
-            UsuarioActivo = txtUserName.getText();
+            UsuarioActivo = Acceso.RellenarCaracteres(txtUserName.getText(), 0) ;
         }
         
         
