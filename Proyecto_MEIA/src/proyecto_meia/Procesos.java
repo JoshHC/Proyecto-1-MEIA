@@ -417,22 +417,18 @@ public class Procesos {
             String [] Auxiliar = Linea.split("\\|");
             byte Aux;
             byte Aux2;
-            if(Auxiliar[4].getBytes().toString() == "49")
-            {
+            
+            String temp = Auxiliar[4];
+            if(temp.equals("1"))
                   Aux = 1;
-            }
             else
-            {
                 Aux = 0;
-            }
-            if(Auxiliar[9].getBytes().toString() == "49")
-            {
+            
+            if(Auxiliar[9].equals("1"))
                   Aux2 = 1;
-            }
             else
-            {
                 Aux2 = 0;
-            }
+            
             Date Fecha = new Date(Auxiliar[5]);
             usuarioaux = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
             Lista.add(usuarioaux);
@@ -443,45 +439,43 @@ public class Procesos {
         
         String path = "C:\\MEIA\\Usuarios.txt";
         File Archivou = new File(path);
-        if(Archivou.exists() == true)
-        {
-        FileReader Leeru = new FileReader(Archivou);
-        BufferedReader bs = new BufferedReader(Leeru);
-        
-        String Lineau = bs.readLine();
-        while(Lineau != null)
-        {
-            byte Aux;
-            byte Aux2;
-            String [] Auxiliar = Lineau.split("\\|");
-            if(Auxiliar[4].getBytes().toString() == "49")
+            if(Archivou.exists() == true)
             {
-                  Aux = 1;
+            FileReader Leeru = new FileReader(Archivou);
+            BufferedReader bs = new BufferedReader(Leeru);
+
+            String Lineau = bs.readLine();
+                while(Lineau != null)
+                {
+                    byte Aux;
+                    byte Aux2;
+                    String [] Auxiliar = Lineau.split("\\|");
+
+                    if(Auxiliar[4].equals("1"))
+                          Aux = 1;
+                    else
+                        Aux = 0;
+
+                    if(Auxiliar[9].equals("1"))
+                        Aux2 = 1;
+                    else
+                        Aux2 = 0;
+
+                    Date Fecha = new Date(Auxiliar[5]);
+                    usuarioaux = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
+                    Lista.add(usuarioaux);
+                    Lineau = bs.readLine(); 
+                }
+            Leer.close();
+            bw.close();
             }
-            else
-            {
-                Aux = 0;
-            }
-            if(Auxiliar[9].getBytes().toString() == "49")
-            {
-                  Aux2 = 1;
-            }
-            else
-            {
-                Aux2 = 0;
-            }
-            Date Fecha = new Date(Auxiliar[5]);
-            usuarioaux = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
-            Lista.add(usuarioaux);
-            Lineau = bs.readLine(); 
-        }
-        Leer.close();
-        bw.close();
-        }
         Collections.sort(Lista, new Comparator<Usuario>() {
-        public int compare(Usuario obj1, Usuario obj2) {
-        return obj1.getUsuario().compareTo(obj2.getUsuario());
+            
+        public int compare(Usuario obj1, Usuario obj2) 
+        {
+            return obj1.getUsuario().compareTo(obj2.getUsuario());
         }
+        
         });
         
         FileOutputStream writer = new FileOutputStream(Archivo);
