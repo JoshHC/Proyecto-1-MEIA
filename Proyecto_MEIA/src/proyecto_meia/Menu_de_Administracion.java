@@ -588,112 +588,214 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        Procesos Acceso = new Procesos();
-        try {
-            String path = "C:\\MEIA\\Usuarios.txt";
-            String pathb = "C:\\MEIA\\Bitacora_Usuarios.txt";
-            Usuario Modificado = new Usuario();
-            String [] UsuarioAuxiliar;
-            String User = "";
-            boolean bitacora = false;
+        try
+        {
             
-            File Archivo = new File(path);
-            FileReader Leer = new FileReader(Archivo);
-            BufferedReader leerArchivo = new BufferedReader(Leer);
-            String Linea = leerArchivo.readLine();
+            Procesos Acceso = new Procesos();
+            String PasswordAux = txtPassword.getText();
             
-            while(Linea != null)
+            String ValidacionContraseña;
+            ValidacionContraseña = ValidarContraseña(PasswordAux);
+            
+            
+            if (ValidacionContraseña != "")
             {
-                UsuarioAuxiliar = Linea.split("\\|");
-                if(UsuarioAuxiliar[0].equals(ComboBoxSeleccionarUsuario.getSelectedItem().toString()))                
+                if(ValidacionContraseña.charAt(0) == '1')
                 {
-                    bitacora = false;
-                    User = Linea;
+                    String[] condicional = ValidacionContraseña.split(",");
+                    JOptionPane.showMessageDialog(null, "El nivel de seguridad de su contraseña es Bajo.\n"
+                            + " La contraseña debe contener al menos " + condicional[1] + " caracteres.\n"
+                                    + " Ingrese otra contraseña");
+                    txtPassword.setText("");
                 }
-                Linea = leerArchivo.readLine();
-            }
-            
-            Leer.close();
-            leerArchivo.close();
-            
-            File Archivob = new File(pathb);
-            FileReader Leerb = new FileReader(Archivob);
-            BufferedReader leerArchivob = new BufferedReader(Leerb);
-            Linea = leerArchivob.readLine();
-            
-            while(Linea != null)
-            {
-                UsuarioAuxiliar = Linea.split("\\|");
-                if(UsuarioAuxiliar[0].equals(ComboBoxSeleccionarUsuario.getSelectedItem().toString()))                
+                else if (ValidacionContraseña.equals("2"))
                 {
-                    bitacora = true;
-                    User = Linea;
+                    JOptionPane.showMessageDialog(null, "El nivel de seguridad de su contraseña es Bajo.\n"
+                            + " La contraseña debe contener al menos una Mayuscula\n"
+                            + " Ingrese otra contraseña");
+                    txtPassword.setText("");
                 }
-               Linea = leerArchivob.readLine();
             }
-            
-            UsuarioAuxiliar = User.split("\\|");
-            byte Aux;
-            byte Aux2;
-            
-            if(UsuarioAuxiliar[4].equals("1"))
-                  Aux = 1;
             else
-                Aux = 0;
-            
-            if(btnEstado.isSelected())
-                Aux2 = 1;
-            else
-                Aux2 = 0;
-                
-            String Password = Acceso.RellenarCaracteres(txtPassword.getText(), 2);
-            String CorreoAlterno = Acceso.RellenarCaracteres(txtCorreo.getText(), 2);
-            int Telefono = Integer.parseInt(txtTelefono.getText());
-            String Path = Acceso.RellenarCaracteres(fichero.getAbsolutePath(), 3);
-            Date Fecha = new Date(UsuarioAuxiliar[5]);
-            Modificado = new Usuario(UsuarioAuxiliar[0],UsuarioAuxiliar[1],UsuarioAuxiliar[2],Password,Aux,Fecha,CorreoAlterno,Telefono,Path,Aux2);
-            
-            
-            if(bitacora == false)
             {
-                RandomAccessFile Modificar = new RandomAccessFile(Archivo,"rw");
-                String Registro = Modificar.readLine();
-                String Sustitucion = "";
-                while(Registro != null)
-                {
-                    UsuarioAuxiliar = Registro.split("\\|");
-                    if(UsuarioAuxiliar[0].equals(Modificado.Usuario))                
-                    {
-                       Sustitucion = Modificado.Usuario+"|"+Modificado.Nombre+"|"+Modificado.Apellido+"|"+Modificado.Password+"|"+Modificado.rol+"|"+Modificado.Fecha+"|"+Modificado.CorreoAlterno+"|"+Modificado.Telefono+"|"+Modificado.PathFotografia+"|"+Modificado.status;
-                       Modificar.writeBytes(Sustitucion);
-                    }
-                    Registro = Modificar.readLine();
+                
+                try {
+                    int puntuacion = obtenerNivelSeguridad(PasswordAux);
+                } catch (IOException ex) {
+                    Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
-                
-            }else if (bitacora == true)
-            {
-                RandomAccessFile Modificar = new RandomAccessFile(Archivob,"rw");
-                String Registro = Modificar.readLine();
-                String Sustitucion = "";
-                while(Registro != null)
-                {
-                    UsuarioAuxiliar = Registro.split("\\|");
-                    if(UsuarioAuxiliar[0].equals(Modificado.Usuario))                
-                    {
-                       Sustitucion = Modificado.Usuario+"|"+Modificado.Nombre+"|"+Modificado.Apellido+"|"+Modificado.Password+"|"+Modificado.rol+"|"+Modificado.Fecha+"|"+Modificado.CorreoAlterno+"|"+Modificado.Telefono+"|"+Modificado.PathFotografia+"|"+Modificado.status;
-                       Modificar.writeBytes(Linea);
-                    }
-                    Registro = Modificar.readLine();
+                if (Acceso.ValidarCaracteres(txtPassword.getText(), 2))
+                {                    
+                    JOptionPane.showConfirmDialog(null, "Para evitar complicaciones a futuro no podemos \n"
+                            + "registrar una clave tan larga.\n\n"
+                            + "Debes ingresar una contraseña que tenga como máximo 40 caracteres.", "Inválido", 
+                            JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);
+                    txtPassword.setText("");
+                    return;
                 }
-                
             }
-
-           
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+            try
+            {
+                int numero = Integer.parseInt(txtTelefono.getText());
+                String cadena = txtTelefono.getText();
+                
+                if (cadena.length() != 8)
+                {
+                    JOptionPane.showMessageDialog(null, "El numero de telefono ingresado no tiene la longitud adecuada.\n"
+                            + "Ingresa una numero telefonico valido por favor");
+                    txtTelefono.setText("");
+                    return;
+                }
+            }
+            catch (NumberFormatException ex)
+            {
+                JOptionPane.showMessageDialog(null, "El numero de telefono ingresado no es valido.\n"
+                        + "Ingresa una numero telefonico valido por favor");
+                txtTelefono.setText("");
+                return;
+            }
+            
+            Date Fechaa;
+            try
+            {
+                String fecha = txtFecha.getText();
+                SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
+                
+                Fechaa = formatofecha.parse(fecha);
+            }
+            catch (ParseException ex)
+            {
+                JOptionPane.showMessageDialog(null, "La fecha ingresada es invalida.\n"
+                        + "Ingresa una fecha valida por favor");
+                txtFecha.setText("");
+                return;
+            }
+            
+            if (fichero == null)
+            {
+                JOptionPane.showMessageDialog(null, "Debe Seleccionar una Foto de Perfil");
+                return;
+            }
+            
+            if(txtCorreo.getText().contains("@") == false)
+            {
+                JOptionPane.showMessageDialog(null, "El Campo de Correo debe contener el Símbolo @");
+                txtCorreo.setText("");
+                return;
+            }
+            
+            try {
+                String path = "C:\\MEIA\\Usuarios.txt";
+                String pathb = "C:\\MEIA\\Bitacora_Usuarios.txt";
+                Usuario Modificado = new Usuario();
+                String [] UsuarioAuxiliar;
+                String User = "";
+                boolean bitacora = false;
+                
+                File Archivo = new File(path);
+                FileReader Leer = new FileReader(Archivo);
+                BufferedReader leerArchivo = new BufferedReader(Leer);
+                String Linea = leerArchivo.readLine();
+                
+                while(Linea != null)
+                {
+                    UsuarioAuxiliar = Linea.split("\\|");
+                    if(UsuarioAuxiliar[0].equals(ComboBoxSeleccionarUsuario.getSelectedItem().toString()))                
+                    {
+                        bitacora = false;
+                        User = Linea;
+                    }
+                    Linea = leerArchivo.readLine();
+                }
+                
+                Leer.close();
+                leerArchivo.close();
+                
+                File Archivob = new File(pathb);
+                FileReader Leerb = new FileReader(Archivob);
+                BufferedReader leerArchivob = new BufferedReader(Leerb);
+                Linea = leerArchivob.readLine();
+                
+                while(Linea != null)
+                {
+                    UsuarioAuxiliar = Linea.split("\\|");
+                    if(UsuarioAuxiliar[0].equals(ComboBoxSeleccionarUsuario.getSelectedItem().toString()))                
+                    {
+                        bitacora = true;
+                        User = Linea;
+                    }
+                    Linea = leerArchivob.readLine();
+                }
+                
+                UsuarioAuxiliar = User.split("\\|");
+                byte Aux;
+                byte Aux2;
+                
+                if(UsuarioAuxiliar[4].equals("1"))
+                    Aux = 1;
+                else
+                    Aux = 0;
+                
+                if(btnEstado.isSelected())
+                    Aux2 = 1;
+                else
+                    Aux2 = 0;
+                
+                String Password = Acceso.RellenarCaracteres(txtPassword.getText(), 2);
+                String CorreoAlterno = Acceso.RellenarCaracteres(txtCorreo.getText(), 2);
+                int Telefono = Integer.parseInt(txtTelefono.getText());
+                String Path = Acceso.RellenarCaracteres(fichero.getAbsolutePath(), 3);
+                Date Fecha = new Date(UsuarioAuxiliar[5]);
+                Modificado = new Usuario(UsuarioAuxiliar[0],UsuarioAuxiliar[1],UsuarioAuxiliar[2],Password,Aux,Fecha,CorreoAlterno,Telefono,Path,Aux2);
+                
+                
+                if(bitacora == false)
+                {
+                    RandomAccessFile Modificar = new RandomAccessFile(Archivo,"rw");
+                    String Registro = Modificar.readLine();
+                    String Sustitucion = "";
+                    while(Registro != null)
+                    {
+                        UsuarioAuxiliar = Registro.split("\\|");
+                        if(UsuarioAuxiliar[0].equals(Modificado.Usuario))
+                        {
+                            Sustitucion = Modificado.Usuario+"|"+Modificado.Nombre+"|"+Modificado.Apellido+"|"+Modificado.Password+"|"+Modificado.rol+"|"+Modificado.Fecha+"|"+Modificado.CorreoAlterno+"|"+Modificado.Telefono+"|"+Modificado.PathFotografia+"|"+Modificado.status;
+                            Modificar.writeBytes(Sustitucion);
+                        }
+                        Registro = Modificar.readLine();
+                    }
+                    
+                    
+                }else if (bitacora == true)
+                {
+                    RandomAccessFile Modificar = new RandomAccessFile(Archivob,"rw");
+                    String Registro = Modificar.readLine();
+                    String Sustitucion = "";
+                    while(Registro != null)
+                    {
+                        UsuarioAuxiliar = Registro.split("\\|");
+                        if(UsuarioAuxiliar[0].equals(Modificado.Usuario))
+                        {
+                            Sustitucion = Modificado.Usuario+"|"+Modificado.Nombre+"|"+Modificado.Apellido+"|"+Modificado.Password+"|"+Modificado.rol+"|"+Modificado.Fecha+"|"+Modificado.CorreoAlterno+"|"+Modificado.Telefono+"|"+Modificado.PathFotografia+"|"+Modificado.status;
+                            Modificar.writeBytes(Linea);
+                        }
+                        Registro = Modificar.readLine();
+                    }
+                    
+                }
+                
+                
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        catch (IOException ex)
+        {
+                Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE,null, ex);
         }
         
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -738,6 +840,106 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private String ValidarContraseña(String Password) throws FileNotFoundException, IOException
+    {
+        String error = "";
+        String texto = ObtenerContenidoArchivo();
+        String[] Condiciones = texto.split(" ");
+        
+        // Si la cadena tiene mas de n caracteres puede seguir
+        if (Password.length() < Integer.parseInt(Condiciones[0]))
+            error += "1,"+Condiciones[0];
+        
+        
+        // Si la condicion de mayusuclas está activa
+        else if (Boolean.valueOf(Condiciones[1]))
+            if (!ContieneMayusculas(Password))
+                error += "2";
+        
+        return error;
+    }
+    
+    // Devuelve el punteo adicional de la contraseña
+    private int obtenerNivelSeguridad (String Password) throws IOException
+    {
+        int Punteo = 0;
+        
+        String[] Condiciones = ObtenerContenidoArchivo().split(" ");
+        
+        if (Boolean.valueOf(Condiciones[2]))
+        {
+            if (Password.contains("1") || Password.contains("2") || Password.contains("3")
+             || Password.contains("4") || Password.contains("5") || Password.contains("6")
+             || Password.contains("7") || Password.contains("8") || Password.contains("9")
+             || Password.contains("0"))
+                Punteo++;
+        }
+        else
+        {
+            Punteo++;
+        }
+        
+        
+        if (ContieneCaracteresEspeciales(Condiciones[3].toCharArray(), Password))
+            Punteo++;
+        
+        if (Boolean.valueOf(Condiciones[4]))
+        {
+            if (Password.contains(" "))
+                Punteo++;
+        }
+        else
+        {
+            Punteo++;
+        }
+
+        return Punteo;
+    }
+    
+    // Verifica si la clave tiene caracteres Especiales
+    private boolean ContieneCaracteresEspeciales (char[] caracteres, String Password)
+    {
+        boolean contiene = false;
+        
+        for (char caracter : caracteres)
+        {
+            if (Password.contains(Character.toString(caracter)))
+                contiene = true;
+        }
+        
+        return contiene;
+    }
+    
+    private boolean ContieneMayusculas(String Texto)
+    {
+        boolean Mayusculas = false;
+        char [] Caracteres = Texto.toCharArray();
+        
+        for (char i: Caracteres) {
+            if (Character.isUpperCase(i))
+                Mayusculas = true;
+        }
+        
+        return Mayusculas;
+    }
+    
+    // Retorna la linea de las condiciones o la linea de los punteos del archivo de contraseña en MEIA
+    private String ObtenerContenidoArchivo() throws FileNotFoundException, IOException
+    {
+        String path = "C:\\MEIA\\ValidacionContraseña.txt";
+        File Archivo = new File(path);
+        
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        
+        String Linea = leerArchivo.readLine();
+
+        Leer.close();
+        leerArchivo.close();
+
+        return Linea;
+
+    }
     /**
      * @param args the command line arguments
      */
