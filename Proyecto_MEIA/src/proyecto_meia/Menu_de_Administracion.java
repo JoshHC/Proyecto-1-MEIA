@@ -41,35 +41,85 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
      */
     public Menu_de_Administracion(String usuario) throws IOException, ParseException {
         initComponents();
+        Procesos Acceso = new Procesos();
       
-            String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
-            String pathRutaU = "C:\\MEIA\\Usuarios.txt";
+        String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
+        File Archivo = new File(pathRuta);
+        
+        FileReader Lectura = null;
+        try 
+        {
+            Lectura = new FileReader(Archivo);
+        } 
+        catch (FileNotFoundException ex) 
+        {
+            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        BufferedReader Leer = new BufferedReader(Lectura);
+        List<Usuario> ListaUsuarios = new ArrayList<Usuario>();
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        String Linea = "";
+        Linea = Leer.readLine();
+        String [] Auxiliar;
+        Usuario Nuevo;
+        boolean Admin = false;
+
+        while(Linea != null)
+        {
+            Auxiliar = Linea.split("\\|");
+            byte Aux;
+            byte Aux2;
+
+            if(Auxiliar[4].equals("1"))
+                Aux = 1;
+            else
+                Aux = 0;
+
+            if(Auxiliar[9].equals("1"))
+                Aux2 = 1;
+            else
+                Aux2 = 0;
+
+            Date Fecha = new Date(Auxiliar[5]);
+            Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
+            ListaUsuarios.add(Nuevo);
+
+            Linea = Leer.readLine();
+        }
+
+        Leer.close();
+        Lectura.close();
+
+        String pathRutaU = "C:\\MEIA\\Usuarios.txt";
+        File ArchivoU = new File(pathRutaU);
+        
+        if(ArchivoU.exists())
+        {
+            FileReader LecturaU = null;
             
-            File Archivo = new File(pathRuta);
-            FileReader Lectura = null;
-            try {
-                Lectura = new FileReader(Archivo);
-            } catch (FileNotFoundException ex) {
+            try 
+            {
+                LecturaU = new FileReader(ArchivoU);
+            }
+            catch (FileNotFoundException ex) 
+            {
                 Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
             }
-            BufferedReader Leer = new BufferedReader(Lectura);
-            List<Usuario> ListaUsuarios = new ArrayList<Usuario>();
-            SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-            String Linea = "";
-            Linea = Leer.readLine();
-            String [] Auxiliar;
-            Usuario Nuevo;
-            boolean Admin = false;
-            Procesos Acceso = new Procesos();
             
-           
-            
-            while(Linea != null)
+            BufferedReader LeerU = new BufferedReader(LecturaU);
+            String LineaU = "";
+            LineaU = LeerU.readLine();
+            String [] AuxiliarU;
+            Nuevo = null;
+            Admin = false;
+
+             while(LineaU != null)
             {
-                Auxiliar = Linea.split("\\|");
+                Auxiliar = LineaU.split("\\|");
                 byte Aux;
                 byte Aux2;
-                
+
                 if(Auxiliar[4].equals("1"))
                     Aux = 1;
                 else
@@ -79,53 +129,15 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                     Aux2 = 1;
                 else
                     Aux2 = 0;
-                
+
                 Date Fecha = new Date(Auxiliar[5]);
                 Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
                 ListaUsuarios.add(Nuevo);
-                
-                Linea = Leer.readLine();
+
+                LineaU = LeerU.readLine();
             }
-            
-            Leer.close();
-            Lectura.close();
-            
-            File ArchivoU = new File(pathRutaU);
-            if(ArchivoU.exists())
-            {
-                FileReader Lecturau = null;
-                try {
-                    Lecturau = new FileReader(ArchivoU);
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                BufferedReader Leeru = new BufferedReader(Lecturau);
-                String Lineau = "";
-
-                 while(Lineau != null)
-                {
-                    Auxiliar = Lineau.split("\\|");
-                    byte Aux;
-                    byte Aux2;
-
-                    if(Auxiliar[4].equals("1"))
-                        Aux = 1;
-                    else
-                        Aux = 0;
-
-                    if(Auxiliar[9].equals("1"))
-                        Aux2 = 1;
-                    else
-                        Aux2 = 0;
-
-                    Date Fecha = new Date(Auxiliar[5]);
-                    Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
-                    ListaUsuarios.add(Nuevo);
-
-                    Lineau = Leeru.readLine();
-                }
-            }
-            usuario = Acceso.RellenarCaracteres(usuario, 0);
+        }
+        usuario = Acceso.RellenarCaracteres(usuario, 0);
         
         for(Usuario i: ListaUsuarios)
         {

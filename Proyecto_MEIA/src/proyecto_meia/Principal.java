@@ -306,13 +306,15 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnMenudeAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenudeAdministracionActionPerformed
         Menu_de_Administracion Usuario;
-        try {
+        try 
+        {
             Usuario = new Menu_de_Administracion(usuario);
+            Usuario.setLocationRelativeTo(null);
             Usuario.show();
             this.dispose();
-        } catch (IOException ex) {
-            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
+        } 
+        catch (IOException | ParseException ex) 
+        {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }//GEN-LAST:event_btnMenudeAdministracionActionPerformed
