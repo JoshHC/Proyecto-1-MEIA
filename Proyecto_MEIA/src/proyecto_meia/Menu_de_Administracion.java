@@ -77,7 +77,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                 Aux2 = 0;
 
             Date Fecha = new Date(Auxiliar[5]);
-            Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
+            Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Acceso.EliminarCaracteres(Auxiliar[3]),Aux,Fecha,Acceso.EliminarCaracteres(Auxiliar[6]),Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
             ListaUsuarios.add(Nuevo);
 
             Linea = Leer.readLine();
@@ -442,6 +442,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCargarFotoActionPerformed
 
     private void ComboBoxSeleccionarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxSeleccionarUsuarioActionPerformed
+        Procesos Acceso = new Procesos();
         
         try {                                                           
             
@@ -482,7 +483,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                     Aux2 = 0;
                 
                 Date Fecha = new Date(Auxiliar[5]);
-                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
+                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Acceso.EliminarCaracteres(Auxiliar[3]),Aux,Fecha,Acceso.EliminarCaracteres(Auxiliar[6]),Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
                 ListaUsuarios.add(Nuevo);
                 
                 Linea = Leer.readLine();
@@ -530,7 +531,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                         Aux2 = 0;
 
                     Date Fecha = new Date(Auxiliar[5]);
-                    Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
+                    Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Acceso.EliminarCaracteres(Auxiliar[3]),Aux,Fecha,Acceso.EliminarCaracteres(Auxiliar[6]),Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
                     ListaUsuarios.add(Nuevo);
 
                     LineaU = LeerU.readLine();
