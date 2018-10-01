@@ -188,10 +188,9 @@ public class Procesos {
         File Archivo = new File(pathRuta);
         RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
         String Auxiliar = ArchivoSustitucion.readLine();
-        String [] AuxTamaño = Auxiliar.split("\\|");
         
         
-        if(AuxTamaño[1].equals("        "))
+        if(Auxiliar == null)
         {
          ArchivoSustitucion.seek(0);
          ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_Simbolico);

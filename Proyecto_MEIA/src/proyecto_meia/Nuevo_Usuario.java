@@ -767,10 +767,10 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                 Escribir.close();
             }
 
-            JOptionPane.showMessageDialog(null, "Usuario Ingresado con Exito");
-
-            DescriptorBitácora();
             DescriptorUsuario();
+            JOptionPane.showMessageDialog(null, "Usuario Ingresado con Exito");
+            DescriptorBitácora();
+           
 
             Login Regreso = new Login();
             Regreso.setLocationRelativeTo(null);
@@ -790,11 +790,12 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
             UsuarioActivo = Acceso.RellenarCaracteres(txtUserName.getText(), 0) ;
         }
         
+        
         String path = "C:\\MEIA\\Usuarios.txt";
         File Archivo = new File(path);
         FileReader Leer = new FileReader(Archivo);
         BufferedReader leerArchivo = new BufferedReader(Leer);
-        String Linea = "";
+        String Linea = leerArchivo.readLine();
         int NoRegistros = 0;
         int Activos = 0;
         int Inactivos = 0;        
@@ -821,7 +822,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         leerArchivo.close();
         
         
-        Descriptor_Usuario Nuevo = new Descriptor_Usuario("Usuarioss",Fecha.toString(),
+        Descriptor_Usuario Nuevo = new Descriptor_Usuario("Usuarios",Fecha.toString(),
                 Acceso.RellenarCaracteres(UsuarioActivo, 0) ,Fecha.toString(),Acceso.RellenarCaracteres(UsuarioActivo, 0),
                 Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
         Acceso.DescriptorUsuario(Nuevo);
