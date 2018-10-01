@@ -306,6 +306,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenudeAdministracionActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+       //procesos.Reorganizar();
         if (JOptionPane.showConfirmDialog(null, "Quieres Salir de Mail", "Confirmar Salida", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed

@@ -177,14 +177,14 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                 btnCargarFotoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCargarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 210, -1));
+        getContentPane().add(btnCargarFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 300, 210, 30));
 
         lblFoto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblFoto.setForeground(new java.awt.Color(255, 255, 255));
         lblFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFoto.setText("Foto");
         lblFoto.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), null));
-        getContentPane().add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 130, 210, 170));
+        getContentPane().add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 210, 190));
 
         lblNombre.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
@@ -478,25 +478,25 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                 {
                     case 0:
                         Resultado = "Apenas Aceptable";
-                        txtmostrador.setText("Nivel de Seguridad \nde la Contraseña: "+Resultado);
+                        txtmostrador.setText("Nivel de Seguridad:"+"\r\n"+Resultado);
                         IngresarUsuarioBitacora(NewUser);
                         break;
                         
                     case 1:
                         Resultado = "Intermedio";
-                        txtmostrador.setText("Nivel de Seguridad \nde la Contraseña: "+Resultado);
+                        txtmostrador.setText("Nivel de Seguridad:"+"\r\n"+Resultado);
                         IngresarUsuarioBitacora(NewUser);
                         break;
                         
                     case 2:
                         Resultado = "Bueno";
-                        txtmostrador.setText("Nivel de Seguridad \nde la Contraseña: "+Resultado);
+                        txtmostrador.setText("Nivel de Seguridad: "+"\r\n"+Resultado);
                         IngresarUsuarioBitacora(NewUser);
                         break;
                         
                     case 3:
                         Resultado = "Fuerte";
-                        txtmostrador.setText("Nivel de Seguridad \nde la Contraseña: "+Resultado);
+                        txtmostrador.setText("Nivel de Seguridad: "+"\r\n"+Resultado);
                         IngresarUsuarioBitacora(NewUser);
                         break;
                 }
@@ -776,6 +776,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         Regreso.show();
         this.dispose();
         
+        DescriptorUsuario();
         DescriptorBitácora();
             
         }

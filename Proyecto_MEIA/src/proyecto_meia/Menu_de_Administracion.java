@@ -40,8 +40,9 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
      */
     public Menu_de_Administracion(String usuario) throws IOException, ParseException {
         initComponents();
-        
+      
             String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
+            String pathRutaU = "C:\\MEIA\\Usuarios.txt";
             
             File Archivo = new File(pathRuta);
             FileReader Lectura = null;
@@ -76,6 +77,30 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             
             Leer.close();
             Lectura.close();
+            
+            File ArchivoU = new File(pathRutaU);
+            FileReader Lecturau = null;
+            try {
+                Lecturau = new FileReader(ArchivoU);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            BufferedReader Leeru = new BufferedReader(Lecturau);
+            String Lineau = "";
+            
+             while(Lineau != null)
+            {
+                Auxiliar = Lineau.split("\\|");
+                byte [] Aux = Auxiliar[4].getBytes();
+                byte [] Aux2 = Auxiliar[9].getBytes();
+                Date Fecha = new Date(Auxiliar[5]);
+                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux[0],Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2[0]);
+                ListaUsuarios.add(Nuevo);
+                
+                Lineau = Leeru.readLine();
+            }
+            
+            usuario = Acceso.RellenarCaracteres(usuario, 0);
         
         for(Usuario i: ListaUsuarios)
         {
@@ -104,7 +129,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         {
             for(Usuario item : ListaUsuarios)
             {
-                if(item.Usuario == usuario)
+                if(item.Usuario.equals(usuario))
                 {
                  ComboBoxSeleccionarUsuario.addItem(item.Usuario);
                 }
@@ -435,6 +460,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             if(item.Usuario.equals(Seleccion))
             {
                 ImageIcon icon = new ImageIcon(item.PathFotografia);
+                fichero = new File (item.PathFotografia);
                 Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
                 txtPassword.setText(item.Password);
                 txtCorreo.setText(item.CorreoAlterno);
@@ -476,33 +502,110 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        String path = "C:\\MEIA\\Usuarios.txt";
-        File Archivo = new File(path);
-        //FileReader Leer = new FileReader(Archivo);
-        //BufferedReader leerArchivo = new BufferedReader(Leer);
-        String Linea = "";
-        int NoRegistros = 0;
-        int Activos = 0;
-        int Inactivos = 0;        
-        
-        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
-        while(Linea != null)
-        {
-            String [] Auxiliar = Linea.split("\\|");
+        Procesos Acceso = new Procesos();
+        try {
+            String path = "C:\\MEIA\\Usuarios.txt";
+            String pathb = "C:\\MEIA\\Bitacora_Usuarios.txt";
+            Usuario Modificado = new Usuario();
+            String [] UsuarioAuxiliar;
+            String User = "";
+            boolean bitacora = false;
             
-            if(Auxiliar[9].equals("1"))
+            File Archivo = new File(path);
+            FileReader Leer = new FileReader(Archivo);
+            BufferedReader leerArchivo = new BufferedReader(Leer);
+            String Linea = leerArchivo.readLine();
+            
+            while(Linea != null)
             {
-                Activos++;
+                UsuarioAuxiliar = Linea.split("\\|");
+                if(UsuarioAuxiliar[0].equals(ComboBoxSeleccionarUsuario.getSelectedItem().toString()))                
+                {
+                    bitacora = false;
+                    User = Linea;
+                }
+                Linea = leerArchivo.readLine();
             }
-            else if (Auxiliar[9].equals("0") == true)
+            
+            Leer.close();
+            leerArchivo.close();
+            
+            File Archivob = new File(pathb);
+            FileReader Leerb = new FileReader(Archivob);
+            BufferedReader leerArchivob = new BufferedReader(Leerb);
+            Linea = leerArchivob.readLine();
+            
+            while(Linea != null)
             {
-                Inactivos++;
+                UsuarioAuxiliar = Linea.split("\\|");
+                if(UsuarioAuxiliar[0].equals(ComboBoxSeleccionarUsuario.getSelectedItem().toString()))                
+                {
+                    bitacora = true;
+                    User = Linea;
+                }
+               Linea = leerArchivob.readLine();
             }
-            //Linea = leerArchivo.readLine();
-            NoRegistros++;
+            
+            UsuarioAuxiliar = User.split("\\|");
+            byte [] Aux = UsuarioAuxiliar[4].getBytes();
+            byte [] Aux2;
+            if(btnEstado.isSelected())
+            {
+               Aux2 = "1".getBytes();
+            }
+            else
+            {
+                Aux2 = "0".getBytes();
+            }
+            String Password = Acceso.RellenarCaracteres(txtPassword.getText(), 2);
+            String CorreoAlterno = Acceso.RellenarCaracteres(txtCorreo.getText(), 2);
+            int Telefono = Integer.parseInt(txtTelefono.getText());
+            String Path = Acceso.RellenarCaracteres(fichero.getAbsolutePath(), 3);
+            Date Fecha = new Date(UsuarioAuxiliar[5]);
+            Modificado = new Usuario(UsuarioAuxiliar[0],UsuarioAuxiliar[1],UsuarioAuxiliar[2],Password,Aux[0],Fecha,CorreoAlterno,Telefono,Path,Aux2[0]);
+            
+
+            if(bitacora == false)
+            {
+                RandomAccessFile Modificar = new RandomAccessFile(Archivo,"rw");
+                String Registro = Modificar.readLine();
+                String Sustitucion = "";
+                while(Registro != null)
+                {
+                    UsuarioAuxiliar = Registro.split("\\|");
+                    if(UsuarioAuxiliar[0].equals(Modificado.Usuario))                
+                    {
+                       Sustitucion = Modificado.Usuario+"|"+Modificado.Nombre+"|"+Modificado.Apellido+"|"+Modificado.Password+"|"+Modificado.rol+"|"+Modificado.Fecha+"|"+Modificado.CorreoAlterno+"|"+Modificado.Telefono+"|"+Modificado.PathFotografia+"|"+Modificado.status;
+                       Modificar.writeBytes(Sustitucion);
+                    }
+                    Registro = Modificar.readLine();
+                }
+                
+                
+            }else if (bitacora == true)
+            {
+                RandomAccessFile Modificar = new RandomAccessFile(Archivob,"rw");
+                String Registro = Modificar.readLine();
+                String Sustitucion = "";
+                while(Registro != null)
+                {
+                    UsuarioAuxiliar = Registro.split("\\|");
+                    if(UsuarioAuxiliar[0].equals(Modificado.Usuario))                
+                    {
+                       Sustitucion = Modificado.Usuario+"|"+Modificado.Nombre+"|"+Modificado.Apellido+"|"+Modificado.Password+"|"+Modificado.rol+"|"+Modificado.Fecha+"|"+Modificado.CorreoAlterno+"|"+Modificado.Telefono+"|"+Modificado.PathFotografia+"|"+Modificado.status;
+                       Modificar.writeBytes(Linea);
+                    }
+                    Registro = Modificar.readLine();
+                }
+                
+            }
+
+           
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        //Descriptor_Usuario Nuevo = new Descriptor_Usuario("Usuario",Fecha.toString(),UsuarioActivo,Fecha.toString(),UsuarioActivo,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
         
     }//GEN-LAST:event_btnGuardarActionPerformed
 
