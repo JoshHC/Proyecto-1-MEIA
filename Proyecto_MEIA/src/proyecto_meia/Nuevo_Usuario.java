@@ -585,22 +585,15 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         
         try {
             if (ValidarContraseña(password).equals(""))
-            {
-                if (obtenerNivelSeguridad(password) == 0)
-                    txtPassword.setBackground(Color.PINK);
-                else if(obtenerNivelSeguridad(password) == 1)
-                    txtPassword.setBackground(Color.ORANGE);
-                else if (obtenerNivelSeguridad(password) == 2)
-                    txtPassword.setBackground(Color.CYAN);
-                else if (obtenerNivelSeguridad(password) == 3)
-                    txtPassword.setBackground(Color.GREEN);
-
-            }
+                switch (obtenerNivelSeguridad(password))
+                {
+                    case 0: txtPassword.setBackground(Color.PINK); break;
+                    case 1: txtPassword.setBackground(Color.ORANGE); break;
+                    case 2: txtPassword.setBackground(Color.CYAN); break;
+                    case 3: txtPassword.setBackground(Color.GREEN); break;
+                }
             else 
-            {
                 txtPassword.setBackground(Color.RED);
-            }
-            
         } catch (IOException ex) {
             Logger.getLogger(Nuevo_Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }

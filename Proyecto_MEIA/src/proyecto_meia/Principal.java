@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package proyecto_meia;
 
 import java.awt.Image;
@@ -39,7 +34,8 @@ public class Principal extends javax.swing.JFrame {
     public Principal(String usuario) throws IOException {
         initComponents();
         this.usuario = usuario;
-         LlenarDatos();
+        
+        LlenarDatos();
         if(lblRol.getText().contains("Rol -> Administrador") == true)
         {
             btnBackup.show();
@@ -190,13 +186,29 @@ public class Principal extends javax.swing.JFrame {
                 while(Linea != null)
                 {
                     if(Linea.contains(usuario))
-                    {
-                        String[] SegmentosInfo = Linea.split("|");
+                    {                    
+                        String[] SegmentosInfo = procesos.ImplementacionSplit(Linea);
                         
                         String pathImagen = SegmentosInfo[8];
                         
+                        ImageIcon icon = new ImageIcon(pathImagen);
+                        Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+                        lblFoto.setText(null);
+                        lblFoto.setIcon( icono );
                         
-                        //lblFoto
+                        lblBienvenido.setText("Bienvenido " + SegmentosInfo[1]);
+                        lblUsuario.setText("Usuario: " + SegmentosInfo[0]);
+                        
+                        if(SegmentosInfo[4].equals("1"))
+                        {
+                            lblNiveldeAcceso.setText("Nivel de acceso -> Maestro");
+                            lblRol.setText("Rol -> Administrador");
+                        }
+                        else
+                        {
+                            lblNiveldeAcceso.setText("Nivel de acceso -> Estandar");
+                            lblRol.setText("Rol -> Usuario");
+                        }
                     }
 
                     Linea = leerArchivo.readLine();
