@@ -590,16 +590,16 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
 
         Procesos Acceso = new Procesos();
         try {
-            String path = "C:\\MEIA\\Usuarios.txt";
-            String pathb = "C:\\MEIA\\Bitacora_Usuarios.txt";
+            String pathU = "C:\\MEIA\\Usuarios.txt";
+            String pathB = "C:\\MEIA\\Bitacora_Usuarios.txt";
             Usuario Modificado = new Usuario();
             String [] UsuarioAuxiliar;
             String User = "";
             boolean bitacora = false;
             
-            File Archivo = new File(path);
-            FileReader Leer = new FileReader(Archivo);
-            BufferedReader leerArchivo = new BufferedReader(Leer);
+            File ArchivoU = new File(pathU);
+            FileReader LeerU = new FileReader(ArchivoU);
+            BufferedReader leerArchivo = new BufferedReader(LeerU);
             String Linea = leerArchivo.readLine();
             
             while(Linea != null)
@@ -613,13 +613,13 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                 Linea = leerArchivo.readLine();
             }
             
-            Leer.close();
+            LeerU.close();
             leerArchivo.close();
             
-            File Archivob = new File(pathb);
-            FileReader Leerb = new FileReader(Archivob);
-            BufferedReader leerArchivob = new BufferedReader(Leerb);
-            Linea = leerArchivob.readLine();
+            File ArchivoB = new File(pathB);
+            FileReader LeerB = new FileReader(ArchivoB);
+            BufferedReader leerArchivoB = new BufferedReader(LeerB);
+            Linea = leerArchivoB.readLine();
             
             while(Linea != null)
             {
@@ -629,7 +629,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                     bitacora = true;
                     User = Linea;
                 }
-               Linea = leerArchivob.readLine();
+               Linea = leerArchivoB.readLine();
             }
             
             UsuarioAuxiliar = User.split("\\|");
@@ -656,34 +656,46 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             
             if(bitacora == false)
             {
-                RandomAccessFile Modificar = new RandomAccessFile(Archivo,"rw");
-                String Registro = Modificar.readLine();
+                FileReader lectorU = new FileReader(ArchivoU);
+                BufferedReader buferU = new BufferedReader(lectorU);
+                String LineaAdelantada = buferU.readLine();
+                
+                RandomAccessFile Modificar = new RandomAccessFile(ArchivoU,"rw");
+                String Registro = "";
                 String Sustitucion = "";
-                while(Registro != null)
+                while(LineaAdelantada != null)
                 {
-                    UsuarioAuxiliar = Registro.split("\\|");
+                    UsuarioAuxiliar = LineaAdelantada.split("\\|");
                     if(UsuarioAuxiliar[0].equals(Modificado.Usuario))                
                     {
                        Sustitucion = Modificado.Usuario+"|"+Modificado.Nombre+"|"+Modificado.Apellido+"|"+Modificado.Password+"|"+Modificado.rol+"|"+Modificado.Fecha+"|"+Modificado.CorreoAlterno+"|"+Modificado.Telefono+"|"+Modificado.PathFotografia+"|"+Modificado.status;
                        Modificar.writeBytes(Sustitucion);
                     }
+                    
+                    LineaAdelantada = buferU.readLine();
                     Registro = Modificar.readLine();
                 }
                 
                 
             }else if (bitacora == true)
             {
-                RandomAccessFile Modificar = new RandomAccessFile(Archivob,"rw");
-                String Registro = Modificar.readLine();
+                FileReader lectorB = new FileReader(ArchivoB);
+                BufferedReader buferB = new BufferedReader(lectorB);
+                String LineaAdelantada = buferB.readLine();
+                
+                RandomAccessFile Modificar = new RandomAccessFile(ArchivoB,"rw");
+                String Registro = "";
                 String Sustitucion = "";
-                while(Registro != null)
+                while(LineaAdelantada != null)
                 {
-                    UsuarioAuxiliar = Registro.split("\\|");
+                    UsuarioAuxiliar = LineaAdelantada.split("\\|");
                     if(UsuarioAuxiliar[0].equals(Modificado.Usuario))                
                     {
                        Sustitucion = Modificado.Usuario+"|"+Modificado.Nombre+"|"+Modificado.Apellido+"|"+Modificado.Password+"|"+Modificado.rol+"|"+Modificado.Fecha+"|"+Modificado.CorreoAlterno+"|"+Modificado.Telefono+"|"+Modificado.PathFotografia+"|"+Modificado.status;
-                       Modificar.writeBytes(Linea);
+                       Modificar.writeBytes(Sustitucion);
                     }
+                    
+                    LineaAdelantada = buferB.readLine();
                     Registro = Modificar.readLine();
                 }
                 
