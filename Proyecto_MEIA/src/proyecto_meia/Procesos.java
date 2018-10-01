@@ -415,10 +415,26 @@ public class Procesos {
         while(Linea != null)
         {
             String [] Auxiliar = Linea.split("\\|");
-             byte [] Aux = Auxiliar[4].getBytes();
-             byte [] Aux2 = Auxiliar[9].getBytes();
+            byte Aux;
+            byte Aux2;
+            if(Auxiliar[4].getBytes().toString() == "49")
+            {
+                  Aux = 1;
+            }
+            else
+            {
+                Aux = 0;
+            }
+            if(Auxiliar[9].getBytes().toString() == "49")
+            {
+                  Aux2 = 1;
+            }
+            else
+            {
+                Aux2 = 0;
+            }
             Date Fecha = new Date(Auxiliar[5]);
-            usuarioaux = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux[0],Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2[0]);
+            usuarioaux = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
             Lista.add(usuarioaux);
             Linea = bw.readLine(); 
         }
