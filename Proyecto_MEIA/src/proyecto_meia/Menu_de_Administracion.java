@@ -143,7 +143,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         {
             if(Acceso.RellenarCaracteres(usuario, 0).equals(i.Usuario))
             {
-                if(i.rol == 49)
+                if(i.rol == 1)
                     Admin = true;
                 else
                     Admin = false;
