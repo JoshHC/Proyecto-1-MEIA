@@ -31,12 +31,16 @@ import static proyecto_meia.Nuevo_Usuario.fichero;
  */
 public class Menu_de_Administracion extends javax.swing.JFrame {
 
+    static String Usuario;
+    
     /**
      * Creates new form Menu_de_Administracion
      */
     public Menu_de_Administracion(String usuario) throws IOException, ParseException {
         initComponents();
         Procesos Acceso = new Procesos();
+        
+        Usuario = usuario;
       
         String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
         File Archivo = new File(pathRuta);
@@ -407,10 +411,20 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMenuPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalActionPerformed
-        Principal Menu = new Principal();
-        Menu.setLocationRelativeTo(null);
-        Menu.show();
-        this.dispose();
+        Principal Menu;
+        
+        try 
+        {
+            Menu = new Principal(Usuario);
+            Menu.setLocationRelativeTo(null);
+            Menu.show();
+            this.dispose();
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnMenuPrincipalActionPerformed
 
     File fichero;
@@ -589,6 +603,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
         Procesos Acceso = new Procesos();
+        Nuevo_Usuario Actualizador = new Nuevo_Usuario();
         
         try {
             String pathU = "C:\\MEIA\\Usuarios.txt";
@@ -796,6 +811,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                     Registro = Modificar.readLine();
                 }
                 
+                Actualizador.DescriptorUsuario();
                 
             }else if (bitacora == true)
             {
@@ -819,8 +835,9 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                     Registro = Modificar.readLine();
                 }
                 
+                Actualizador.DescriptorBitácora();
+                
             }
-
            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
@@ -855,7 +872,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         else
         {
         try {
-            String Resultado = Busqueda.EncontrarUsuario(Usuario);
+            String Resultado = Busqueda.BuscarUsuario(Usuario);
             
             if(Resultado.equals("Usuarios"))
                lblResultado.setText("El usuario SI existe");

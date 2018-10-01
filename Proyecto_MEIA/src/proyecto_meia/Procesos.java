@@ -94,6 +94,79 @@ public class Procesos {
             return "No Existe";
     }
     
+     public String BuscarUsuario(String user) throws FileNotFoundException, IOException
+    {
+        boolean ExisteUsuarios = false;
+        boolean ExisteBitacora = false;
+        
+        String pathRuta;
+        File Archivo;
+        FileReader Leer;
+        BufferedReader leerArchivo;
+        String Linea;
+        
+        try
+        {
+            pathRuta = "C:\\MEIA\\Usuarios.txt";
+            Archivo = new File(pathRuta);
+            Leer = new FileReader(Archivo);
+            leerArchivo = new BufferedReader(Leer);
+            Linea = leerArchivo.readLine();
+
+            while(Linea != null)
+            {
+                String[] pedazos = Linea.split("\\|");
+                    
+                if(Linea.contains(user) && pedazos[9].equals("1"))
+                    ExisteUsuarios = true;
+
+                Linea = leerArchivo.readLine();
+            } 
+            leerArchivo.close();
+            Leer.close();
+        }
+        catch(IOException ex)
+        {
+            
+        }
+        
+        if (!ExisteUsuarios)
+        {
+            try
+            {
+                pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
+                Archivo = new File(pathRuta);
+                Leer = new FileReader(Archivo);
+                leerArchivo = new BufferedReader(Leer);
+                Linea = leerArchivo.readLine();
+                
+                while(Linea != null)
+                {
+                    String[] pedazos = Linea.split("\\|");
+                    
+                    if(Linea.contains(user) && pedazos[9].equals("1"))
+                        ExisteBitacora = true;
+
+                    Linea = leerArchivo.readLine();
+                } 
+                leerArchivo.close();
+                Leer.close();
+            }
+            catch (IOException ex)
+            {
+            
+            }
+            
+        }
+        
+        if (ExisteUsuarios)
+            return "Usuarios";
+        else if(ExisteBitacora)
+            return "Bitacora_Usuarios";
+        else
+            return "No Existe";
+    }
+    
     public String[] ImplementacionSplit(String condiciones)
     {
         String[] porciones = new String[10];

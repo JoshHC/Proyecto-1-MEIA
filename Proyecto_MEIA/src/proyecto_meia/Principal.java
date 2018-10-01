@@ -14,8 +14,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -270,6 +273,7 @@ public class Principal extends javax.swing.JFrame {
             File Backupfile = new File(Backup.getPath()+"\\BackupMEIA");
             try {
                 FileUtils.copyDirectory(Direccion, Backupfile);
+                RespaldarFotos(Backupfile);
                 String pathRuta = "C:\\MEIA\\Bitacora_Backup.txt";
                 File Archivo = new File(pathRuta);
                 FileWriter Escribir = new FileWriter(Archivo,true);
@@ -304,6 +308,87 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnBackupActionPerformed
 
+    private void RespaldarFotos(File BackupFile) throws IOException
+    {
+        String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
+        File Archivo = new File(pathRuta);
+        
+        FileReader Lectura = null;
+        try 
+        {
+            Lectura = new FileReader(Archivo);
+        } 
+        catch (FileNotFoundException ex) 
+        {
+            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        BufferedReader Leer = new BufferedReader(Lectura);
+        List<File> ListaUsuarios = new ArrayList<File>();
+        String Linea = "";
+        Linea = Leer.readLine();
+       
+        String [] Auxiliar;
+
+        while(Linea != null)
+        {
+            Auxiliar = Linea.split("\\|");
+            File AuxiliarPath = new File(Auxiliar[8].toString());
+            ListaUsuarios.add(AuxiliarPath);
+
+            Linea = Leer.readLine();
+        }
+
+        Leer.close();
+        Lectura.close();
+
+        String pathRutaU = "C:\\MEIA\\Usuarios.txt";
+        File ArchivoU = new File(pathRutaU);
+        
+        if(ArchivoU.exists())
+        {
+            try 
+            {
+                FileReader LecturaU = null;
+                
+                try
+                {
+                    LecturaU = new FileReader(ArchivoU);
+                }
+                catch (FileNotFoundException ex)
+                {
+                    Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                BufferedReader LeerU = new BufferedReader(LecturaU);
+                String LineaU = "";
+                LineaU = LeerU.readLine();
+                String [] AuxiliarU;
+                
+                while(LineaU != null)
+                {
+                    AuxiliarU = LineaU.split("\\|");
+                    File AuxiliarPath = new File(AuxiliarU[8].toString());
+                    ListaUsuarios.add(AuxiliarPath);
+                    
+                    LineaU = LeerU.readLine();
+                }
+                
+                LeerU.close();
+                LecturaU.close();
+
+                for(int i= 0; i<=ListaUsuarios.size(); i++)
+                {
+                    FileUtils.copyFileToDirectory(ListaUsuarios.get(i), BackupFile);
+                }
+                
+            }
+            catch (IOException ex) 
+            {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }            
+    }
     private void btnMenudeAdministracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenudeAdministracionActionPerformed
         Menu_de_Administracion Usuario;
         try 
@@ -320,7 +405,21 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenudeAdministracionActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-       //procesos.Reorganizar();
+        Nuevo_Usuario Actualizador = new Nuevo_Usuario();
+
+        try 
+        {
+            procesos.Reorganizar();
+            
+            Actualizador.DescriptorBitácora();
+            Actualizador.DescriptorUsuario();
+
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         if (JOptionPane.showConfirmDialog(null, "Quieres Salir de Mail", "Confirmar Salida", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
