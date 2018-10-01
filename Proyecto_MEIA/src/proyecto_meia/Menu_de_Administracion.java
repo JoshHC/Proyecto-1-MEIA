@@ -66,10 +66,27 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             while(Linea != null)
             {
                 Auxiliar = Linea.split("\\|");
-                byte [] Aux = Auxiliar[4].getBytes();
-                byte [] Aux2 = Auxiliar[9].getBytes();
+                byte Aux;
+                byte Aux2;
+                if(Auxiliar[4].getBytes().toString() == "49")
+                {
+                      Aux = 1;
+                }
+                else
+                {
+                    Aux = 0;
+                }
+                if(Auxiliar[9].getBytes().toString() == "49")
+                {
+                      Aux2 = 1;
+                }
+                else
+                {
+                    Aux2 = 0;
+                }
+                
                 Date Fecha = new Date(Auxiliar[5]);
-                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux[0],Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2[0]);
+                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
                 ListaUsuarios.add(Nuevo);
                 
                 Linea = Leer.readLine();
@@ -91,10 +108,26 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
              while(Lineau != null)
             {
                 Auxiliar = Lineau.split("\\|");
-                byte [] Aux = Auxiliar[4].getBytes();
-                byte [] Aux2 = Auxiliar[9].getBytes();
+                byte Aux;
+                byte Aux2;
+                if(Auxiliar[4].getBytes().toString() == "49")
+                {
+                      Aux = 1;
+                }
+                else
+                {
+                    Aux = 0;
+                }
+                if(Auxiliar[9].getBytes().toString() == "49")
+                {
+                      Aux2 = 1;
+                }
+                else
+                {
+                    Aux2 = 0;
+                }
                 Date Fecha = new Date(Auxiliar[5]);
-                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux[0],Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2[0]);
+                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
                 ListaUsuarios.add(Nuevo);
                 
                 Lineau = Leeru.readLine();
@@ -441,10 +474,26 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             while(Linea != null)
             {
                 Auxiliar = Linea.split("\\|");
-                byte [] Aux = Auxiliar[4].getBytes();
-                byte [] Aux2 = Auxiliar[9].getBytes();
+                byte Aux;
+                byte Aux2;
+                if(Auxiliar[4].getBytes().toString() == "49")
+                {
+                      Aux = 1;
+                }
+                else
+                {
+                    Aux = 0;
+                }
+                if(Auxiliar[9].getBytes().toString() == "49")
+                {
+                      Aux2 = 1;
+                }
+                else
+                {
+                    Aux2 = 0;
+                }
                 Date Fecha = new Date(Auxiliar[5]);
-                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux[0],Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2[0]);
+                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
                 ListaUsuarios.add(Nuevo);
                 
                 Linea = Leer.readLine();
@@ -468,7 +517,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                 txtFecha.setText(item.Fecha.toString());
                 lblFoto.setText(null);
                 lblFoto.setIcon( icono );
-                if(item.status == 49)
+                if(item.status == 1)
                 {
                      btnEstado.setSelected(true);
                      btnEstado.setBackground(Color.BLUE);
@@ -547,22 +596,30 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             }
             
             UsuarioAuxiliar = User.split("\\|");
-            byte [] Aux = UsuarioAuxiliar[4].getBytes();
-            byte [] Aux2;
+            byte Aux;
+            byte Aux2;
+                if(UsuarioAuxiliar[4].getBytes().toString() == "49")
+                 {
+                          Aux = 1;
+                 }
+                 else
+                {
+                    Aux = 0;
+                }
             if(btnEstado.isSelected())
             {
-               Aux2 = "1".getBytes();
+               Aux2 = 1;
             }
             else
             {
-                Aux2 = "0".getBytes();
+                Aux2 = 0;
             }
             String Password = Acceso.RellenarCaracteres(txtPassword.getText(), 2);
             String CorreoAlterno = Acceso.RellenarCaracteres(txtCorreo.getText(), 2);
             int Telefono = Integer.parseInt(txtTelefono.getText());
             String Path = Acceso.RellenarCaracteres(fichero.getAbsolutePath(), 3);
             Date Fecha = new Date(UsuarioAuxiliar[5]);
-            Modificado = new Usuario(UsuarioAuxiliar[0],UsuarioAuxiliar[1],UsuarioAuxiliar[2],Password,Aux[0],Fecha,CorreoAlterno,Telefono,Path,Aux2[0]);
+            Modificado = new Usuario(UsuarioAuxiliar[0],UsuarioAuxiliar[1],UsuarioAuxiliar[2],Password,Aux,Fecha,CorreoAlterno,Telefono,Path,Aux2);
             
 
             if(bitacora == false)
