@@ -406,38 +406,26 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         int resultado;
         
         CargarFoto ventana = new CargarFoto();
-
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("JPG y PNG","jpg","png");
-
         ventana.jfchCargarFoto.setFileFilter(filtro);
-
         resultado= ventana.jfchCargarFoto.showOpenDialog(null);
-
-
-        if (JFileChooser.APPROVE_OPTION == resultado){
-
-
-        fichero = ventana.jfchCargarFoto.getSelectedFile();
-
-        try{
-
-               ImageIcon icon = new ImageIcon(fichero.toString());
-
-               Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
-
-               lblFoto.setText(null);
-               
-               lblFoto.setIcon( icono );
-
-
-        }catch(Exception ex){
-
-           
-        JOptionPane.showMessageDialog(null, "Error abriendo la imagen "+ ex);
-                 
-        }
         
-        } 
+        if (JFileChooser.APPROVE_OPTION == resultado)
+        {
+            fichero = ventana.jfchCargarFoto.getSelectedFile();
+
+            try
+            {
+               ImageIcon icon = new ImageIcon(fichero.toString());
+               Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+               lblFoto.setText(null);
+               lblFoto.setIcon( icono );
+            }
+            catch(Exception ex)
+            {
+                JOptionPane.showMessageDialog(null, "Error abriendo la imagen "+ ex);  
+            }
+        }
     }//GEN-LAST:event_btnCargarFotoActionPerformed
 
     private void ComboBoxSeleccionarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxSeleccionarUsuarioActionPerformed
@@ -448,9 +436,12 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             
             File Archivo = new File(pathRuta);
             FileReader Lectura = null;
-            try {
+            try 
+            {
                 Lectura = new FileReader(Archivo);
-            } catch (FileNotFoundException ex) {
+            } 
+            catch (FileNotFoundException ex) 
+            {
                 Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
             }
             BufferedReader Leer = new BufferedReader(Lectura);
@@ -598,7 +589,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             Date Fecha = new Date(UsuarioAuxiliar[5]);
             Modificado = new Usuario(UsuarioAuxiliar[0],UsuarioAuxiliar[1],UsuarioAuxiliar[2],Password,Aux,Fecha,CorreoAlterno,Telefono,Path,Aux2);
             
-
+            
             if(bitacora == false)
             {
                 RandomAccessFile Modificar = new RandomAccessFile(Archivo,"rw");

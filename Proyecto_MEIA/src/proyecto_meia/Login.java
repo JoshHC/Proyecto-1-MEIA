@@ -174,16 +174,11 @@ public class Login extends javax.swing.JFrame {
     private boolean ValidarPassword(String User, String Password) throws FileNotFoundException, IOException
     {
         boolean Hallazgo = false;
+        
         String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
-        String pathRutaU = "C:\\MEIA\\Usuarios.txt";
-        
         File Archivo = new File(pathRuta);
-        File ArchivoU = new File(pathRutaU);
-        
         FileReader Leer = new FileReader(Archivo);
-        FileReader LeerU = new FileReader(ArchivoU);
         BufferedReader leerArchivo = new BufferedReader(Leer);
-        BufferedReader leerArchivoU = new BufferedReader(LeerU);
         
         String Linea = leerArchivo.readLine();
 
@@ -198,18 +193,30 @@ public class Login extends javax.swing.JFrame {
         leerArchivo.close();
         Leer.close();
         
-        Linea = leerArchivoU.readLine();
-        
-        while(Linea != null)
+        try
         {
-            if(Linea.contains(User) && Linea.contains(Password))
-                Hallazgo = true;
-            
-            Linea = leerArchivoU.readLine();
-        } 
+            String pathRutaU = "C:\\MEIA\\Usuarios.txt";
+            File ArchivoU = new File(pathRutaU);
+            FileReader LeerU = new FileReader(ArchivoU);
+            BufferedReader leerArchivoU = new BufferedReader(LeerU);
 
-        leerArchivoU.close();
-        LeerU.close();
+            Linea = leerArchivoU.readLine();
+
+            while(Linea != null)
+            {
+                if(Linea.contains(User) && Linea.contains(Password))
+                    Hallazgo = true;
+
+                Linea = leerArchivoU.readLine();
+            } 
+
+            leerArchivoU.close();
+            LeerU.close();
+        }
+        catch(IOException e)
+        {
+        
+        }
 
         return Hallazgo;
     }
