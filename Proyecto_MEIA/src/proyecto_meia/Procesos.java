@@ -418,8 +418,7 @@ public class Procesos {
             byte Aux;
             byte Aux2;
             
-            String temp = Auxiliar[4];
-            if(temp.equals("1"))
+            if(Auxiliar[4].equals("1"))
                   Aux = 1;
             else
                 Aux = 0;
@@ -452,7 +451,7 @@ public class Procesos {
                     String [] Auxiliar = Lineau.split("\\|");
 
                     if(Auxiliar[4].equals("1"))
-                          Aux = 1;
+                        Aux = 1;
                     else
                         Aux = 0;
 

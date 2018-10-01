@@ -68,22 +68,16 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                 Auxiliar = Linea.split("\\|");
                 byte Aux;
                 byte Aux2;
-                if(Auxiliar[4].getBytes().toString() == "49")
-                {
-                      Aux = 1;
-                }
+                
+                if(Auxiliar[4].equals("1"))
+                    Aux = 1;
                 else
-                {
                     Aux = 0;
-                }
-                if(Auxiliar[9].getBytes().toString() == "49")
-                {
-                      Aux2 = 1;
-                }
+
+                if(Auxiliar[9].equals("1"))
+                    Aux2 = 1;
                 else
-                {
                     Aux2 = 0;
-                }
                 
                 Date Fecha = new Date(Auxiliar[5]);
                 Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
@@ -110,22 +104,17 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                 Auxiliar = Lineau.split("\\|");
                 byte Aux;
                 byte Aux2;
-                if(Auxiliar[4].getBytes().toString() == "49")
-                {
-                      Aux = 1;
-                }
+                
+                if(Auxiliar[4].equals("1"))
+                    Aux = 1;
                 else
-                {
                     Aux = 0;
-                }
-                if(Auxiliar[9].getBytes().toString() == "49")
-                {
-                      Aux2 = 1;
-                }
+            
+                if(Auxiliar[9].equals("1"))
+                    Aux2 = 1;
                 else
-                {
                     Aux2 = 0;
-                }
+                
                 Date Fecha = new Date(Auxiliar[5]);
                 Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
                 ListaUsuarios.add(Nuevo);
@@ -140,13 +129,9 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             if(Acceso.RellenarCaracteres(usuario, 0).equals(i.Usuario))
             {
                 if(i.rol == 49)
-                {
                     Admin = true;
-                }
                 else
-                {
                     Admin = false;
-                }
             }
         }
             
@@ -476,22 +461,17 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                 Auxiliar = Linea.split("\\|");
                 byte Aux;
                 byte Aux2;
-                if(Auxiliar[4].getBytes().toString() == "49")
-                {
-                      Aux = 1;
-                }
+                
+                if(Auxiliar[4].equals("1"))
+                    Aux = 1;
                 else
-                {
                     Aux = 0;
-                }
-                if(Auxiliar[9].getBytes().toString() == "49")
-                {
-                      Aux2 = 1;
-                }
+            
+                if(Auxiliar[9].equals("1"))
+                    Aux2 = 1;
                 else
-                {
                     Aux2 = 0;
-                }
+                
                 Date Fecha = new Date(Auxiliar[5]);
                 Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
                 ListaUsuarios.add(Nuevo);
@@ -502,45 +482,41 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             Leer.close();
             Lectura.close();
             
-        String Seleccion = (String)ComboBoxSeleccionarUsuario.getSelectedItem();
+            String Seleccion = (String)ComboBoxSeleccionarUsuario.getSelectedItem();
        
-         for(Usuario item : ListaUsuarios)
-        {
-            if(item.Usuario.equals(Seleccion))
+            for(Usuario item : ListaUsuarios)
             {
-                ImageIcon icon = new ImageIcon(item.PathFotografia);
-                fichero = new File (item.PathFotografia);
-                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
-                txtPassword.setText(item.Password);
-                txtCorreo.setText(item.CorreoAlterno);
-                txtTelefono.setText(Integer.toString(item.Telefono));
-                txtFecha.setText(item.Fecha.toString());
-                lblFoto.setText(null);
-                lblFoto.setIcon( icono );
-                if(item.status == 1)
+                if(item.Usuario.equals(Seleccion))
                 {
-                     btnEstado.setSelected(true);
-                     btnEstado.setBackground(Color.BLUE);
-                     btnEstado.setText("Activo");
-                }
-                else
-                {
-                    btnEstado.setSelected(false);
-                    btnEstado.setBackground(Color.RED);
-                    btnEstado.setText("Inactivo");
-                }
-               
+                    ImageIcon icon = new ImageIcon(item.PathFotografia);
+                    fichero = new File (item.PathFotografia);
+                    Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+                    txtPassword.setText(item.Password);
+                    txtCorreo.setText(item.CorreoAlterno);
+                    txtTelefono.setText(Integer.toString(item.Telefono));
+                    txtFecha.setText(item.Fecha.toString());
+                    lblFoto.setText(null);
+                    lblFoto.setIcon( icono );
+                    if(item.status == 1)
+                    {
+                         btnEstado.setSelected(true);
+                         btnEstado.setBackground(Color.BLUE);
+                         btnEstado.setText("Activo");
+                    }
+                    else
+                    {
+                        btnEstado.setSelected(false);
+                        btnEstado.setBackground(Color.RED);
+                        btnEstado.setText("Inactivo");
+                    }
+                    
             }
                  
         }
         
-        
         } catch (IOException ex) {
             Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-       
-   
     }//GEN-LAST:event_ComboBoxSeleccionarUsuarioActionPerformed
 
     private void btnNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoUsuarioActionPerformed
@@ -598,22 +574,17 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             UsuarioAuxiliar = User.split("\\|");
             byte Aux;
             byte Aux2;
-                if(UsuarioAuxiliar[4].getBytes().toString() == "49")
-                 {
-                          Aux = 1;
-                 }
-                 else
-                {
-                    Aux = 0;
-                }
-            if(btnEstado.isSelected())
-            {
-               Aux2 = 1;
-            }
+            
+            if(UsuarioAuxiliar[4].equals("1"))
+                  Aux = 1;
             else
-            {
+                Aux = 0;
+            
+            if(btnEstado.isSelected())
+                Aux2 = 1;
+            else
                 Aux2 = 0;
-            }
+                
             String Password = Acceso.RellenarCaracteres(txtPassword.getText(), 2);
             String CorreoAlterno = Acceso.RellenarCaracteres(txtCorreo.getText(), 2);
             int Telefono = Integer.parseInt(txtTelefono.getText());
@@ -693,16 +664,13 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         try {
             String Resultado = Busqueda.EncontrarUsuario(Usuario);
             
-            if(Resultado == "Usuarios")
-            {
+            if(Resultado.equals("Usuarios"))
                lblResultado.setText("El usuario SI existe");
-            }else if (Resultado == "Bitacora_Usuarios")
-            {
+            else if (Resultado.equals("Bitacora_Usuarios"))
                lblResultado.setText("El usuario SI existe"); 
-            }else if (Resultado == "No Existe")
-            {
+            else if (Resultado.equals("No Existe"))
                lblResultado.setText("El usuario NO existe"); 
-            }
+            
         } catch (IOException ex) {
             Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
         }
