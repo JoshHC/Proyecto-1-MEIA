@@ -393,6 +393,8 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                     return;
                 }
                 
+                if(fichero != null)
+                {
                 if (Acceso.ValidarCaracteres(fichero.getAbsolutePath(), 3))
                 {                    
                     JOptionPane.showConfirmDialog(null, "La URL de tu fotografía es demasiado larga!.\n"
@@ -400,6 +402,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                             JOptionPane.OK_OPTION, JOptionPane.ERROR_MESSAGE);
                     txtPassword.setText("");
                     return;
+                }
                 }
                 
                 try

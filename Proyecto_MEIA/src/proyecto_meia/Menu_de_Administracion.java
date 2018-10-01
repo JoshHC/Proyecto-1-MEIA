@@ -185,6 +185,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
 
         jFileChooser1 = new javax.swing.JFileChooser();
         panel3 = new java.awt.Panel();
+        txtFecha = new javax.swing.JFormattedTextField();
         btnGuardar = new javax.swing.JButton();
         lblPassword = new javax.swing.JLabel();
         lblCorreo = new javax.swing.JLabel();
@@ -199,7 +200,6 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         ComboBoxSeleccionarUsuario = new javax.swing.JComboBox<>();
         txtCorreo = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
-        txtFecha = new javax.swing.JTextField();
         PanelEstado = new javax.swing.JPanel();
         btnBuscar = new javax.swing.JButton();
         txtBusqueda = new javax.swing.JTextField();
@@ -226,6 +226,13 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         );
 
         getContentPane().add(panel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 830, 10));
+
+        try {
+            txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        getContentPane().add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 160, -1));
 
         btnGuardar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnGuardar.setText("Guardar");
@@ -308,7 +315,6 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         getContentPane().add(ComboBoxSeleccionarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 160, -1));
         getContentPane().add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 160, -1));
         getContentPane().add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 160, -1));
-        getContentPane().add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 160, -1));
 
         PanelEstado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 102), 3));
 
@@ -769,7 +775,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
     private java.awt.Panel panel3;
     private javax.swing.JTextField txtBusqueda;
     private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtFecha;
+    private javax.swing.JFormattedTextField txtFecha;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
