@@ -408,7 +408,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                 try
                 {
                     int numero = Integer.parseInt(txtTelefono.getText());
-                    String cadena = txtTelefono.getText().toString();
+                    String cadena = txtTelefono.getText();
                     
                     if (cadena.length() != 8)
                     {
@@ -473,10 +473,9 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                             Acceso.RellenarCaracteres(txtApellido.getText(), 1) , Acceso.RellenarCaracteres(Password, 2) , rol , Fecha , 
                             Acceso.RellenarCaracteres(txtCorreoAlterno.getText(), 2) , Integer.parseInt(txtTelefono.getText()) , 
                             Acceso.RellenarCaracteres(fichero.getAbsolutePath(), 3) , Status);
-                    //NewUser = new Usuario(txtUserName.getText(),txtNombre.getText(),txtApellido.getText(),Password,rol,Fecha,txtCorreoAlterno.getText(),Integer.parseInt(txtTelefono.getText()),fichero.getAbsolutePath(),Status);
                     
                 }
-                //Usuario NewUser = new Usuario(txtUserName.getText(),txtNombre.getText(),Password,);
+
                 switch(puntuacion) 
                 {
                     case 0:
@@ -503,6 +502,8 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
                         IngresarUsuarioBitacora(NewUser);
                         break;
                 }
+                
+                fichero = null;
             }
             
         } 
@@ -718,63 +719,63 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         FileWriter Escribir = new FileWriter(Archivo,true);
         BufferedWriter bw = new BufferedWriter(Escribir);
         
-        if(Acceso.Validador() == "Estable")
+        if(Acceso.Validador().equals("Estable"))
         {
-        RandomAccessFile File = new RandomAccessFile(pathRuta, "rw");
-        String NuevoUsuario = Nuevo.Usuario+"|"+Nuevo.Nombre+"|"+Nuevo.Apellido+"|"+Nuevo.Password+"|"+Nuevo.rol+"|"+Nuevo.Fecha+"|"+Nuevo.CorreoAlterno+"|"+Nuevo.Telefono+"|"+Nuevo.PathFotografia+"|"+Nuevo.status;
-        
-        if(Archivo.length() == 0)
-        {
-         bw.write(NuevoUsuario);
-         bw.close();   
-         Escribir.close();
-        }
-        else
-        {
-         bw.newLine();
-         bw.write(NuevoUsuario);
-         bw.close();
-         Escribir.close();
-        }
-        
-        JOptionPane.showMessageDialog(null, "Usuario Ingresado con Exito");
-        Login Regreso = new Login();
-        Regreso.setLocationRelativeTo(null);
-        Regreso.show();
-        this.dispose();
-        
-        DescriptorBitácora();
-        }
-        else if(Acceso.Validador() == "Reorganizar")
-        {
-         Acceso.Reorganizar();
-            
-        RandomAccessFile File = new RandomAccessFile(pathRuta, "rw");
-        String NuevoUsuario = Nuevo.Usuario+"|"+Nuevo.Nombre+"|"+Nuevo.Apellido+"|"+Nuevo.Password+"|"+Nuevo.rol+"|"+Nuevo.Fecha+"|"+Nuevo.CorreoAlterno+"|"+Nuevo.Telefono+"|"+Nuevo.PathFotografia+"|"+Nuevo.status;
-        
-        if(Archivo.length() == 0)
-        {
-         bw.write(NuevoUsuario);
-         bw.close();   
-         Escribir.close();
-        }
-        else
-        {
-         bw.newLine();
-         bw.write(NuevoUsuario);
-         bw.close();
-         Escribir.close();
-        }
-        
-        JOptionPane.showMessageDialog(null, "Usuario Ingresado con Exito");
+            RandomAccessFile File = new RandomAccessFile(pathRuta, "rw");
+            String NuevoUsuario = Nuevo.Usuario+"|"+Nuevo.Nombre+"|"+Nuevo.Apellido+"|"+Nuevo.Password+"|"+Nuevo.rol+"|"+Nuevo.Fecha+"|"+Nuevo.CorreoAlterno+"|"+Nuevo.Telefono+"|"+Nuevo.PathFotografia+"|"+Nuevo.status;
 
-        DescriptorUsuario();
-        DescriptorBitácora();
+            if(Archivo.length() == 0)
+            {
+                bw.write(NuevoUsuario);
+                bw.close();   
+                Escribir.close();
+            }
+            else
+            {
+                bw.newLine();
+                bw.write(NuevoUsuario);
+                bw.close();
+                Escribir.close();
+            }
+
+            DescriptorBitácora();
             
-        Login Regreso = new Login();
-        Regreso.setLocationRelativeTo(null);
-        Regreso.show();
-        this.dispose();
+            JOptionPane.showMessageDialog(null, "Usuario Ingresado con Exito");
+            Login Regreso = new Login();
+            Regreso.setLocationRelativeTo(null);
+            Regreso.show();
+            this.dispose();
+        }
+        else if(Acceso.Validador().equals("Reorganizar"))
+        {
+            Acceso.Reorganizar();
+            
+            RandomAccessFile File = new RandomAccessFile(pathRuta, "rw");
+            String NuevoUsuario = Nuevo.Usuario+"|"+Nuevo.Nombre+"|"+Nuevo.Apellido+"|"+Nuevo.Password+"|"+Nuevo.rol+"|"+Nuevo.Fecha+"|"+Nuevo.CorreoAlterno+"|"+Nuevo.Telefono+"|"+Nuevo.PathFotografia+"|"+Nuevo.status;
+
+            if(Archivo.length() == 0)
+            {
+                bw.write(NuevoUsuario);
+                bw.close();   
+                Escribir.close();
+            }
+            else
+            {
+                bw.newLine();
+                bw.write(NuevoUsuario);
+                bw.close();
+                Escribir.close();
+            }
+
+            JOptionPane.showMessageDialog(null, "Usuario Ingresado con Exito");
+
+            DescriptorBitácora();
+            DescriptorUsuario();
+
+            Login Regreso = new Login();
+            Regreso.setLocationRelativeTo(null);
+            Regreso.show();
+            this.dispose();
         }
     }
     
@@ -842,7 +843,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
             FileReader Leer = new FileReader(Archivo);
             BufferedReader leerArchivo = new BufferedReader(Leer);
             String Linea = "";
-             Linea = leerArchivo.readLine();
+            Linea = leerArchivo.readLine();
             int NoRegistros = 0;
             int Activos = 0;
             int Inactivos = 0;  
@@ -888,8 +889,8 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
             }
 
             Descriptor_Bitacora Nuevo = new Descriptor_Bitacora("Usuarios",Fecha.toString(),
-                    Acceso.RellenarCaracteres(UsuarioActivo, 0) ,Fecha.toString(),Acceso.RellenarCaracteres(UsuarioActivo, 0),
-                    Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),MaxRepeticiones); 
+            Acceso.RellenarCaracteres(UsuarioActivo, 0) ,Fecha.toString(),Acceso.RellenarCaracteres(UsuarioActivo, 0),
+            Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),MaxRepeticiones); 
             Acceso.DescriptorBitacoraUsuario(Nuevo);     
     }   
     
