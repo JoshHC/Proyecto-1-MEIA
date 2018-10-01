@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package proyecto_meia;
 
 import java.awt.Color;
@@ -131,11 +126,15 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                     Aux2 = 0;
 
                 Date Fecha = new Date(Auxiliar[5]);
-                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
+                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Acceso.EliminarCaracteres(Auxiliar[3]),Aux,Fecha,Acceso.EliminarCaracteres(Auxiliar[6]),Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
                 ListaUsuarios.add(Nuevo);
 
                 LineaU = LeerU.readLine();
             }
+             
+            LeerU.close();
+            LecturaU.close();
+            
         }
         usuario = Acceso.RellenarCaracteres(usuario, 0);
         
@@ -154,9 +153,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         if (Admin == true)
         {
             for(Usuario item : ListaUsuarios)
-            {
-                 ComboBoxSeleccionarUsuario.addItem(item.Usuario);
-            }         
+                ComboBoxSeleccionarUsuario.addItem(item.Usuario);
         }
         else
         {
@@ -164,7 +161,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             {
                 if(item.Usuario.equals(usuario))
                 {
-                 ComboBoxSeleccionarUsuario.addItem(item.Usuario);
+                    ComboBoxSeleccionarUsuario.addItem(item.Usuario);
                 }
             }      
         }
@@ -411,6 +408,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
 
     private void btnMenuPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuPrincipalActionPerformed
         Principal Menu = new Principal();
+        Menu.setLocationRelativeTo(null);
         Menu.show();
         this.dispose();
     }//GEN-LAST:event_btnMenuPrincipalActionPerformed
@@ -431,10 +429,10 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
 
             try
             {
-               ImageIcon icon = new ImageIcon(fichero.toString());
-               Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
-               lblFoto.setText(null);
-               lblFoto.setIcon( icono );
+                ImageIcon icon = new ImageIcon(fichero.toString());
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+                lblFoto.setText(null);
+                lblFoto.setIcon( icono );
             }
             catch(Exception ex)
             {
@@ -467,7 +465,6 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             String [] Auxiliar;
             Usuario Nuevo;
            
-            
             while(Linea != null)
             {
                 Auxiliar = Linea.split("\\|");
@@ -493,6 +490,56 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             
             Leer.close();
             Lectura.close();
+            
+            String pathRutaU = "C:\\MEIA\\Usuarios.txt";
+            File ArchivoU = new File(pathRutaU);
+            
+            if(ArchivoU.exists())
+            {
+                FileReader LecturaU = null;
+
+                try 
+                {
+                    LecturaU = new FileReader(ArchivoU);
+                }
+                catch (FileNotFoundException ex) 
+                {
+                    Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                BufferedReader LeerU = new BufferedReader(LecturaU);
+                String LineaU = "";
+                LineaU = LeerU.readLine();
+                String [] AuxiliarU;
+                Nuevo = null;
+
+                while(LineaU != null)
+                {
+                    Auxiliar = LineaU.split("\\|");
+                    byte Aux;
+                    byte Aux2;
+
+                    if(Auxiliar[4].equals("1"))
+                        Aux = 1;
+                    else
+                        Aux = 0;
+
+                    if(Auxiliar[9].equals("1"))
+                        Aux2 = 1;
+                    else
+                        Aux2 = 0;
+
+                    Date Fecha = new Date(Auxiliar[5]);
+                    Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
+                    ListaUsuarios.add(Nuevo);
+
+                    LineaU = LeerU.readLine();
+                }
+                
+                LeerU.close();
+                LecturaU.close();
+                
+            }
             
             String Seleccion = (String)ComboBoxSeleccionarUsuario.getSelectedItem();
        

@@ -348,6 +348,20 @@ public class Procesos {
         return tetsto;
     }
     
+    public String EliminarCaracteres (String Texto)
+    {
+        char[] caracteres = Texto.toCharArray();
+        String TextoSinEspacios = "";
+        
+        for (char letra : caracteres)
+        {
+            if (letra != ' ')
+                TextoSinEspacios += Character.toString(letra);
+        }
+        
+        return TextoSinEspacios;
+    }
+    
     public String Validador() throws FileNotFoundException, IOException
     {
         String pathRuta = "C:\\MEIA\\desc_Bitacora_Usuarios.txt";
