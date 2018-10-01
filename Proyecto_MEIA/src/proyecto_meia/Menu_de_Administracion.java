@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -90,38 +91,40 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             Lectura.close();
             
             File ArchivoU = new File(pathRutaU);
-            FileReader Lecturau = null;
-            try {
-                Lecturau = new FileReader(ArchivoU);
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            BufferedReader Leeru = new BufferedReader(Lecturau);
-            String Lineau = "";
-            
-             while(Lineau != null)
+            if(ArchivoU.exists())
             {
-                Auxiliar = Lineau.split("\\|");
-                byte Aux;
-                byte Aux2;
-                
-                if(Auxiliar[4].equals("1"))
-                    Aux = 1;
-                else
-                    Aux = 0;
-            
-                if(Auxiliar[9].equals("1"))
-                    Aux2 = 1;
-                else
-                    Aux2 = 0;
-                
-                Date Fecha = new Date(Auxiliar[5]);
-                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
-                ListaUsuarios.add(Nuevo);
-                
-                Lineau = Leeru.readLine();
+                FileReader Lecturau = null;
+                try {
+                    Lecturau = new FileReader(ArchivoU);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                BufferedReader Leeru = new BufferedReader(Lecturau);
+                String Lineau = "";
+
+                 while(Lineau != null)
+                {
+                    Auxiliar = Lineau.split("\\|");
+                    byte Aux;
+                    byte Aux2;
+
+                    if(Auxiliar[4].equals("1"))
+                        Aux = 1;
+                    else
+                        Aux = 0;
+
+                    if(Auxiliar[9].equals("1"))
+                        Aux2 = 1;
+                    else
+                        Aux2 = 0;
+
+                    Date Fecha = new Date(Auxiliar[5]);
+                    Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Aux,Fecha,Auxiliar[6],Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
+                    ListaUsuarios.add(Nuevo);
+
+                    Lineau = Leeru.readLine();
+                }
             }
-            
             usuario = Acceso.RellenarCaracteres(usuario, 0);
         
         for(Usuario i: ListaUsuarios)
@@ -446,7 +449,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             }
             BufferedReader Leer = new BufferedReader(Lectura);
             List<Usuario> ListaUsuarios = new ArrayList<Usuario>();
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat formatter = DateFormat.getDateInstance(DateFormat.MEDIUM);
             String Linea = "";
             Linea = Leer.readLine();
             String [] Auxiliar;
@@ -491,7 +494,8 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
                     txtPassword.setText(item.Password);
                     txtCorreo.setText(item.CorreoAlterno);
                     txtTelefono.setText(Integer.toString(item.Telefono));
-                    txtFecha.setText(item.Fecha.toString());
+                    String FechaFormateada = formatter.format(item.Fecha);
+                    txtFecha.setText(FechaFormateada);
                     lblFoto.setText(null);
                     lblFoto.setIcon( icono );
                     if(item.status == 1)
