@@ -596,6 +596,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
 
     private void btnNuevoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoUsuarioActionPerformed
        Nuevo_Usuario Usuario = new Nuevo_Usuario();
+       Usuario.setLocationRelativeTo(null);
        Usuario.show();
        this.dispose();
     }//GEN-LAST:event_btnNuevoUsuarioActionPerformed

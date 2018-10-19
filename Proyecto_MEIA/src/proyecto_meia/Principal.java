@@ -34,12 +34,13 @@ public class Principal extends javax.swing.JFrame {
 
     Procesos procesos = new Procesos();
     String usuario;
+    
     public Principal(String usuario) throws IOException {
         initComponents();
-        this.usuario = usuario;
+        this.usuario = procesos.EliminarCaracteres(usuario);
         
         LlenarDatos();
-        if(lblRol.getText().contains("Rol -> Administrador") == true)
+        if(lblRol.getText().contains("Rol ➙ Administrador") == true)
         {
             btnBackup.show();
         }
@@ -73,6 +74,7 @@ public class Principal extends javax.swing.JFrame {
         btnSalir = new javax.swing.JButton();
         panel1 = new java.awt.Panel();
         panel2 = new java.awt.Panel();
+        btnMenudeAdministracion1 = new javax.swing.JButton();
         lblFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -82,64 +84,64 @@ public class Principal extends javax.swing.JFrame {
         lblFoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblFoto.setText("Foto");
         lblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        getContentPane().add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 130, 120));
+        getContentPane().add(lblFoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 120, 110));
 
-        lblRol.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblRol.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
         lblRol.setForeground(new java.awt.Color(255, 255, 255));
         lblRol.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblRol.setText("Rol:");
-        getContentPane().add(lblRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 190, 30));
+        getContentPane().add(lblRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 210, 30));
 
-        lblBienvenido.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblBienvenido.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
         lblBienvenido.setForeground(new java.awt.Color(255, 255, 255));
         lblBienvenido.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblBienvenido.setText("Bienvenido:");
-        getContentPane().add(lblBienvenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 200, 30));
+        lblBienvenido.setText("Bienvenido");
+        getContentPane().add(lblBienvenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 350, 30));
 
-        lblNiveldeAcceso.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblNiveldeAcceso.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
         lblNiveldeAcceso.setForeground(new java.awt.Color(255, 255, 255));
         lblNiveldeAcceso.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblNiveldeAcceso.setText("Nivel de Acceso:");
         getContentPane().add(lblNiveldeAcceso, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 270, 30));
 
-        lblUsuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblUsuario.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
         lblUsuario.setForeground(new java.awt.Color(255, 255, 255));
         lblUsuario.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblUsuario.setText("Usuario:");
-        getContentPane().add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, 190, 30));
+        getContentPane().add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, 210, 30));
 
-        btnBackup.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnBackup.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         btnBackup.setText("Respaldo de Informacion");
         btnBackup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackupActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBackup, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 320, 220, 50));
+        getContentPane().add(btnBackup, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 230, 50));
 
-        btnMenudeAdministracion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnMenudeAdministracion.setText("Menu de Administracion");
+        btnMenudeAdministracion.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        btnMenudeAdministracion.setText("Administracion de Usuarios");
         btnMenudeAdministracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMenudeAdministracionActionPerformed(evt);
             }
         });
-        getContentPane().add(btnMenudeAdministracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 240, 220, 50));
+        getContentPane().add(btnMenudeAdministracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, 230, 50));
 
-        lblMenu.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        lblMenu.setFont(new java.awt.Font("Calibri Light", 0, 36)); // NOI18N
         lblMenu.setForeground(new java.awt.Color(255, 255, 255));
         lblMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMenu.setText("Menu");
         getContentPane().add(lblMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, -1, -1));
 
-        btnSalir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnSalir.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         btnSalir.setText("Log Out");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 390, 100, 30));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 400, 100, 30));
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -165,8 +167,18 @@ public class Principal extends javax.swing.JFrame {
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        getContentPane().add(panel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 660, 10));
+        getContentPane().add(panel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 660, 10));
 
+        btnMenudeAdministracion1.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        btnMenudeAdministracion1.setText("Administracion de Listas");
+        btnMenudeAdministracion1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenudeAdministracion1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMenudeAdministracion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 230, 50));
+
+        lblFondo.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
         getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 450));
 
@@ -204,13 +216,13 @@ public class Principal extends javax.swing.JFrame {
                         
                         if(SegmentosInfo[4].equals("1"))
                         {
-                            lblNiveldeAcceso.setText("Nivel de acceso -> Maestro");
-                            lblRol.setText("Rol -> Administrador");
+                            lblNiveldeAcceso.setText("Nivel de acceso ➙ Maestro");
+                            lblRol.setText("Rol ➙ Administrador");
                         }
                         else
                         {
-                            lblNiveldeAcceso.setText("Nivel de acceso -> Estandar");
-                            lblRol.setText("Rol -> Usuario");
+                            lblNiveldeAcceso.setText("Nivel de acceso ➙ Estandar");
+                            lblRol.setText("Rol ➙ Usuario");
                         }
                     }
 
@@ -245,13 +257,13 @@ public class Principal extends javax.swing.JFrame {
                         
                         if(SegmentosInfo[4].equals("1"))
                         {
-                            lblNiveldeAcceso.setText("Nivel de acceso -> Maestro");
-                            lblRol.setText("Rol -> Administrador");
+                            lblNiveldeAcceso.setText("Nivel de acceso ➙ Maestro");
+                            lblRol.setText("Rol ➙ Administrador");
                         }
                         else
                         {
-                            lblNiveldeAcceso.setText("Nivel de acceso -> Estandar");
-                            lblRol.setText("Rol -> Usuario");
+                            lblNiveldeAcceso.setText("Nivel de acceso ➙ Estandar");
+                            lblRol.setText("Rol ➙ Usuario");
                         }
                     }
 
@@ -424,6 +436,13 @@ public class Principal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void btnMenudeAdministracion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenudeAdministracion1ActionPerformed
+        Listas listas = new Listas(usuario);
+        listas.setLocationRelativeTo(null);
+        listas.show();
+        this.dispose();
+    }//GEN-LAST:event_btnMenudeAdministracion1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -463,6 +482,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBackup;
     private javax.swing.JButton btnMenudeAdministracion;
+    private javax.swing.JButton btnMenudeAdministracion1;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel lblBienvenido;
     private javax.swing.JLabel lblFondo;
