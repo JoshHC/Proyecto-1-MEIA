@@ -33,11 +33,14 @@ import org.apache.commons.io.FileUtils;
 public class Principal extends javax.swing.JFrame {
 
     Procesos procesos = new Procesos();
-    String usuario;
+    String Usuario;
+    String Rol;
     
-    public Principal(String usuario) throws IOException {
+    public Principal(String usuario, String Rol) throws IOException {
         initComponents();
-        this.usuario = procesos.EliminarCaracteres(usuario);
+        
+        this.Rol = Rol;
+        this.Usuario = procesos.EliminarCaracteres(usuario);
         
         LlenarDatos();
         if(lblRol.getText().contains("Rol ➙ Administrador") == true)
@@ -188,7 +191,7 @@ public class Principal extends javax.swing.JFrame {
     private void LlenarDatos() throws FileNotFoundException, IOException
     {
             String Ubicacion = "";
-            Ubicacion = procesos.EncontrarUsuario(usuario);
+            Ubicacion = procesos.EncontrarUsuario(Usuario);
             
             if (Ubicacion.equals("Usuarios"))
             {
@@ -200,7 +203,7 @@ public class Principal extends javax.swing.JFrame {
                 
                 while(Linea != null)
                 {
-                    if(Linea.contains(usuario))
+                    if(Linea.contains(Usuario))
                     {                    
                         String[] SegmentosInfo = procesos.ImplementacionSplit(Linea);
                         
@@ -218,11 +221,13 @@ public class Principal extends javax.swing.JFrame {
                         {
                             lblNiveldeAcceso.setText("Nivel de acceso ➙ Maestro");
                             lblRol.setText("Rol ➙ Administrador");
+                            Rol = "Administrador";
                         }
                         else
                         {
                             lblNiveldeAcceso.setText("Nivel de acceso ➙ Estandar");
                             lblRol.setText("Rol ➙ Usuario");
+                            Rol = "Usuario";
                         }
                     }
 
@@ -241,7 +246,7 @@ public class Principal extends javax.swing.JFrame {
                 
                 while(Linea != null)
                 {
-                    if(Linea.contains(usuario))
+                    if(Linea.contains(Usuario))
                     {
                         String[] SegmentosInfo = procesos.ImplementacionSplit(Linea);
                         
@@ -293,7 +298,7 @@ public class Principal extends javax.swing.JFrame {
                 Date Fecha = new Date();
 
                 bw.write("Ruta Absoluta|"+Backupfile.getPath());
-                bw.write("Usuario|"+usuario);
+                bw.write("Usuario|"+Usuario);
                 bw.write("Fecha de Transaccion|"+Fecha.toString());
                 bw.close();
                 Escribir.close();
@@ -311,7 +316,7 @@ public class Principal extends javax.swing.JFrame {
                 contador = contador/3;
 
                 Procesos NuevoProceso = new Procesos();
-                Descriptor_Backup NuevoBackup = new Descriptor_Backup("Bitacora_Backup",Fecha.toString(),usuario,Fecha.toString(),usuario,String.valueOf(contador));
+                Descriptor_Backup NuevoBackup = new Descriptor_Backup("Bitacora_Backup",Fecha.toString(),Usuario,Fecha.toString(),Usuario,String.valueOf(contador));
                 NuevoProceso.DescriptorBakcup(NuevoBackup);
             } catch (IOException ex) {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
@@ -405,7 +410,7 @@ public class Principal extends javax.swing.JFrame {
         Menu_de_Administracion Usuario;
         try 
         {
-            Usuario = new Menu_de_Administracion(usuario);
+            Usuario = new Menu_de_Administracion(this.Usuario, Rol);
             Usuario.setLocationRelativeTo(null);
             Usuario.show();
             this.dispose();
@@ -441,7 +446,7 @@ public class Principal extends javax.swing.JFrame {
         
         try 
         {
-            listas = new Listas(usuario);
+            listas = new Listas(Usuario, Rol);
             listas.setLocationRelativeTo(null);
             listas.show();
             this.dispose();

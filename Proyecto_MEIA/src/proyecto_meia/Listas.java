@@ -317,7 +317,7 @@ public class Listas extends javax.swing.JFrame {
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         Principal Menu = null;
         try {
-            Menu = new Principal(Usuario);
+            Menu = new Principal(Usuario, Rol);
         } catch (IOException ex) {
             Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
         }

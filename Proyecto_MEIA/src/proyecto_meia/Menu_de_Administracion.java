@@ -32,15 +32,17 @@ import static proyecto_meia.Nuevo_Usuario.fichero;
 public class Menu_de_Administracion extends javax.swing.JFrame {
 
     static String Usuario;
+    private String Rol;
     
     /**
      * Creates new form Menu_de_Administracion
      */
-    public Menu_de_Administracion(String usuario) throws IOException, ParseException {
+    public Menu_de_Administracion(String usuario, String Rol) throws IOException, ParseException {
         initComponents();
         Procesos Acceso = new Procesos();
         
-        Usuario = usuario;
+        this.Rol = Rol;
+        this.Usuario = usuario;
       
         String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
         File Archivo = new File(pathRuta);
@@ -425,7 +427,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         
         try 
         {
-            Menu = new Principal(Usuario);
+            Menu = new Principal(Usuario, Rol);
             Menu.setLocationRelativeTo(null);
             Menu.show();
             this.dispose();
@@ -903,7 +905,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         
         try 
         {
-            listas = new Listas(Usuario);
+            listas = new Listas(Usuario, Rol);
             listas.setLocationRelativeTo(null);
             listas.show();
             this.dispose();

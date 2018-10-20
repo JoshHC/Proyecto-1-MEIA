@@ -6,15 +6,23 @@ package proyecto_meia;
  */
 public class CrearLista extends javax.swing.JFrame {
 
+    private String Rol;
     private String Usuario;
     private String NombreLista;
     private String Descripcion;
 
-    public CrearLista(String Usuario) {
+    public CrearLista(String Usuario, String Rol) {
         initComponents();
         
         this.Usuario = Usuario;
+        this.Rol = Rol;
+        
         jTFUsuario.setText(Usuario);
+        
+        if (Rol == "Administrador")
+            jTFUsuario.enable(true);
+        else
+            jTFUsuario.enable(false);
     }
     
     public CrearLista(String Usuario, String NombreLista, String Descripcion) {

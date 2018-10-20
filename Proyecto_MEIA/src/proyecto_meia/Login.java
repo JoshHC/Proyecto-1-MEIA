@@ -155,7 +155,7 @@ public class Login extends javax.swing.JFrame {
                 
                 if (Existe)
                 {
-                    Principal Menu = new Principal(User);
+                    Principal Menu = new Principal(User, "");
                     Menu.setLocationRelativeTo(null);
                     Usuario = User;
                     Menu.show();
