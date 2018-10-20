@@ -1,5 +1,16 @@
 package proyecto_meia;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
@@ -41,6 +52,7 @@ public class CrearLista extends javax.swing.JFrame {
     private CrearLista() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 
 
     @SuppressWarnings("unchecked")
@@ -100,6 +112,11 @@ public class CrearLista extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
         jButton1.setText("Crear");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 180, 31));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
@@ -109,9 +126,128 @@ public class CrearLista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Date fecha = new Date();
+        SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
+        
+        String Nombre = jTFNombreLista.getText();
+        String Usuario = jTFUsuario.getText();
+        String Descripcion = jTADescripcion.getText();
+        
+        Lista NuevaLista = new Lista(Nombre, Usuario, Descripcion, "0", fecha.toString(), "1");
+        
+        try 
+        {
+            CrearLista(NuevaLista);
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(CrearLista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void CrearLista(Lista NuevaLista) throws IOException
+    {
+        if (ListaExiste(NuevaLista))
+        {
+            JOptionPane.showMessageDialog(null, "No es posible crear esta lista en este momento. \n"
+                    + "La lista que quieres crear ya existe.");
+        }
+        else
+        {
+            if (VerificarEspacioBitacora())
+            {
+                // Insertar el nuevo registro
+                // Modificar el descriptor
+            }
+            else
+            {
+                // Reorganizar la bitacora y el meromero
+                // Insertar el nuevo registro
+                // Modificar el descriptor
+            }
+        }
+    }
+    
+    private boolean VerificarEspacioBitacora() throws FileNotFoundException, IOException
+    {
+        boolean HayEspacio = true;
+        
+        String pathRutaBitacoraLista = "C:\\MEIA\\BitacoraLista.txt";
+        File ArchivoBitacoraLista = new File(pathRutaBitacoraLista);
+        FileReader Leer = new FileReader(ArchivoBitacoraLista);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+            
+        for(int i = 0; i < 6; i++)
+            Linea = leerArchivo.readLine();
+        
+        String[] Trozos = new String[2];
+        Trozos = Linea.split("\\|");
+        
+        for(int i = 0; i < 3; i++)
+            Linea = leerArchivo.readLine();
+        
+        String[] trozos = new String[2];
+        trozos = Linea.split("\\|");
+        
+        if (Trozos[1].equals(trozos[1]))
+            HayEspacio = false;
+        
+        return HayEspacio;   
+    }
+    
+    private boolean ListaExiste(Lista NuevaLista) throws FileNotFoundException, IOException
+    {
+        boolean Existe = false;
+        
+        String pathRutaLista = "C:\\MEIA\\Lista.txt";
+        File ArchivoLista = new File(pathRutaLista);
+        
+        String pathRutaBitacoraLista = "C:\\MEIA\\BitacoraLista.txt";
+        File ArchivoBitacoraLista = new File(pathRutaBitacoraLista);
+        
+        if (ArchivoLista.exists())
+        {
+            FileReader Leer = new FileReader(ArchivoLista);
+            BufferedReader leerArchivo = new BufferedReader(Leer);
+            String Linea = leerArchivo.readLine();
+            
+            while (!"".equals(Linea))
+            {
+                String[] Datos = new String[6];
+                Datos = Linea.split("\\|");
+                
+                if (NuevaLista.Nombre_lista.equals(Datos[0]) && NuevaLista.Usuario.equals(Datos[1]) && Datos[5].equals("1"))
+                    Existe = true;
+                
+                Linea = leerArchivo.readLine();
+            }
+        } 
+        
+        if (ArchivoBitacoraLista.exists())
+        {
+            FileReader Leer = new FileReader(ArchivoBitacoraLista);
+            BufferedReader leerArchivo = new BufferedReader(Leer);
+            String Linea = leerArchivo.readLine();
+            
+            while (!"".equals(Linea))
+            {
+                String[] Datos = new String[6];
+                Datos = Linea.split("\\|");
+                
+                if (NuevaLista.Nombre_lista.equals(Datos[0]) && NuevaLista.Usuario.equals(Datos[1]) && Datos[5].equals("1"))
+                    Existe = true;
+                
+                Linea = leerArchivo.readLine();
+            }
+        }
+        
+        return Existe;
+    }
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
