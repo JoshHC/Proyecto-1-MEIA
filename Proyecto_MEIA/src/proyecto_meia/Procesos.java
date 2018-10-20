@@ -362,8 +362,8 @@ public class Procesos {
      
     
     public boolean ValidarCaracteres (String Texto, int cod)
-    {
-        // Max 30 caracteres
+    {   
+        // Max 20 caracteres
         if (cod == 0)
         {
             if (Texto.length() < 20)
@@ -420,16 +420,25 @@ public class Procesos {
         return tetsto;
     }
     
+    // Elimina los espacios
     public String EliminarCaracteres (String Texto)
     {
         char[] caracteres = Texto.toCharArray();
         String TextoSinEspacios = "";
         
-        for (char letra : caracteres)
+        try
         {
-            if (letra != ' ')
-                TextoSinEspacios += Character.toString(letra);
+            for (int i = 0; i < caracteres.length; i++)
+            {
+                if (caracteres[i] != ' ' || caracteres[i+1] != ' ')
+                    TextoSinEspacios += Character.toString(caracteres[i]);
+            }
         }
+        catch(Exception e)
+        {
+        
+        }
+        
         
         return TextoSinEspacios;
     }

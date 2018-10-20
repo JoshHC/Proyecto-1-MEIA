@@ -5,6 +5,7 @@
  */
 package proyecto_meia;
 
+import com.sun.glass.events.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -53,25 +54,37 @@ public class Login extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Calibri Light", 0, 58)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Mail");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, -1, -1));
-        getContentPane().add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, 210, 30));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, -1, -1));
 
+        txtpassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtpasswordKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtpasswordKeyTyped(evt);
+            }
+        });
+        getContentPane().add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 350, 210, 30));
+
+        lblinformacion.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
         lblinformacion.setForeground(new java.awt.Color(255, 255, 255));
         lblinformacion.setText("¿No tienes una cuenta? ");
-        getContentPane().add(lblinformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, -1, -1));
+        getContentPane().add(lblinformacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 440, -1, -1));
 
+        lblforgotpassword.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
         lblforgotpassword.setForeground(new java.awt.Color(255, 255, 255));
-        lblforgotpassword.setText("Olvidaste tu contraseña?");
+        lblforgotpassword.setText("¿Olvidaste tu contraseña?");
         lblforgotpassword.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblforgotpasswordMouseClicked(evt);
             }
         });
-        getContentPane().add(lblforgotpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 450, -1, -1));
+        getContentPane().add(lblforgotpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, -1, -1));
 
+        lblnewuser.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
         lblnewuser.setForeground(new java.awt.Color(255, 255, 255));
         lblnewuser.setText("Crea una");
         lblnewuser.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -79,8 +92,8 @@ public class Login extends javax.swing.JFrame {
                 lblnewuserMouseClicked(evt);
             }
         });
-        getContentPane().add(lblnewuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 470, -1, -1));
-        getContentPane().add(txtuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 210, 30));
+        getContentPane().add(lblnewuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 440, -1, -1));
+        getContentPane().add(txtuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 210, 30));
 
         btnlogin.setText("Login");
         btnlogin.addActionListener(new java.awt.event.ActionListener() {
@@ -88,13 +101,13 @@ public class Login extends javax.swing.JFrame {
                 btnloginActionPerformed(evt);
             }
         });
-        getContentPane().add(btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 420, 210, -1));
+        getContentPane().add(btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 390, 210, -1));
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/LOGO_MEIA2 .png"))); // NOI18N
-        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 40, -1, 500));
+        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 500));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo.png"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 530));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -115,7 +128,21 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_lblnewuserMouseClicked
 
     private void btnloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnloginActionPerformed
+        ProcesoLogin();
+    }//GEN-LAST:event_btnloginActionPerformed
 
+    private void txtpasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpasswordKeyTyped
+        // Me equivoqué de metodo, ya funciona con KeyPressed
+    }//GEN-LAST:event_txtpasswordKeyTyped
+
+    private void txtpasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpasswordKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER)
+            ProcesoLogin();
+    }//GEN-LAST:event_txtpasswordKeyPressed
+
+    // Se realiza toda la validacion de login
+    private void ProcesoLogin()
+    {
         String Password = txtpassword.getText();
         String User = txtuser.getText();
         
@@ -155,9 +182,9 @@ public class Login extends javax.swing.JFrame {
             NewUser.show();
             this.dispose();
         }
-
-    }//GEN-LAST:event_btnloginActionPerformed
-
+    }
+    
+    
     // Metodo que verifica si existe el archivo de usuarios
     private boolean ExisteArchivo(String path)
     {

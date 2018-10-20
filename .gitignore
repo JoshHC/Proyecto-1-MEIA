@@ -23,3 +23,6 @@
 hs_err_pid*
 /Proyecto_MEIA/build/
 /Proyecto_MEIA/dist/
+Proyecto_MEIA/nbproject/private/private.properties
+Proyecto_MEIA/nbproject/private/private.xml
+Proyecto_MEIA/nbproject/project.properties

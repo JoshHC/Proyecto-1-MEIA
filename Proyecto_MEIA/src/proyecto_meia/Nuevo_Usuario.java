@@ -551,8 +551,6 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
             btnCargarFoto.requestFocus();
     }//GEN-LAST:event_txtFechaNacKeyPressed
 
-    
-    
     private void txtUserNameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUserNameMouseClicked
 
     }//GEN-LAST:event_txtUserNameMouseClicked
@@ -580,7 +578,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     private void txtFechaNacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtFechaNacMouseClicked
 
     }//GEN-LAST:event_txtFechaNacMouseClicked
-
+    
     private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
         // El de abajo lo hace mejor
     }//GEN-LAST:event_txtPasswordKeyTyped
