@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import static proyecto_meia.Login.Usuario;
 
 /**
@@ -293,7 +294,19 @@ public class Listas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearNuevaListaActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        
+        String Nombre = txtListaaBuscar.getText();
+        try {
+            if(ListaExiste(Nombre) == true)
+            {
+                JOptionPane.showMessageDialog(jMenu1,"La Lista que busca SI Existe","Aviso",JOptionPane.INFORMATION_MESSAGE);
+            }else
+            {
+                JOptionPane.showMessageDialog(jMenu1,"La Lista que busca NO Existe","Aviso",JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -316,7 +329,25 @@ public class Listas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarListaActionPerformed
-        //Programar La Eliminacion de la Lista Seleccionada
+            
+            String pathRuta = "C:\\MEIA\\Lista.txt";
+            File Archivo = new File(pathRuta);
+            FileReader Lectura = null;
+            Lectura = new FileReader(Archivo);
+            BufferedReader Leer = new BufferedReader(Lectura);
+            String Linea = null;
+            Linea = Leer.readLine();
+            String[] Auxiliar;
+            List<Lista> Listas = new ArrayList<Lista>();
+            Lista NuevaLista;
+            
+            while(Linea != null)
+            {
+              Auxiliar = Linea.split("\\|"); 
+              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+              Listas.add(NuevaLista);
+            }
+        
     }//GEN-LAST:event_btnEliminarListaActionPerformed
 
     /**
