@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -330,24 +331,6 @@ public class Listas extends javax.swing.JFrame {
 
     private void btnEliminarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarListaActionPerformed
             
-            String pathRuta = "C:\\MEIA\\Lista.txt";
-            File Archivo = new File(pathRuta);
-            FileReader Lectura = null;
-            Lectura = new FileReader(Archivo);
-            BufferedReader Leer = new BufferedReader(Lectura);
-            String Linea = null;
-            Linea = Leer.readLine();
-            String[] Auxiliar;
-            List<Lista> Listas = new ArrayList<Lista>();
-            Lista NuevaLista;
-            
-            while(Linea != null)
-            {
-              Auxiliar = Linea.split("\\|"); 
-              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-              Listas.add(NuevaLista);
-            }
-        
     }//GEN-LAST:event_btnEliminarListaActionPerformed
 
     /**
