@@ -11,11 +11,11 @@ public class Lista {
     String Nombre_lista;
     String Usuario;
     String Descripcion;
-    int Numero_usuarios;
-    Date Fecha_creacion;
-    byte Status;
+    String Numero_usuarios;
+    String Fecha_creacion;
+    String Status;
     
-    public Lista(String Nombre, String Usuario, String Desc, int CantUsuarios, Date FechaCreacion)
+    public Lista(String Nombre, String Usuario, String Desc, String CantUsuarios, String FechaCreacion)
     {
         this.Nombre_lista = Nombre;
         this.Usuario = Usuario;

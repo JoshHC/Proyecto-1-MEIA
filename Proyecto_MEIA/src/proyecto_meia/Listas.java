@@ -1,5 +1,17 @@
 package proyecto_meia;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import static proyecto_meia.Login.Usuario;
+
 /**
  *
  * @author Admin
@@ -12,7 +24,7 @@ public class Listas extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public Listas(String Usuario) {
+    public Listas(String Usuario) throws IOException {
         initComponents();
         
         this.Usuario = Usuario;
@@ -20,19 +32,84 @@ public class Listas extends javax.swing.JFrame {
     }
 
     
-
-    private void BuscarListas(String Usuario)
+    //En esta Funcion se Buscan las Listas para llenar La Lista del Menu Principal.
+    private void BuscarListas(String Usuario) throws FileNotFoundException, IOException
     {
-        // ACA SE TIENE QUE PROGRAMAR UNA BUSQUEDA DE LISTAS
-        // SE MUESTRAN EN EL JLIST1
+        if(Usuario == "Administrador")
+        {
+            String pathRuta = "C:\\MEIA\\Lista.txt";
+            File Archivo = new File(pathRuta);
+            FileReader Lectura = new FileReader(Archivo);
+            BufferedReader Leer = new BufferedReader(Lectura);
+            String Linea = Leer.readLine();
+            String[] Auxiliar;
+            List<Lista> Listas = new ArrayList<Lista>();
+            Lista NuevaLista;
+            
+            while(Linea != null)
+            {
+              Auxiliar = Linea.split("\\|"); 
+              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+              Listas.add(NuevaLista);
+            }
+            
+            DefaultListModel Modelo = new DefaultListModel();
+            Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "+"Fecha de Creacion:    "+"Estatus    ");
+            for(int i = 0; i< Listas.size(); i++)
+            {
+                Modelo.addElement(Listas.get(i).Nombre_lista+" "+Listas.get(i).Usuario+" "+Listas.get(i).Descripcion+" "+Listas.get(i).Numero_usuarios+" "+Listas.get(i).Fecha_creacion+" "+Listas.get(i).Status);
+            }
+            lstListas.setModel(Modelo);
+            
+        }else
+        {
+            String pathRuta = "C:\\MEIA\\Lista.txt";
+            File Archivo = new File(pathRuta);
+            FileReader Lectura = new FileReader(Archivo);
+            BufferedReader Leer = new BufferedReader(Lectura);
+            String Linea = Leer.readLine();
+            String[] Auxiliar;
+            List<Lista> Listas = new ArrayList<Lista>();
+            Lista NuevaLista;
+            
+            while(Linea != null)
+            {
+              Auxiliar = Linea.split("\\|"); 
+              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+              if(Auxiliar[1].equals(Usuario))
+              Listas.add(NuevaLista);
+            }
+            
+            DefaultListModel Modelo = new DefaultListModel();
+            Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "+"Fecha de Creacion:    "+"Estatus    ");
+            for(int i = 0; i< Listas.size(); i++)
+            {
+                Modelo.addElement(Listas.get(i).Nombre_lista+" "+Listas.get(i).Usuario+" "+Listas.get(i).Descripcion+" "+Listas.get(i).Numero_usuarios+" "+Listas.get(i).Fecha_creacion+" "+Listas.get(i).Status);
+            }
+            lstListas.setModel(Modelo);    
+        }
     }
     
-    private Boolean ListaExiste(String Nombre)
+    private Boolean ListaExiste(String Nombre) throws FileNotFoundException, IOException
     {
         boolean Existe = false;
         
-        // SE BUSCA LA LISTA SOLICITADA
-        
+            String pathRuta = "C:\\MEIA\\Lista.txt";
+            File Archivo = new File(pathRuta);
+            FileReader Lectura = new FileReader(Archivo);
+            BufferedReader Leer = new BufferedReader(Lectura);
+            String Linea = Leer.readLine();
+            String[] Auxiliar;
+            Lista NuevaLista;
+            
+            while(Linea != null)
+            {
+              Auxiliar = Linea.split("\\|"); 
+              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+              if(Nombre.equals(Auxiliar[0]))
+                  Existe = true;
+            }
+
         return Existe; 
     }
     
@@ -45,18 +122,18 @@ public class Listas extends javax.swing.JFrame {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jLabel2 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jButton5 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        lstListas = new javax.swing.JList<>();
+        btnEliminarLista = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtListaaBuscar = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
+        btnCrearNuevaLista = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
         jMenu1.setText("jMenu1");
@@ -77,23 +154,38 @@ public class Listas extends javax.swing.JFrame {
         jLabel2.setText("Administración de Listas");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 40, -1, -1));
 
-        jButton4.setFont(new java.awt.Font("Calibri Light", 1, 13)); // NOI18N
-        jButton4.setText("Regresar");
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 130, 30));
+        btnRegresar.setFont(new java.awt.Font("Calibri Light", 1, 13)); // NOI18N
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 130, 30));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel1.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
         jLabel1.setText("Gestion de Listas");
 
-        jList1.setComponentPopupMenu(jPopupMenu1);
-        jScrollPane1.setViewportView(jList1);
+        lstListas.setComponentPopupMenu(jPopupMenu1);
+        jScrollPane1.setViewportView(lstListas);
 
-        jButton5.setFont(new java.awt.Font("Calibri Light", 1, 13)); // NOI18N
-        jButton5.setText("Eliminar Lista");
+        btnEliminarLista.setFont(new java.awt.Font("Calibri Light", 1, 13)); // NOI18N
+        btnEliminarLista.setText("Eliminar Lista");
+        btnEliminarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarListaActionPerformed(evt);
+            }
+        });
 
-        jButton1.setFont(new java.awt.Font("Calibri Light", 1, 13)); // NOI18N
-        jButton1.setText("Modificar");
+        btnModificar.setFont(new java.awt.Font("Calibri Light", 1, 13)); // NOI18N
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -108,9 +200,9 @@ public class Listas extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton5)))
+                        .addComponent(btnEliminarLista)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -122,8 +214,8 @@ public class Listas extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton5))
+                    .addComponent(btnModificar)
+                    .addComponent(btnEliminarLista))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -134,19 +226,19 @@ public class Listas extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
         jLabel3.setText("Busqueda de Listas");
 
-        jButton3.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
-        jButton3.setText("Buscar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
-        jButton2.setText("Crear Nueva Lista");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCrearNuevaLista.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        btnCrearNuevaLista.setText("Crear Nueva Lista");
+        btnCrearNuevaLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCrearNuevaListaActionPerformed(evt);
             }
         });
 
@@ -162,9 +254,9 @@ public class Listas extends javax.swing.JFrame {
                         .addGap(56, 56, 56))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCrearNuevaLista, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtListaaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -173,11 +265,11 @@ public class Listas extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtListaaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(btnBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCrearNuevaLista, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
         );
 
@@ -193,16 +285,39 @@ public class Listas extends javax.swing.JFrame {
         // Aca se programa modificar
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCrearNuevaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearNuevaListaActionPerformed
         CrearLista NuevaLista = new CrearLista(Usuario);
         NuevaLista.setLocationRelativeTo(null);
         NuevaLista.show();
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnCrearNuevaListaActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        Principal Menu = null;
+        try {
+            Menu = new Principal(Usuario);
+        } catch (IOException ex) {
+            Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Menu.setLocationRelativeTo(null);
+        Menu.show();
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        Modificacion_De_Listas RealizarModificacion = new Modificacion_De_Listas();
+        RealizarModificacion.setLocationRelativeTo(null);
+        RealizarModificacion.show();
+        this.dispose();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarListaActionPerformed
+        //Programar La Eliminacion de la Lista Seleccionada
+    }//GEN-LAST:event_btnEliminarListaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,22 +355,22 @@ public class Listas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCrearNuevaLista;
+    private javax.swing.JButton btnEliminarLista;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JList<String> lstListas;
+    private javax.swing.JTextField txtListaaBuscar;
     // End of variables declaration//GEN-END:variables
 }

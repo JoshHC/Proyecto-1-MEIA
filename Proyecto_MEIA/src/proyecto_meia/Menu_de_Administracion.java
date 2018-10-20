@@ -231,6 +231,11 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
 
         btnAgregaraLista.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnAgregaraLista.setText("Agregar a una Lista");
+        btnAgregaraLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregaraListaActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAgregaraLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 480, 170, 30));
 
         try {
@@ -892,6 +897,13 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         }
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnAgregaraListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregaraListaActionPerformed
+        Listas listas = new Listas(Usuario);
+        listas.setLocationRelativeTo(null);
+        listas.show();
+        this.dispose();
+    }//GEN-LAST:event_btnAgregaraListaActionPerformed
 
     private String ValidarContraseña(String Password) throws FileNotFoundException, IOException
     {
