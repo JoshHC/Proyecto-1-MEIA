@@ -899,6 +899,17 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnAgregaraListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregaraListaActionPerformed
+<<<<<<< HEAD
+        Listas listas = null;
+        try {
+            listas = new Listas(Usuario);
+        } catch (IOException ex) {
+            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        listas.setLocationRelativeTo(null);
+        listas.show();
+        this.dispose();
+=======
         Listas listas;
         
         try 
@@ -913,6 +924,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
             Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+>>>>>>> 505294f78c0275df43fb35f5b1e0ec155d5a7300
     }//GEN-LAST:event_btnAgregaraListaActionPerformed
 
     private String ValidarContraseña(String Password) throws FileNotFoundException, IOException
