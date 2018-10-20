@@ -21,16 +21,17 @@ import static proyecto_meia.Login.Usuario;
 public class Listas extends javax.swing.JFrame {
 
     private String Usuario;
+    private String Rol;
     
     private Listas() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    public Listas(String Usuario) throws IOException {
+    public Listas(String Usuario, String Rol) throws IOException {
         initComponents();
         
         this.Usuario = Usuario;
-        
+        this.Rol = Rol;
         String pathRuta = "C:\\MEIA\\Lista.txt";
         File Archivo = new File(pathRuta);
         
@@ -91,7 +92,7 @@ public class Listas extends javax.swing.JFrame {
             Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "+"Fecha de Creacion:    "+"Estatus    ");
             for(int i = 0; i< Listas.size(); i++)
             {
-                Modelo.addElement(Listas.get(i).Nombre_lista+" "+Listas.get(i).Usuario+" "+Listas.get(i).Descripcion+" "+Listas.get(i).Numero_usuarios+" "+Listas.get(i).Fecha_creacion+" "+Listas.get(i).Status);
+                Modelo.addElement(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Descripcion+"|"+Listas.get(i).Numero_usuarios+"|"+Listas.get(i).Fecha_creacion+"|"+Listas.get(i).Status);
             }
             lstListas.setModel(Modelo);    
         }
@@ -187,7 +188,7 @@ public class Listas extends javax.swing.JFrame {
         });
 
         btnModificar.setFont(new java.awt.Font("Calibri Light", 1, 13)); // NOI18N
-        btnModificar.setText("Modificar");
+        btnModificar.setText("Modificar Usuarios");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
@@ -205,9 +206,9 @@ public class Listas extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEliminarLista)))
                 .addContainerGap())
@@ -223,7 +224,7 @@ public class Listas extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModificar)
                     .addComponent(btnEliminarLista))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 390, 280));
@@ -291,7 +292,7 @@ public class Listas extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void btnCrearNuevaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearNuevaListaActionPerformed
-        CrearLista NuevaLista = new CrearLista(Usuario);
+        CrearLista NuevaLista = new CrearLista(Usuario, Rol);
         NuevaLista.setLocationRelativeTo(null);
         NuevaLista.show();
         this.dispose();
@@ -333,29 +334,33 @@ public class Listas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarListaActionPerformed
-        String pathRuta = "C:\\MEIA\\Lista.txt";
-        File Archivo = new File(pathRuta);
-        FileReader Lectura = null;
+        
+        String Cadena = lstListas.getSelectedValue();
+        String []ArregloCadena = Cadena.split("\\|");
+        String Nombre = ArregloCadena[0];
+        String Usuario = ArregloCadena[1];
+        Procesos TamañoFijo = new Procesos();
         
         try {
-            Lectura = new FileReader(Archivo);
-            BufferedReader Leer = new BufferedReader(Lectura);
-            String Linea = null;
-            Linea = Leer.readLine();
-            String[] Auxiliar;
-            List<Lista> Listas = new ArrayList<Lista>();
-            Lista NuevaLista;
-            
+            String pathRuta = "C:\\MEIA\\Lista.txt";
+            File Archivo = new File(pathRuta);
+            RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+            String Linea = ArchivoSustitucion.readLine();
+            String [] Auxiliar;
+         
+               
             while(Linea != null)
             {
-              Auxiliar = Linea.split("\\|"); 
-              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-              Listas.add(NuevaLista);
+                Auxiliar = Linea.split("\\|"); 
+                if(Auxiliar[0].equals(Nombre) && Auxiliar[1].equals(Usuario))
+                {
+                    Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0], 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1], 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2], 2),ArregloCadena[3], ArregloCadena[4], "0");
+                    String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status;
+                    ArchivoSustitucion.writeBytes(Sustitucion);
+                }
+                Linea = ArchivoSustitucion.readLine();
             }
-            
-        } 
-        catch (FileNotFoundException ex) 
-        {
+        } catch (FileNotFoundException ex) {
             Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
