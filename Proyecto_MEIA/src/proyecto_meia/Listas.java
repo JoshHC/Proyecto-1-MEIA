@@ -333,9 +333,6 @@ public class Listas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarListaActionPerformed
-<<<<<<< HEAD
-            
-=======
         String pathRuta = "C:\\MEIA\\Lista.txt";
         File Archivo = new File(pathRuta);
         FileReader Lectura = null;
@@ -364,8 +361,6 @@ public class Listas extends javax.swing.JFrame {
             Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
         }
             
-        
->>>>>>> 505294f78c0275df43fb35f5b1e0ec155d5a7300
     }//GEN-LAST:event_btnEliminarListaActionPerformed
 
     /**
