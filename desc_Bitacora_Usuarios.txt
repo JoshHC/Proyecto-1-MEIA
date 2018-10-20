@@ -1,9 +1,0 @@
-Nombre Simbolico|        
-Fecha de Creacion|                            
-Usuario que lo creo|                    
-Fecha de Modificacion|                            
-Usuario que lo Modifico|                    
-Numero de Registros| 
-Registros Activos| 
-Registros Inactivos| 
-Max.Reorganizacion|5
