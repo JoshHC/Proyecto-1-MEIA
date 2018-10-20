@@ -5,17 +5,26 @@
  */
 package proyecto_meia;
 
+import java.awt.Color;
+import java.awt.Image;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,12 +39,14 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
     
     static String NombreLista;
     static String Usuario;
+    Procesos Acceso = new Procesos();
       
     public Modificacion_De_Listas(String Dato, String Usuario) throws IOException {
         
         NombreLista = Dato;
         lblLista.setText("Lista:"+NombreLista);
         BuscarListas(Usuario);
+        LlenarComboBox();
         initComponents();
     }
     
@@ -58,7 +69,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
         lblLista = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstUsuariosLista = new javax.swing.JList<>();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        ComboBoxUsuarios = new javax.swing.JComboBox<>();
         btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
@@ -86,9 +97,9 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(lstUsuariosLista);
 
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        ComboBoxUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                ComboBoxUsuariosActionPerformed(evt);
             }
         });
 
@@ -144,7 +155,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ComboBoxUsuarios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtNombreUsuario)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -161,7 +172,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(6, 6, 6)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ComboBoxUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -185,6 +196,114 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void LlenarComboBox() throws IOException
+    {
+        Procesos Acceso = new Procesos();
+      
+        String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
+        File Archivo = new File(pathRuta);
+        
+        FileReader Lectura = null;
+        try 
+        {
+            Lectura = new FileReader(Archivo);
+        } 
+        catch (FileNotFoundException ex) 
+        {
+            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        BufferedReader Leer = new BufferedReader(Lectura);
+        List<Usuario> ListaUsuarios = new ArrayList<Usuario>();
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        String Linea = "";
+        Linea = Leer.readLine();
+        String [] Auxiliar;
+        Usuario Nuevo;
+        boolean Admin = false;
+
+        while(Linea != null)
+        {
+            Auxiliar = Linea.split("\\|");
+            byte Aux;
+            byte Aux2;
+
+            if(Auxiliar[4].equals("1"))
+                Aux = 1;
+            else
+                Aux = 0;
+
+            if(Auxiliar[9].equals("1"))
+                Aux2 = 1;
+            else
+                Aux2 = 0;
+
+            Date Fecha = new Date(Auxiliar[5]);
+            Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Acceso.EliminarCaracteres(Auxiliar[3]),Aux,Fecha,Acceso.EliminarCaracteres(Auxiliar[6]),Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
+            ListaUsuarios.add(Nuevo);
+
+            Linea = Leer.readLine();
+        }
+
+        Leer.close();
+        Lectura.close();
+
+        String pathRutaU = "C:\\MEIA\\Usuarios.txt";
+        File ArchivoU = new File(pathRutaU);
+        
+        if(ArchivoU.exists())
+        {
+            FileReader LecturaU = null;
+            
+            try 
+            {
+                LecturaU = new FileReader(ArchivoU);
+            }
+            catch (FileNotFoundException ex) 
+            {
+                Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            BufferedReader LeerU = new BufferedReader(LecturaU);
+            String LineaU = "";
+            LineaU = LeerU.readLine();
+            String [] AuxiliarU;
+            Nuevo = null;
+            Admin = false;
+
+             while(LineaU != null)
+            {
+                Auxiliar = LineaU.split("\\|");
+                byte Aux;
+                byte Aux2;
+
+                if(Auxiliar[4].equals("1"))
+                    Aux = 1;
+                else
+                    Aux = 0;
+
+                if(Auxiliar[9].equals("1"))
+                    Aux2 = 1;
+                else
+                    Aux2 = 0;
+
+                Date Fecha = new Date(Auxiliar[5]);
+                Nuevo = new Usuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Acceso.EliminarCaracteres(Auxiliar[3]),Aux,Fecha,Acceso.EliminarCaracteres(Auxiliar[6]),Integer.parseInt(Auxiliar[7]),Auxiliar[8],Aux2);
+                ListaUsuarios.add(Nuevo);
+
+                LineaU = LeerU.readLine();
+            }
+             
+            LeerU.close();
+            LecturaU.close();
+            
+        }
+        
+            for(Usuario item : ListaUsuarios)
+                ComboBoxUsuarios.addItem(item.Usuario);
+        
+    }
+    
     //En esta Funcion se Buscan las Listas para llenar La Lista del Menu Principal.
     private void BuscarListas(String Usuario) throws FileNotFoundException, IOException
     {
@@ -213,7 +332,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Usuario Asociado:    "+"Descripcion:    "+"Fecha de Creacion:    "+"Estatus    ");
             for(int i = 0; i< Listas.size(); i++)
             {
-                Modelo.addElement(Listas.get(i).Nombre_lista+" "+Listas.get(i).Usuario+" "+Listas.get(i).Descripcion+" "+Listas.get(i).Numero_usuarios+" "+Listas.get(i).Fecha_creacion+" "+Listas.get(i).Status);
+                Modelo.addElement(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Descripcion+"|"+Listas.get(i).Numero_usuarios+"|"+Listas.get(i).Fecha_creacion+"|"+Listas.get(i).Status);
             }
             lstUsuariosLista.setModel(Modelo);
             }
@@ -239,7 +358,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Usuario Asociado:    "+"Descripcion:    "+"Fecha de Creacion:    "+"Estatus    ");
             for(int i = 0; i< Listas.size(); i++)
             {
-                Modelo.addElement(Listas.get(i).Nombre_lista+" "+Listas.get(i).Usuario+" "+Listas.get(i).Descripcion+" "+Listas.get(i).Numero_usuarios+" "+Listas.get(i).Fecha_creacion+" "+Listas.get(i).Status);
+                Modelo.addElement(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Descripcion+"|"+Listas.get(i).Numero_usuarios+"|"+Listas.get(i).Fecha_creacion+"|"+Listas.get(i).Status);
             }
             lstUsuariosLista.setModel(Modelo);
             }
@@ -367,6 +486,8 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    //PENDIENTE Aqui hay que actualizar el Archivo de ListaIndizada y su Descriptor
+    //Se Elimina un Usuario de la Lista y se Actualizan los Descriptores
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         
         String Cadena = lstUsuariosLista.getSelectedValue();
@@ -395,6 +516,28 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                 }
                 Linea = ArchivoSustitucion.readLine();
             }
+            
+            
+            pathRuta = "C:\\MEIA\\Bitacora_ListaUsuario.txt";
+            Archivo = new File(pathRuta);
+            ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+            Linea = ArchivoSustitucion.readLine();
+                      
+            while(Linea != null)
+            {
+                Auxiliar = Linea.split("\\|"); 
+                if(Auxiliar[0].equals(Nombre) && Auxiliar[1].equals(Usuario))
+                {
+                    Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0], 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1], 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2], 2),ArregloCadena[3], ArregloCadena[4], "0");
+                    String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status;
+                    ArchivoSustitucion.writeBytes(Sustitucion);
+                }
+                Linea = ArchivoSustitucion.readLine();
+            }
+            
+            DescriptorBitacoraListaUsuario();
+            DescriptorListaUsuario();          
+           
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -407,13 +550,170 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    //PENDIENTE Aqui hay que actualizar el Archivo de ListaIndizada y su Descriptor
+    //se Agrega un Usuario a la Lista y se Actualizan los Descriptores
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       //Programar Agregar
+       
+        try {
+            String Usuario = ComboBoxUsuarios.getSelectedItem().toString();
+            String pathRuta = "C:\\MEIA\\Bitacora_ListaUsuario.txt";
+            File Archivo = new File(pathRuta);
+            FileWriter Escritor = new FileWriter(Archivo,true);
+            BufferedWriter bw = new BufferedWriter(Escritor);
+            
+            Procesos Proceso = new Procesos();
+            Usuario = Proceso.RellenarCaracteres(Usuario, 0);
+            NombreLista = Proceso.RellenarCaracteres(NombreLista, 1);
+            List<Lista> Registros = new ArrayList<Lista>();
+            Registros = ListaRequerida();
+            
+            ListaUsuario Nueva = new ListaUsuario(NombreLista,Proceso.RellenarCaracteres(Registros.get(0).Usuario,0),Usuario,Proceso.RellenarCaracteres(Registros.get(0).Descripcion,2),Registros.get(0).Fecha_creacion, "1");
+            
+            if (Proceso.ValidadorListaUsuario().equals("Estable"))
+            {
+            bw.newLine();
+            bw.write(Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Descripcion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status);
+            DescriptorBitacoraListaUsuario();
+            JOptionPane.showMessageDialog(null, "Usuario Ingresado con Exito");
+            }
+            else
+            {
+            Proceso.ReorganizarListaUsuario();
+            bw.write(Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Descripcion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status);
+            DescriptorBitacoraListaUsuario();
+            DescriptorListaUsuario();
+            JOptionPane.showMessageDialog(null, "Usuario Ingresado con Exito");
+            }
+            
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Modificacion_De_Listas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            
+            
+            
+         
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        //Programar ComboBox
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    //método donde se crea el Descriptor de la ListaUsuario y se Actualiza
+    public void DescriptorBitacoraListaUsuario() throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\Bitacora_ListaUsuario.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[5].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[5].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        Descriptor_Bitacora_ListaUsuario Nuevo = new Descriptor_Bitacora_ListaUsuario(NombreLista,Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),"");
+        Acceso.DescriptorBitacoraListaUsuario(Nuevo);
+    } 
+    //método donde se crea el Descriptor de Lista y se Actualiza
+    public void DescriptorListaUsuario() throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\ListaUsuario.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[5].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[5].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        Descriptor_ListaUsuario Nuevo = new Descriptor_ListaUsuario(NombreLista,Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        Acceso.DescriptorListaUsuario(Nuevo);
+    }
+    
+    public List ListaRequerida() throws IOException
+    {
+            String pathRuta = "C:\\MEIA\\ListaUsuario.txt";
+            File Archivo = new File(pathRuta);
+            
+            FileReader Lectura = new FileReader(Archivo);
+            BufferedReader Leer = new BufferedReader(Lectura);
+            String Linea = Leer.readLine();
+            String[] Auxiliar;
+            List<Lista> Listas = new ArrayList<Lista>();
+            Lista NuevaLista;
+            
+            while(Linea != null)
+            {
+              Auxiliar = Linea.split("\\|"); 
+              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+              if(NombreLista.equals(Auxiliar[0]) && Usuario.equals(Auxiliar[1]))
+              Listas.add(NuevaLista);
+            }
+          
+            pathRuta = "C:\\MEIA\\Bitacora_ListaUsuario.txt";
+            Archivo = new File(pathRuta);
+            Lectura = new FileReader(Archivo);
+            Leer = new BufferedReader(Lectura);
+            Linea = Leer.readLine();
+            
+            while(Linea != null)
+            {
+              Auxiliar = Linea.split("\\|"); 
+              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+              if(NombreLista.equals(Auxiliar[0]) && Usuario.equals(Auxiliar[1]))
+              Listas.add(NuevaLista);
+            }
+            
+            return Listas;
+    }
+    
+    private void ComboBoxUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxUsuariosActionPerformed
+
+    }//GEN-LAST:event_ComboBoxUsuariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -451,11 +751,11 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBoxUsuarios;
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

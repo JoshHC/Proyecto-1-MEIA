@@ -20,6 +20,11 @@ public class ListaUsuario {
     String Descripcion;
     String Fecha_creacion;
     String Status;
+    
+    public ListaUsuario()
+    {
+        
+    }
 
     public ListaUsuario(String Nombre_lista, String Usuario, String Usuario_Asociado, String Descripcion, String Fecha_creacion, String Status) {
         this.Nombre_lista = Nombre_lista;

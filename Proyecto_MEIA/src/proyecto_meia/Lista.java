@@ -14,6 +14,11 @@ public class Lista {
     String Numero_usuarios;
     String Fecha_creacion;
     String Status;
+    
+    public Lista()
+    {
+        
+    }
 
     public Lista(String Nombre_lista, String Usuario, String Descripcion, String Numero_usuarios, String Fecha_creacion, String Status) {
         this.Nombre_lista = Nombre_lista;

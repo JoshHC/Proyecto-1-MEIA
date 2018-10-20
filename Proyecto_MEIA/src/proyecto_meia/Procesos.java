@@ -187,7 +187,6 @@ public class Procesos {
         return porciones;
     }
 
-    
     public void DescriptorBitacoraUsuario(Descriptor_Bitacora Descriptor) throws IOException
     {
         String pathRuta = "C:\\MEIA\\desc_Bitacora_Usuarios.txt";
@@ -360,7 +359,6 @@ public class Procesos {
         
     }
      
-    
     public boolean ValidarCaracteres (String Texto, int cod)
     {   
         // Max 20 caracteres
@@ -496,6 +494,114 @@ public class Procesos {
         }       
     }
     
+    public String ValidadorListaUsuario() throws FileNotFoundException, IOException
+    {
+       String pathRuta = "C:\\MEIA\\desc_Bitacora_ListaUsuario.txt";
+        File Archivo = new File(pathRuta);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader bw = new BufferedReader(Leer);
+
+        String Linea = bw.readLine();
+        String Auxiliar = "";
+        String ObtenerRegistros = "";
+        int contadorregistros = 0;
+        
+        while(Linea != null)
+        {
+            Auxiliar = Linea;
+            Linea = bw.readLine();
+            
+            if(Linea == null)
+            {
+                ObtenerRegistros = Auxiliar;
+            }
+            
+        }
+        Leer.close();
+        bw.close();
+        
+        String [] AuxRegistros = ObtenerRegistros.split("\\|");
+        
+        String path = "C:\\MEIA\\Bitacora_ListaUsuario.txt";
+        File Archivou = new File(path);
+        FileReader Leeru = new FileReader(Archivou);
+        BufferedReader bs = new BufferedReader(Leeru);
+
+        String Lineau = bs.readLine();
+        
+        while(Lineau != null)
+        {
+            contadorregistros++;
+            Lineau = bs.readLine();
+        }
+        Leer.close();
+        bw.close();
+        
+        if(Integer.toString(contadorregistros).equals(AuxRegistros[1]) == true)
+        {
+            return "Reorganizar";
+        }
+        else
+        {
+            return "Estable";
+        }       
+ 
+    }
+    
+    public String ValidadorLista() throws FileNotFoundException, IOException
+    {
+       String pathRuta = "C:\\MEIA\\desc_Bitacora_Lista.txt";
+        File Archivo = new File(pathRuta);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader bw = new BufferedReader(Leer);
+
+        String Linea = bw.readLine();
+        String Auxiliar = "";
+        String ObtenerRegistros = "";
+        int contadorregistros = 0;
+        
+        while(Linea != null)
+        {
+            Auxiliar = Linea;
+            Linea = bw.readLine();
+            
+            if(Linea == null)
+            {
+                ObtenerRegistros = Auxiliar;
+            }
+            
+        }
+        Leer.close();
+        bw.close();
+        
+        String [] AuxRegistros = ObtenerRegistros.split("\\|");
+        
+        String path = "C:\\MEIA\\Bitacora_Lista.txt";
+        File Archivou = new File(path);
+        FileReader Leeru = new FileReader(Archivou);
+        BufferedReader bs = new BufferedReader(Leeru);
+
+        String Lineau = bs.readLine();
+        
+        while(Lineau != null)
+        {
+            contadorregistros++;
+            Lineau = bs.readLine();
+        }
+        Leer.close();
+        bw.close();
+        
+        if(Integer.toString(contadorregistros).equals(AuxRegistros[1]) == true)
+        {
+            return "Reorganizar";
+        }
+        else
+        {
+            return "Estable";
+        }       
+ 
+    }
+    
     public void Reorganizar() throws FileNotFoundException, IOException
     {
         
@@ -589,6 +695,132 @@ public class Procesos {
         
     }
     
+    public void ReorganizarListaUsuario() throws FileNotFoundException, IOException
+    {
+        String pathRuta = "C:\\MEIA\\Bitacora_ListaUsuario.txt";
+        File Archivo = new File(pathRuta);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader bw = new BufferedReader(Leer);
+        ListaUsuario ListaAux = new ListaUsuario();
+        List<ListaUsuario> Lista = new ArrayList<ListaUsuario>();
+
+        String Linea = bw.readLine();
+        while(Linea != null)
+        {
+            String []Auxiliar = Linea.split("\\|"); 
+            ListaUsuario NuevaLista = new ListaUsuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+            Lista.add(NuevaLista);
+            Linea = bw.readLine(); 
+        }
+        Leer.close();
+        bw.close();
+        
+        String path = "C:\\MEIA\\ListaUsuario.txt";
+        File Archivou = new File(path);
+            if(Archivou.exists() == true)
+            {
+            FileReader Leeru = new FileReader(Archivou);
+            BufferedReader bs = new BufferedReader(Leeru);
+
+            String Lineau = bs.readLine();
+                while(Lineau != null)
+                {
+                    String []Auxiliar = Linea.split("\\|"); 
+                    ListaUsuario NuevaLista = new ListaUsuario(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                    Lista.add(NuevaLista);
+                    Lineau = bs.readLine(); 
+                }
+            Leer.close();
+            bw.close();
+            }
+        Collections.sort(Lista, new Comparator<ListaUsuario>() {
+            
+        public int compare(ListaUsuario obj1, ListaUsuario obj2) 
+        {
+            return obj1.Nombre_lista.compareTo(obj2.Nombre_lista);
+        }
+        
+        });
+        
+        FileOutputStream writer = new FileOutputStream(Archivo);
+        writer.write(("").getBytes());
+        writer.close(); 
+       
+        FileWriter Escribir = new FileWriter(Archivou);
+        BufferedWriter wr = new BufferedWriter(Escribir);
+        
+        for(int i = 0; i<= Lista.size()-1; i++)
+        { 
+            wr.write("Nombre Lista"+"|"+Lista.get(i).Nombre_lista+"Usuario"+"|"+Lista.get(i).Usuario+"UsuarioAsociado"+"|"+Lista.get(i).Usuario_Asociado+"Descripcion"+"|"+Lista.get(i).Descripcion+"Fecha de Creacion "+"|"+Lista.get(i).Fecha_creacion+"Estatus"+"|"+Lista.get(i).Status);
+            wr.write("\r\n");
+        }
+        wr.close();
+        Escribir.close();
+    }
+    
+    public void ReorganizarLista() throws FileNotFoundException, IOException
+    {
+        String pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
+        File Archivo = new File(pathRuta);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader bw = new BufferedReader(Leer);
+        Lista ListaAux = new Lista();
+        List<Lista> Lista = new ArrayList<Lista>();
+
+        String Linea = bw.readLine();
+        while(Linea != null)
+        {
+            String []Auxiliar = Linea.split("\\|"); 
+            Lista NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+            Lista.add(NuevaLista);
+            Linea = bw.readLine(); 
+        }
+        Leer.close();
+        bw.close();
+        
+        String path = "C:\\MEIA\\Lista.txt";
+        File Archivou = new File(path);
+            if(Archivou.exists() == true)
+            {
+            FileReader Leeru = new FileReader(Archivou);
+            BufferedReader bs = new BufferedReader(Leeru);
+
+            String Lineau = bs.readLine();
+                while(Lineau != null)
+                {
+                    String []Auxiliar = Linea.split("\\|"); 
+                    Lista NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                    Lista.add(NuevaLista);
+                    Lineau = bs.readLine(); 
+                }
+            Leer.close();
+            bw.close();
+            }
+        Collections.sort(Lista, new Comparator<Lista>() {
+            
+        public int compare(Lista obj1, Lista obj2) 
+        {
+            return obj1.Nombre_lista.compareTo(obj2.Nombre_lista);
+        }
+        
+        });
+        
+        FileOutputStream writer = new FileOutputStream(Archivo);
+        writer.write(("").getBytes());
+        writer.close(); 
+       
+        FileWriter Escribir = new FileWriter(Archivou);
+        BufferedWriter wr = new BufferedWriter(Escribir);
+        
+        for(int i = 0; i<= Lista.size()-1; i++)
+        { 
+            wr.write("Nombre Lista"+"|"+Lista.get(i).Nombre_lista+"Usuario"+"|"+Lista.get(i).Usuario+"UsuarioAsociado"+"|"+"Descripcion"+"|"+Lista.get(i).Descripcion+"Fecha de Creacion "+"|"+Lista.get(i).Fecha_creacion+"Estatus"+"|"+Lista.get(i).Status);
+            wr.write("\r\n");
+        }
+        wr.close();
+        Escribir.close();
+    }
+    
      public void DescriptorListaUsuario(Descriptor_ListaUsuario Descriptor) throws IOException
     {
         String pathRuta = "C:\\MEIA\\desc_ListaUsuario.txt";
@@ -646,6 +878,72 @@ public class Procesos {
             
             ArchivoSustitucion.readLine();
             Sustitucion = "Registros Inactivos"+"|"+Descriptor.RegistrosInactivos;
+            ArchivoSustitucion.writeBytes(Sustitucion);
+        }
+        
+    }
+     
+      public void DescriptorBitacoraListaUsuario(Descriptor_Bitacora_ListaUsuario Descriptor) throws IOException
+    {
+        String pathRuta = "C:\\MEIA\\desc_Bitacora_ListaUsuario.txt";
+        File Archivo = new File(pathRuta);
+        RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+        /*FileReader Leer = new FileReader(Archivo);
+        BufferedReader bs = new BufferedReader(Leer);*/
+        String Auxiliar = ArchivoSustitucion.readLine();
+        String [] AuxTamaño = Auxiliar.split("\\|");
+        
+        
+        if(AuxTamaño[1].equals("        "))
+        {
+         ArchivoSustitucion.seek(0);
+         ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_simbolico);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Usuario que lo creo"+"|"+Descriptor.Usuario_Creacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Numero de Registros"+"|"+Descriptor.NumerodeRegistros);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Registros Activos"+"|"+Descriptor.RegistrosActivos);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.close();
+        }
+        else
+        {
+            ArchivoSustitucion.seek(0);
+            String Sustitucion;
+            ArchivoSustitucion.readLine();
+            ArchivoSustitucion.readLine();
+            
+            ArchivoSustitucion.readLine();            
+            Sustitucion = "Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion;
+            ArchivoSustitucion.writeBytes(Sustitucion);
+            
+            ArchivoSustitucion.readLine();
+            Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion;
+            ArchivoSustitucion.writeBytes(Sustitucion);  
+            
+            ArchivoSustitucion.readLine();
+            Sustitucion = "Numero de Registros"+"|"+Descriptor.NumerodeRegistros;
+            ArchivoSustitucion.writeBytes(Sustitucion);
+            
+            ArchivoSustitucion.readLine();
+            Sustitucion = "Registros Activos"+"|"+Descriptor.RegistrosActivos;
+            ArchivoSustitucion.writeBytes(Sustitucion);
+            
+            ArchivoSustitucion.readLine();
+            Sustitucion = "Registros Inactivos"+"|"+Descriptor.RegistrosInactivos;
+            ArchivoSustitucion.writeBytes(Sustitucion);
+            
+            ArchivoSustitucion.readLine();
+            Sustitucion = "Max. Reorganizacion"+"|"+Descriptor.Max_Reorganizacion;
             ArchivoSustitucion.writeBytes(Sustitucion);
         }
         
@@ -713,7 +1011,73 @@ public class Procesos {
         
     }
       
-      public void DescriptorListaUsuarioIndizada(Descriptor_ListaUsuarioIndizada Descriptor) throws IOException
+       public void DescriptorBitacoraLista(Descriptor_Bitacora_Lista Descriptor) throws IOException
+    {
+        String pathRuta = "C:\\MEIA\\desc_Bitacora_Lista.txt";
+        File Archivo = new File(pathRuta);
+        RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+        /*FileReader Leer = new FileReader(Archivo);
+        BufferedReader bs = new BufferedReader(Leer);*/
+        String Auxiliar = ArchivoSustitucion.readLine();
+        String [] AuxTamaño = Auxiliar.split("\\|");
+        
+        
+        if(AuxTamaño[1].equals("        "))
+        {
+         ArchivoSustitucion.seek(0);
+         ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_simbolico);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Usuario que lo creo"+"|"+Descriptor.Usuario_Creacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Numero de Registros"+"|"+Descriptor.NumerodeRegistros);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Registros Activos"+"|"+Descriptor.RegistrosActivos);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.close();
+        }
+        else
+        {
+            ArchivoSustitucion.seek(0);
+            String Sustitucion;
+            ArchivoSustitucion.readLine();
+            ArchivoSustitucion.readLine();
+            
+            ArchivoSustitucion.readLine();            
+            Sustitucion = "Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion;
+            ArchivoSustitucion.writeBytes(Sustitucion);
+            
+            ArchivoSustitucion.readLine();
+            Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion;
+            ArchivoSustitucion.writeBytes(Sustitucion);  
+            
+            ArchivoSustitucion.readLine();
+            Sustitucion = "Numero de Registros"+"|"+Descriptor.NumerodeRegistros;
+            ArchivoSustitucion.writeBytes(Sustitucion);
+            
+            ArchivoSustitucion.readLine();
+            Sustitucion = "Registros Activos"+"|"+Descriptor.RegistrosActivos;
+            ArchivoSustitucion.writeBytes(Sustitucion);
+            
+            ArchivoSustitucion.readLine();
+            Sustitucion = "Registros Inactivos"+"|"+Descriptor.RegistrosInactivos;
+            ArchivoSustitucion.writeBytes(Sustitucion);
+            
+            ArchivoSustitucion.readLine();
+            Sustitucion = "Max. Reorganizacion"+"|"+Descriptor.Max_Reorganizacion;
+            ArchivoSustitucion.writeBytes(Sustitucion);
+        }
+        
+    }
+      
+      public void DescriptorListaIndizada(Descriptor_ListaUsuarioIndizada Descriptor) throws IOException
     {
         String pathRuta = "C:\\MEIA\\desc_ListaUsuarioIndizada.txt";
         File Archivo = new File(pathRuta);

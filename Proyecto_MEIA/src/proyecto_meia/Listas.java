@@ -371,6 +371,7 @@ public class Listas extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // Aca se programa modificar
+        //Se debe programar modificar descripcion solamente, lo demas no
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void btnCrearNuevaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearNuevaListaActionPerformed

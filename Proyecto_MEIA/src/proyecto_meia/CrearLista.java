@@ -1,9 +1,11 @@
 package proyecto_meia;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,6 +23,7 @@ public class CrearLista extends javax.swing.JFrame {
     private String Usuario;
     private String NombreLista;
     private String Descripcion;
+    Procesos Acceso = new Procesos();
 
     public CrearLista(String Usuario, String Rol) {
         initComponents();
@@ -59,7 +62,7 @@ public class CrearLista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -68,15 +71,20 @@ public class CrearLista extends javax.swing.JFrame {
         jTFNombreLista = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTADescripcion = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        btnCrearLista = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton2.setFont(new java.awt.Font("Calibri Light", 1, 13)); // NOI18N
-        jButton2.setText("Cancelar");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 335, 180, 30));
+        btnCancelar.setFont(new java.awt.Font("Calibri Light", 1, 13)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 335, 180, 30));
 
         jLabel2.setFont(new java.awt.Font("Calibri Light", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -110,14 +118,14 @@ public class CrearLista extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 180, -1));
 
-        jButton1.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
-        jButton1.setText("Crear");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCrearLista.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
+        btnCrearLista.setText("Crear");
+        btnCrearLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCrearListaActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 180, 31));
+        getContentPane().add(btnCrearLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 180, 31));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
         jLabel5.setText("jLabel5");
@@ -126,7 +134,7 @@ public class CrearLista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnCrearListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearListaActionPerformed
         Date fecha = new Date();
         SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
         
@@ -145,8 +153,20 @@ public class CrearLista extends javax.swing.JFrame {
             Logger.getLogger(CrearLista.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnCrearListaActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+       Listas Nueva = null;
+        try {
+            Nueva = new Listas(Usuario, Rol);
+        } catch (IOException ex) {
+            Logger.getLogger(CrearLista.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       Nueva.show();
+       this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    //AQUI NO TIENE NADA QUE VER LA LISTA INDIZADA
     private void CrearLista(Lista NuevaLista) throws IOException
     {
         if (ListaExiste(NuevaLista))
@@ -156,16 +176,25 @@ public class CrearLista extends javax.swing.JFrame {
         }
         else
         {
+            String pathRutaLista = "C:\\MEIA\\Bitacora_Lista.txt";
+            File ArchivoLista = new File(pathRutaLista);
+                
+            FileWriter Escribir = new FileWriter(ArchivoLista);
+            BufferedWriter bw = new BufferedWriter(Escribir);
+            
             if (VerificarEspacioBitacora())
             {
-                // Insertar el nuevo registro
-                // Modificar el descriptor
+                //Se Inserta el Nuevo Registro
+                bw.write(NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
+                DescriptorBitacoraLista();
             }
             else
             {
-                // Reorganizar la bitacora y el meromero
-                // Insertar el nuevo registro
-                // Modificar el descriptor
+                Acceso.ReorganizarLista();
+                //Se Inserta el Nuevo Registro
+                 bw.write(NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
+                DescriptorBitacoraLista();
+                DescriptorLista();
             }
         }
     }
@@ -174,7 +203,7 @@ public class CrearLista extends javax.swing.JFrame {
     {
         boolean HayEspacio = true;
         
-        String pathRutaBitacoraLista = "C:\\MEIA\\BitacoraLista.txt";
+        String pathRutaBitacoraLista = "C:\\MEIA\\Bitacora_Lista.txt";
         File ArchivoBitacoraLista = new File(pathRutaBitacoraLista);
         FileReader Leer = new FileReader(ArchivoBitacoraLista);
         BufferedReader leerArchivo = new BufferedReader(Leer);
@@ -205,7 +234,7 @@ public class CrearLista extends javax.swing.JFrame {
         String pathRutaLista = "C:\\MEIA\\Lista.txt";
         File ArchivoLista = new File(pathRutaLista);
         
-        String pathRutaBitacoraLista = "C:\\MEIA\\BitacoraLista.txt";
+        String pathRutaBitacoraLista = "C:\\MEIA\\Bitacora_Lista.txt";
         File ArchivoBitacoraLista = new File(pathRutaBitacoraLista);
         
         if (ArchivoLista.exists())
@@ -247,6 +276,83 @@ public class CrearLista extends javax.swing.JFrame {
         return Existe;
     }
     
+    //método donde se crea el Descriptor de la Bitacora de Lista y se Actualiza
+    public void DescriptorBitacoraLista() throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\Bitacora_Lista.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[5].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[5].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista(NombreLista,Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),"");
+        Acceso.DescriptorBitacoraLista(Nuevo);
+    }
+    
+    //método donde se crea el Descriptor de Lista y se Actualiza
+    public void DescriptorLista() throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\Lista.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[5].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[5].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        Descriptor_Listas Nuevo = new Descriptor_Listas(NombreLista,Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        Acceso.DescriptorLista(Nuevo);
+    }
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -281,8 +387,8 @@ public class CrearLista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCrearLista;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
