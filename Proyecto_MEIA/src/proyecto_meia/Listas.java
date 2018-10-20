@@ -330,7 +330,39 @@ public class Listas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarListaActionPerformed
+<<<<<<< HEAD
             
+=======
+        String pathRuta = "C:\\MEIA\\Lista.txt";
+        File Archivo = new File(pathRuta);
+        FileReader Lectura = null;
+        
+        try {
+            Lectura = new FileReader(Archivo);
+            BufferedReader Leer = new BufferedReader(Lectura);
+            String Linea = null;
+            Linea = Leer.readLine();
+            String[] Auxiliar;
+            List<Lista> Listas = new ArrayList<Lista>();
+            Lista NuevaLista;
+            
+            while(Linea != null)
+            {
+              Auxiliar = Linea.split("\\|"); 
+              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+              Listas.add(NuevaLista);
+            }
+            
+        } 
+        catch (FileNotFoundException ex) 
+        {
+            Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        
+>>>>>>> 505294f78c0275df43fb35f5b1e0ec155d5a7300
     }//GEN-LAST:event_btnEliminarListaActionPerformed
 
     /**
