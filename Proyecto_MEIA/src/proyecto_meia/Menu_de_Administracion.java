@@ -186,6 +186,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
 
         jFileChooser1 = new javax.swing.JFileChooser();
         panel3 = new java.awt.Panel();
+        btnAgregaraLista = new javax.swing.JButton();
         txtFecha = new javax.swing.JFormattedTextField();
         btnGuardar = new javax.swing.JButton();
         lblPassword = new javax.swing.JLabel();
@@ -227,6 +228,10 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
         );
 
         getContentPane().add(panel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 830, 10));
+
+        btnAgregaraLista.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnAgregaraLista.setText("Agregar a una Lista");
+        getContentPane().add(btnAgregaraLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 480, 170, 30));
 
         try {
             txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -1026,6 +1031,7 @@ public class Menu_de_Administracion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBoxSeleccionarUsuario;
     private javax.swing.JPanel PanelEstado;
+    private javax.swing.JButton btnAgregaraLista;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCargarFoto;
     private javax.swing.JToggleButton btnEstado;
