@@ -329,10 +329,11 @@ public class Listas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarListaActionPerformed
-            
-            String pathRuta = "C:\\MEIA\\Lista.txt";
-            File Archivo = new File(pathRuta);
-            FileReader Lectura = null;
+        String pathRuta = "C:\\MEIA\\Lista.txt";
+        File Archivo = new File(pathRuta);
+        FileReader Lectura = null;
+        
+        try {
             Lectura = new FileReader(Archivo);
             BufferedReader Leer = new BufferedReader(Lectura);
             String Linea = null;
@@ -347,6 +348,15 @@ public class Listas extends javax.swing.JFrame {
               NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
               Listas.add(NuevaLista);
             }
+            
+        } 
+        catch (FileNotFoundException ex) 
+        {
+            Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
         
     }//GEN-LAST:event_btnEliminarListaActionPerformed
 

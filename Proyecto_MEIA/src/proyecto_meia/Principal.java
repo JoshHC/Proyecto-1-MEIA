@@ -437,10 +437,19 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnMenudeAdministracion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenudeAdministracion1ActionPerformed
-        Listas listas = new Listas(usuario);
-        listas.setLocationRelativeTo(null);
-        listas.show();
-        this.dispose();
+        Listas listas;
+        
+        try 
+        {
+            listas = new Listas(usuario);
+            listas.setLocationRelativeTo(null);
+            listas.show();
+            this.dispose();
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnMenudeAdministracion1ActionPerformed
 
     /**
