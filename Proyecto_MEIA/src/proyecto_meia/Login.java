@@ -104,10 +104,10 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(btnlogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 390, 210, -1));
 
         Fondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/LOGO_MEIA2 .png"))); // NOI18N
-        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 500));
+        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 500));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo.png"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 540));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -402,12 +402,15 @@ public class Procesos {
         
         switch(cod)
         {
-            // Max 30 caracteres
+            // Max 20 caracteres
             case 0: cantidad = 20 - Texto.length(); break;
+            
             // Max 30 caracteres
             case 1: cantidad = 30 - Texto.length(); break;
+            
             // Max 40 caracteres
             case 2: cantidad = 40 - Texto.length(); break;
+            
             // Max 200 caracteres
             case 3: cantidad = 200 - Texto.length(); break;
         }
