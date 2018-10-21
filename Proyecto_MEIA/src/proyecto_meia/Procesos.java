@@ -949,7 +949,7 @@ public class Procesos {
         
     }
      
-      public void DescriptorLista(Descriptor_Listas Descriptor) throws IOException
+    public void DescriptorLista(Descriptor_Listas Descriptor) throws IOException
     {
         String pathRuta = "C:\\MEIA\\desc_Lista.txt";
         File Archivo = new File(pathRuta);
@@ -957,10 +957,10 @@ public class Procesos {
         /*FileReader Leer = new FileReader(Archivo);
         BufferedReader bs = new BufferedReader(Leer);*/
         String Auxiliar = ArchivoSustitucion.readLine();
-        String [] AuxTamaño = Auxiliar.split("\\|");
+        //String [] AuxTamaño = Auxiliar.split("\\|");
         
         
-        if(AuxTamaño[1].equals("        "))
+        if(Auxiliar == null)
         {
          ArchivoSustitucion.seek(0);
          ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_simbolico);
@@ -1085,10 +1085,10 @@ public class Procesos {
         /*FileReader Leer = new FileReader(Archivo);
         BufferedReader bs = new BufferedReader(Leer);*/
         String Auxiliar = ArchivoSustitucion.readLine();
-        String [] AuxTamaño = Auxiliar.split("\\|");
+        //String [] AuxTamaño = Auxiliar.split("\\|");
         
         
-        if(AuxTamaño[1].equals("        "))
+        if(Auxiliar == null)
         {
          ArchivoSustitucion.seek(0);
          ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_simbolico);
