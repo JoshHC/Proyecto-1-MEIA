@@ -20,9 +20,9 @@ import javax.swing.JOptionPane;
 public class CrearLista extends javax.swing.JFrame {
 
     private String Rol;
-    private String Usuario;
-    private String NombreLista;
-    private String Descripcion;
+    private static String Usuario;
+    private static String NombreLista;
+    private static String Descripcion;
     Procesos Acceso = new Procesos();
 
     public CrearLista(String Usuario, String Rol) {
@@ -173,6 +173,9 @@ public class CrearLista extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(null, "No es posible crear esta lista en este momento. \n"
                     + "La lista que quieres crear ya existe.");
+            jTFNombreLista.setText("");
+            jTFUsuario.setText("");
+            jTADescripcion.setText("");
         }
         else
         {
@@ -188,18 +191,25 @@ public class CrearLista extends javax.swing.JFrame {
                 bw.write(Acceso.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+Acceso.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+Acceso.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
                 bw.close();
                 Escribir.close();
-                DescriptorBitacoraLista();                        
+                DescriptorBitacoraLista();      
+                JOptionPane.showMessageDialog(this,"Lista Creada","La Lista se ha Creado Exitosamente",JOptionPane.INFORMATION_MESSAGE);
             }
             else
             {
                 Acceso.ReorganizarLista();
                 //Se Inserta el Nuevo Registro
-               bw.write(Acceso.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+Acceso.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+Acceso.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
+                bw.write(Acceso.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+Acceso.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+Acceso.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
                 bw.close();
                 Escribir.close();
                 DescriptorBitacoraLista();
                 DescriptorLista();
+                JOptionPane.showMessageDialog(this,"Lista Creada","La Lista se ha Creado Exitosamente",JOptionPane.INFORMATION_MESSAGE);
             }
+            
+        jTFNombreLista.setText("");
+        jTFUsuario.setText("");
+        jTADescripcion.setText("");
+        
         }
     }
     
@@ -327,8 +337,8 @@ public class CrearLista extends javax.swing.JFrame {
         Leer.close();
         leerArchivo.close();
         
-        
-        Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista(NombreLista,Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),"");
+        String Nombre = jTFNombreLista.getText();
+        Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista(Acceso.RellenarCaracteres(Nombre,1),Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),"");
         Acceso.DescriptorBitacoraLista(Nuevo);
     }
     
