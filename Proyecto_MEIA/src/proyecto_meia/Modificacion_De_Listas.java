@@ -715,6 +715,21 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_ComboBoxUsuariosActionPerformed
 
+    //Cuando se Agregue en ListaUsuarios se debe llamar a Este Metodo en donde se agregara tambien el registro
+    //y se actualizara su descriptor
+    public void AgregarListaIndizada()
+    {
+        
+        
+    }
+    
+    //Cuando se Elimine en ListaUsuarios se debe llamar a Este Metodo en donde se agregara tambien el registro
+    //y se actualizara su descriptor
+    public void EliminarListaIndizada()
+    {
+        
+        
+    }
     /**
      * @param args the command line arguments
      */

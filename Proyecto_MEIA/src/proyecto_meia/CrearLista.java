@@ -185,14 +185,18 @@ public class CrearLista extends javax.swing.JFrame {
             if (VerificarEspacioBitacora())
             {
                 //Se Inserta el Nuevo Registro
-                bw.write(NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
-                DescriptorBitacoraLista();
+                bw.write(Acceso.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+Acceso.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+Acceso.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
+                bw.close();
+                Escribir.close();
+                DescriptorBitacoraLista();                        
             }
             else
             {
                 Acceso.ReorganizarLista();
                 //Se Inserta el Nuevo Registro
-                 bw.write(NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
+               bw.write(Acceso.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+Acceso.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+Acceso.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
+                bw.close();
+                Escribir.close();
                 DescriptorBitacoraLista();
                 DescriptorLista();
             }
@@ -209,6 +213,12 @@ public class CrearLista extends javax.swing.JFrame {
         BufferedReader leerArchivo = new BufferedReader(Leer);
         String Linea = leerArchivo.readLine();
             
+        if(Linea == null)
+        {
+            HayEspacio = true;
+        }
+        else
+        {
         for(int i = 0; i < 6; i++)
             Linea = leerArchivo.readLine();
         
@@ -223,6 +233,7 @@ public class CrearLista extends javax.swing.JFrame {
         
         if (Trozos[1].equals(trozos[1]))
             HayEspacio = false;
+        }
         
         return HayEspacio;   
     }
@@ -243,15 +254,18 @@ public class CrearLista extends javax.swing.JFrame {
             BufferedReader leerArchivo = new BufferedReader(Leer);
             String Linea = leerArchivo.readLine();
             
-            while (!"".equals(Linea))
+            if(Linea != null)
             {
-                String[] Datos = new String[6];
-                Datos = Linea.split("\\|");
-                
-                if (NuevaLista.Nombre_lista.equals(Datos[0]) && NuevaLista.Usuario.equals(Datos[1]) && Datos[5].equals("1"))
-                    Existe = true;
-                
-                Linea = leerArchivo.readLine();
+                while (!"".equals(Linea))
+                {
+                    String[] Datos = new String[6];
+                    Datos = Linea.split("\\|");
+
+                    if (NuevaLista.Nombre_lista.equals(Datos[0]) && NuevaLista.Usuario.equals(Datos[1]) && Datos[5].equals("1"))
+                        Existe = true;
+
+                    Linea = leerArchivo.readLine();
+                }
             }
         } 
         
@@ -261,15 +275,18 @@ public class CrearLista extends javax.swing.JFrame {
             BufferedReader leerArchivo = new BufferedReader(Leer);
             String Linea = leerArchivo.readLine();
             
-            while (!"".equals(Linea))
+            if(Linea != null)
             {
-                String[] Datos = new String[6];
-                Datos = Linea.split("\\|");
-                
-                if (NuevaLista.Nombre_lista.equals(Datos[0]) && NuevaLista.Usuario.equals(Datos[1]) && Datos[5].equals("1"))
-                    Existe = true;
-                
-                Linea = leerArchivo.readLine();
+                while (!"".equals(Linea))
+                {
+                    String[] Datos = new String[6];
+                    Datos = Linea.split("\\|");
+
+                    if (NuevaLista.Nombre_lista.equals(Datos[0]) && NuevaLista.Usuario.equals(Datos[1]) && Datos[5].equals("1"))
+                        Existe = true;
+
+                    Linea = leerArchivo.readLine();
+                }
             }
         }
         
