@@ -650,6 +650,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                     String [] Auxiliar = Linea.split("\\|");
                     ListaIndizada Nueva = new ListaIndizada(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5],Auxiliar[6]);
                     Listas.add(Nueva);
+                    Linea = bw.readLine();
                 }
                 Lector.close();
                 bw.close();
@@ -676,7 +677,8 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                 {
                     if(Listas.get(i+1).NoRegistro != null)
                     {
-                        Listas.get(i).Siguiente = Listas.get(i).NoRegistro;
+                        if(Listas.get(i).Siguiente.equals("0") == false)
+                        Listas.get(i).Siguiente = Listas.get(i+1).NoRegistro;
                     }
                     else
                     {
@@ -711,9 +713,47 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
     
     //Cuando se Elimine en ListaUsuarios se debe llamar a Este Metodo en donde se agregara tambien el registro
     //y se actualizara su descriptor
-    public void EliminarListaIndizada()
+    public void EliminarListaIndizada(ListaUsuario Nueva) throws IOException
     {
         
+            String pathRuta = "C:\\MEIA\\ListaUsuarioIndizada.txt";
+            File Archivo = new File(pathRuta);
+            FileReader Lector = new FileReader(Archivo);
+            BufferedReader bw = new BufferedReader(Lector);
+            String Linea = bw.readLine();
+            List<ListaIndizada> Listas = new ArrayList<ListaIndizada>();
+           
+            
+            
+            while(Linea != null)
+            {
+                String[] Auxiliar = Linea.split("\\|");
+                if(Auxiliar[2].equals(Nueva.Nombre_lista) && Auxiliar[3].equals(Nueva.Usuario) && Auxiliar[4].equals(Nueva.Usuario_Asociado))
+                {
+                ListaIndizada Aux = new ListaIndizada(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5],Auxiliar[6]);
+                Listas.add(Aux);
+                }
+                else
+                {
+                 ListaIndizada Aux = new ListaIndizada(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4], "0","0");   
+                 Listas.add(Aux);
+                }
+                Linea = bw.readLine();
+            }
+
+            FileWriter Escritor = new FileWriter(Archivo);
+            BufferedWriter bs = new BufferedWriter(Escritor);
+            
+            for(int i = 0; i<Listas.size();i++)
+            {
+                bs.write(Listas.get(i).NoRegistro+"|"+Listas.get(i).Posicion+"|"+Listas.get(i).Nombre_Lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Usuario_Asociado+"|"+Listas.get(i).Siguiente+"|"+Listas.get(i).Status);
+            }
+            bs.close();
+            Escritor.close();
+            AsignarSiguiente();
+            DescriptorListaIndizada();
+            bw.close();
+            Lector.close();
         
     }
     
