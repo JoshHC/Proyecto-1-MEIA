@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +23,8 @@ public class Listas extends javax.swing.JFrame {
 
     private String Usuario;
     private String Rol;
+    private static String NombreListaSeleccionada;
+    Procesos Acceso = new Procesos();
     
     private Listas() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -39,7 +42,6 @@ public class Listas extends javax.swing.JFrame {
             BuscarListas(Usuario);
     }
 
-    
     //En esta Funcion se Buscan las Listas para llenar La Lista del Menu Principal.
     private void BuscarListas(String Usuario) throws FileNotFoundException, IOException
     {
@@ -434,6 +436,7 @@ public class Listas extends javax.swing.JFrame {
         String Cadena = lstListas.getSelectedValue();
         String []ArregloCadena = Cadena.split("\\|");
         String Nombre = ArregloCadena[0];
+        NombreListaSeleccionada = Nombre;
         String Usuario = ArregloCadena[1];
         Procesos TamañoFijo = new Procesos();
         
@@ -458,6 +461,30 @@ public class Listas extends javax.swing.JFrame {
                 }
                 Linea = ArchivoSustitucion.readLine();
             }
+            
+            
+            pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
+            Archivo = new File(pathRuta);
+            ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+            Linea = ArchivoSustitucion.readLine();
+         
+               
+            while(Linea != null)
+            {
+                Auxiliar = Linea.split("\\|"); 
+                if(Auxiliar[0].equals(Nombre) && Auxiliar[1].equals(Usuario))
+                {
+                    Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0], 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1], 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2], 2),ArregloCadena[3], ArregloCadena[4], "0");
+                    String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status;
+                    ArchivoSustitucion.writeBytes(Sustitucion);
+                }
+                Linea = ArchivoSustitucion.readLine();
+            }
+            
+            DescriptorLista();
+            DescriptorBitacoraLista();
+            
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -471,6 +498,83 @@ public class Listas extends javax.swing.JFrame {
             
     }//GEN-LAST:event_btnEliminarListaActionPerformed
 
+    //método donde se crea el Descriptor de la Bitacora de Lista y se Actualiza
+    public void DescriptorBitacoraLista() throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\Bitacora_Lista.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[5].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[5].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista(NombreListaSeleccionada,Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),"");
+        Acceso.DescriptorBitacoraLista(Nuevo);
+    }
+    
+    //método donde se crea el Descriptor de Lista y se Actualiza
+    public void DescriptorLista() throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\Lista.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[5].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[5].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        Descriptor_Listas Nuevo = new Descriptor_Listas(NombreListaSeleccionada,Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        Acceso.DescriptorLista(Nuevo);
+    }
     /**
      * @param args the command line arguments
      */
