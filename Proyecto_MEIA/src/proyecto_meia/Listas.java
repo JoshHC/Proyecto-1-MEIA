@@ -20,7 +20,9 @@ import static proyecto_meia.Login.Usuario;
  * @author Admin
  */
 public class Listas extends javax.swing.JFrame {
-
+    
+    Procesos procesos = new Procesos();
+    
     private String Usuario;
     private String Rol;
     private static String NombreListaSeleccionada;
@@ -47,7 +49,7 @@ public class Listas extends javax.swing.JFrame {
     //En esta Funcion se Buscan las Listas para llenar La Lista del Menu Principal.
     private void BuscarListas(String Usuario) throws FileNotFoundException, IOException
     {
-        if(Usuario == "admin")
+        if(Usuario.equals("admin"))
         {
             String pathRuta = "C:\\MEIA\\Lista.txt";
             File Archivo = new File(pathRuta);
@@ -63,14 +65,18 @@ public class Listas extends javax.swing.JFrame {
 
                 while(Linea != null)
                 {
-                  Auxiliar = Linea.split("\\|"); 
-                  NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-                  Listas.add(NuevaLista);
+                    Auxiliar = Linea.split("\\|"); 
+                    NuevaLista = new Lista(Auxiliar[0]+"  |",Auxiliar[1]+"|",Auxiliar[2]+"|",procesos.RellenarCaracteres(Auxiliar[3], 0)+"|"
+                            ,Auxiliar[4] + "   "+"|",Auxiliar[5]);
+                    Listas.add(NuevaLista);
+
+                    Linea = Leer.readLine();
                 }
 
                 DefaultListModel Modelo = new DefaultListModel();
-                Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "
-                        +"Fecha de Creacion:    "+"Estatus    ");
+                Modelo.addElement(procesos.RellenarCaracteres("Nombre Lista", 1) +"|"+ procesos.RellenarCaracteres("Usuario", 0) +"|"+ 
+                        procesos.RellenarCaracteres("Descripcion", 2) + "      " +"|"+ procesos.RellenarCaracteres("Numero de Usuarios", 0) +"|"+
+                        "Fecha de Creacion               " +"|"+ procesos.RellenarCaracteres("Estatus", 0));
                 
                 for(int i = 0; i< Listas.size(); i++)
                 {
@@ -94,14 +100,18 @@ public class Listas extends javax.swing.JFrame {
 
                 while(Linea != null)
                 {
-                  Auxiliar = Linea.split("\\|"); 
-                  NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-                  Listas.add(NuevaLista);
+                    Auxiliar = Linea.split("\\|"); 
+                    NuevaLista = new Lista(Auxiliar[0]+"  |",Auxiliar[1]+"|",Auxiliar[2]+"|",procesos.RellenarCaracteres(Auxiliar[3], 0)+"|"
+                            ,Auxiliar[4] + "   "+"|",Auxiliar[5]);
+                    Listas.add(NuevaLista);
+
+                    Linea = Leer.readLine();
                 }
 
                 DefaultListModel Modelo = new DefaultListModel();
-                Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "
-                        +"Fecha de Creacion:    "+"Estatus    ");
+                Modelo.addElement(procesos.RellenarCaracteres("Nombre Lista", 1) +"|"+ procesos.RellenarCaracteres("Usuario", 0) +"|"+ 
+                        procesos.RellenarCaracteres("Descripcion", 2) + "      " +"|"+ procesos.RellenarCaracteres("Numero de Usuarios", 0) +"|"+
+                        "Fecha de Creacion               " +"|"+ procesos.RellenarCaracteres("Estatus", 0));
                 
                 for(int i = 0; i< Listas.size(); i++)
                 {
@@ -113,7 +123,8 @@ public class Listas extends javax.swing.JFrame {
                 lstListas.setModel(Modelo);
             }
             
-        }else
+        }
+        else
         {
             String pathRuta = "C:\\MEIA\\Lista.txt";
             File Archivo = new File(pathRuta);
@@ -129,15 +140,20 @@ public class Listas extends javax.swing.JFrame {
 
                 while(Linea != null)
                 {
-                  Auxiliar = Linea.split("\\|"); 
-                  NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-                  if(Auxiliar[1].equals(Usuario))
-                  Listas.add(NuevaLista);
+                    Auxiliar = Linea.split("\\|"); 
+                    NuevaLista = new Lista(Auxiliar[0]+"  |",Auxiliar[1]+"|",Auxiliar[2]+"|",procesos.RellenarCaracteres(Auxiliar[3], 0)+"|"
+                            ,Auxiliar[4] + "   "+"|",Auxiliar[5]);
+                    
+                    if(Auxiliar[1].equals(Usuario))
+                        Listas.add(NuevaLista);
+                    
+                    Linea = Leer.readLine();
                 }
 
                 DefaultListModel Modelo = new DefaultListModel();
-                Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "+
-                        "Fecha de Creacion:    "+"Estatus    ");
+                Modelo.addElement(procesos.RellenarCaracteres("Nombre Lista", 1) +"|"+ procesos.RellenarCaracteres("Usuario", 0) +"|"+ 
+                        procesos.RellenarCaracteres("Descripcion", 2) + "      " +"|"+ procesos.RellenarCaracteres("Numero de Usuarios", 0) +"|"+
+                        "Fecha de Creacion               " +"|"+ procesos.RellenarCaracteres("Estatus", 0));
                 
                 for(int i = 0; i< Listas.size(); i++)
                 {
@@ -161,15 +177,21 @@ public class Listas extends javax.swing.JFrame {
 
                 while(Linea != null)
                 {
-                  Auxiliar = Linea.split("\\|"); 
-                  NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-                  if(Auxiliar[1].equals(Usuario))
-                  Listas.add(NuevaLista);
+                    Auxiliar = Linea.split("\\|"); 
+                    NuevaLista = new Lista(Auxiliar[0]+"  |",Auxiliar[1]+"|",Auxiliar[2]+"|",procesos.RellenarCaracteres(Auxiliar[3], 0)+"|"
+                            ,Auxiliar[4] + "   "+"|",Auxiliar[5]);
+
+                    if(Auxiliar[1].equals(Usuario))
+                      Listas.add(NuevaLista);
+
+                    Linea = Leer.readLine();
                 }
 
                 DefaultListModel Modelo = new DefaultListModel();
-                Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "
-                        +"Fecha de Creacion:    "+"Estatus    ");
+                Modelo.addElement(procesos.RellenarCaracteres("Nombre Lista", 1) +"|"+ procesos.RellenarCaracteres("Usuario", 0) +"|"+ 
+                        procesos.RellenarCaracteres("Descripcion", 2) + "      " +"|"+ procesos.RellenarCaracteres("Numero de Usuarios", 0) +"|"+
+                        "Fecha de Creacion               " +"|"+ procesos.RellenarCaracteres("Estatus", 0));
+                
                 for(int i = 0; i< Listas.size(); i++)
                 {
                     Modelo.addElement(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+
@@ -243,11 +265,11 @@ public class Listas extends javax.swing.JFrame {
         lstListas = new javax.swing.JList<>();
         btnEliminarLista = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
+        btnCrearNuevaLista = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtListaaBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
-        btnCrearNuevaLista = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
         jMenu1.setText("jMenu1");
@@ -275,13 +297,14 @@ public class Listas extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, 130, 30));
+        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 530, 130, 30));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel1.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
         jLabel1.setText("Gestion de Listas");
 
+        lstListas.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
         lstListas.setComponentPopupMenu(jPopupMenu1);
         jScrollPane1.setViewportView(lstListas);
 
@@ -305,19 +328,21 @@ public class Listas extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(125, 125, 125))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE)
+                .addGap(267, 267, 267)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnModificar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEliminarLista)))
-                .addContainerGap())
+                        .addComponent(btnEliminarLista)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,14 +351,23 @@ public class Listas extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModificar)
                     .addComponent(btnEliminarLista))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 390, 280));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 670, 280));
+
+        btnCrearNuevaLista.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        btnCrearNuevaLista.setText("Crear Nueva Lista");
+        btnCrearNuevaLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearNuevaListaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCrearNuevaLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 190, 40));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -352,50 +386,50 @@ public class Listas extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
+                .addContainerGap(41, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(56, 56, 56))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtListaaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(29, 29, 29))))
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtListaaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtListaaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
-                .addContainerGap(153, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, -1, 280));
-
-        btnCrearNuevaLista.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
-        btnCrearNuevaLista.setText("Crear Nueva Lista");
-        btnCrearNuevaLista.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearNuevaListaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnCrearNuevaLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 190, 40));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 270, 120));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 750, 490));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 750, 590));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // Aca se programa modificar
-        //CrearLista Modificar = new CrearLista(Usuario, NombreLista, Descripcion, 1)
+        String[] Campos = lstListas.getSelectedValue().toString().split("\\|");
+        
+        String nombre = procesos.EliminarCaracteres(Campos[0]);
+        String usuario = procesos.EliminarCaracteres(Campos[1]);
+        String desc = procesos.EliminarCaracteres(Campos[2]);
+         
+        CrearLista Modificar = new CrearLista(usuario, nombre, desc, 1, Rol);
+        Modificar.setLocationRelativeTo(null);
+        Modificar.show();
+        this.dispose();
+                
         //Se debe programar modificar descripcion solamente, lo demas no
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 

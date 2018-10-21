@@ -40,11 +40,13 @@ public class CrearLista extends javax.swing.JFrame {
             jTFUsuario.enable(false);
     }
     
-    public CrearLista(String Usuario, String NombreLista, String Descripcion, int Code) {
+    public CrearLista(String Usuario, String NombreLista, String Descripcion, int Code, String Rol) {
         initComponents();
         
         this.Code = Code;
         this.Usuario = Usuario;
+        this.Rol = Rol;
+        
         jTFUsuario.setText(Usuario);
         
         this.NombreLista = NombreLista;
@@ -85,8 +87,8 @@ public class CrearLista extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnCancelar.setFont(new java.awt.Font("Calibri Light", 1, 13)); // NOI18N
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
+        btnCancelar.setText("Regresar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -144,6 +146,21 @@ public class CrearLista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearListaActionPerformed
+        if (Code == 1)
+        {
+            // MODIFICAR
+        }
+        else
+        {
+            Crear();
+        }
+        
+        
+        
+    }//GEN-LAST:event_btnCrearListaActionPerformed
+
+    private void Crear()
+    {
         Date fecha = new Date();
         SimpleDateFormat formatofecha = new SimpleDateFormat("dd/MM/yyyy");
         
@@ -161,18 +178,28 @@ public class CrearLista extends javax.swing.JFrame {
         {
             Logger.getLogger(CrearLista.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }//GEN-LAST:event_btnCrearListaActionPerformed
-
+    }
+    
+    private void Modificar()
+    {
+    
+    }
+    
+    
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       Listas Nueva = null;
-        try {
+        Listas Nueva = null;
+        try 
+        {
             Nueva = new Listas(Usuario, Rol);
-        } catch (IOException ex) {
+            Nueva.setLocationRelativeTo(null);
+            Nueva.show();
+            this.dispose();
+        } 
+        catch (IOException ex) 
+        {
             Logger.getLogger(CrearLista.class.getName()).log(Level.SEVERE, null, ex);
         }
-       Nueva.show();
-       this.dispose();
+       
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     //AQUI NO TIENE NADA QUE VER LA LISTA INDIZADA
@@ -349,11 +376,6 @@ public class CrearLista extends javax.swing.JFrame {
         String Nombre = jTFNombreLista.getText();
         Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista(Acceso.RellenarCaracteres(Nombre,1),Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),"");
         Acceso.DescriptorBitacoraLista(Nuevo);
-    }
-    
-    private void Modificar()
-    {
-        
     }
     
     //método donde se crea el Descriptor de Lista y se Actualiza
