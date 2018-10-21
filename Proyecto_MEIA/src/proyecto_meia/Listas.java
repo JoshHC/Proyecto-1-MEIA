@@ -49,7 +49,7 @@ public class Listas extends javax.swing.JFrame {
     //En esta Funcion se Buscan las Listas para llenar La Lista del Menu Principal.
     private void BuscarListas(String Usuario) throws FileNotFoundException, IOException
     {
-        if(Usuario.equals("admin"))
+        if(Rol.equals("Administrador"))
         {
             String pathRuta = "C:\\MEIA\\Lista.txt";
             File Archivo = new File(pathRuta);
@@ -458,15 +458,18 @@ public class Listas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        Principal Menu = null;
-        try {
-            Menu = new Principal(Usuario, Rol);
-        } catch (IOException ex) {
+        try 
+        {
+            Principal Menu = new Principal(Usuario, Rol);
+            Menu.setLocationRelativeTo(null);
+            Menu.show();
+            this.dispose();
+        } 
+        catch (IOException ex) 
+        {
             Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Menu.setLocationRelativeTo(null);
-        Menu.show();
-        this.dispose();
+        
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed

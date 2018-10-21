@@ -39,18 +39,17 @@ public class Principal extends javax.swing.JFrame {
     public Principal(String usuario, String Rol) throws IOException {
         initComponents();
         
-        this.Rol = Rol;
+        if(Rol.equals(""))
+            this.Rol = Rol;
+        
         this.Usuario = procesos.EliminarCaracteres(usuario);
         
         LlenarDatos();
-        if(lblRol.getText().contains("Rol ➙ Administrador") == true)
-        {
+        if(this.Rol.equals("Administrador"))
             btnBackup.show();
-        }
         else
-        {
             btnBackup.hide();
-        }
+        
     }
 
     Principal() {
@@ -264,11 +263,13 @@ public class Principal extends javax.swing.JFrame {
                         {
                             lblNiveldeAcceso.setText("Nivel de acceso ➙ Maestro");
                             lblRol.setText("Rol ➙ Administrador");
+                            Rol = "Administrador";
                         }
                         else
                         {
                             lblNiveldeAcceso.setText("Nivel de acceso ➙ Estandar");
                             lblRol.setText("Rol ➙ Usuario");
+                            Rol = "Usuario";
                         }
                     }
 

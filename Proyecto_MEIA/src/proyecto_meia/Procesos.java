@@ -44,9 +44,11 @@ public class Procesos {
             leerArchivo = new BufferedReader(Leer);
             Linea = leerArchivo.readLine();
 
+            String[] Secciones = Linea.split(" ");
+            
             while(Linea != null)
             {
-                if(Linea.contains(user))
+                if(Secciones[0].equals(user))
                     ExisteUsuarios = true;
 
                 Linea = leerArchivo.readLine();
