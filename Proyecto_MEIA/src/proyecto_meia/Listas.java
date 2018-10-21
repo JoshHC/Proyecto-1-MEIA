@@ -35,127 +35,149 @@ public class Listas extends javax.swing.JFrame {
         
         this.Usuario = Usuario;
         this.Rol = Rol;
-        String pathRuta = "C:\\MEIA\\Lista.txt";
-        File Archivo = new File(pathRuta);
+        String pathRuta1 = "C:\\MEIA\\Lista.txt";
+        String pathRuta2 = "C:\\MEIA\\Bitacora_Lista.txt";
+        File Archivo1 = new File(pathRuta1);
+        File Archivo2 = new File(pathRuta2);
         
-        if(Archivo.exists())
+        if(Archivo1.exists() || Archivo2.exists())
             BuscarListas(Usuario);
     }
 
     //En esta Funcion se Buscan las Listas para llenar La Lista del Menu Principal.
     private void BuscarListas(String Usuario) throws FileNotFoundException, IOException
     {
-        if(Usuario == "Administrador")
+        if(Usuario == "admin")
         {
             String pathRuta = "C:\\MEIA\\Lista.txt";
             File Archivo = new File(pathRuta);
             
             if(Archivo.exists())
             {
-            FileReader Lectura = new FileReader(Archivo);
-            BufferedReader Leer = new BufferedReader(Lectura);
-            String Linea = Leer.readLine();
-            String[] Auxiliar;
-            List<Lista> Listas = new ArrayList<Lista>();
-            Lista NuevaLista;
-            
-            while(Linea != null)
-            {
-              Auxiliar = Linea.split("\\|"); 
-              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-              Listas.add(NuevaLista);
-            }
-            
-            DefaultListModel Modelo = new DefaultListModel();
-            Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "+"Fecha de Creacion:    "+"Estatus    ");
-            for(int i = 0; i< Listas.size(); i++)
-            {
-                Modelo.addElement(Listas.get(i).Nombre_lista+" "+Listas.get(i).Usuario+" "+Listas.get(i).Descripcion+" "+Listas.get(i).Numero_usuarios+" "+Listas.get(i).Fecha_creacion+" "+Listas.get(i).Status);
-            }
-            lstListas.setModel(Modelo);
+                FileReader Lectura = new FileReader(Archivo);
+                BufferedReader Leer = new BufferedReader(Lectura);
+                String Linea = Leer.readLine();
+                String[] Auxiliar;
+                List<Lista> Listas = new ArrayList<Lista>();
+                Lista NuevaLista;
+
+                while(Linea != null)
+                {
+                  Auxiliar = Linea.split("\\|"); 
+                  NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                  Listas.add(NuevaLista);
+                }
+
+                DefaultListModel Modelo = new DefaultListModel();
+                Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "
+                        +"Fecha de Creacion:    "+"Estatus    ");
+                
+                for(int i = 0; i< Listas.size(); i++)
+                {
+                    Modelo.addElement(Listas.get(i).Nombre_lista+" "+Listas.get(i).Usuario+" "+
+                            Listas.get(i).Descripcion+" "+Listas.get(i).Numero_usuarios+" "+
+                            Listas.get(i).Fecha_creacion+" "+Listas.get(i).Status);
+                }
+                
+                lstListas.setModel(Modelo);
             }
             else
             {
-            pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
-            Archivo = new File(pathRuta);
-            FileReader Lectura = new FileReader(Archivo);
-            BufferedReader Leer = new BufferedReader(Lectura);
-            String Linea = Leer.readLine();
-            String[] Auxiliar;
-            List<Lista> Listas = new ArrayList<Lista>();
-            Lista NuevaLista;
-            
-            while(Linea != null)
-            {
-              Auxiliar = Linea.split("\\|"); 
-              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-              Listas.add(NuevaLista);
-            }
-            
-            DefaultListModel Modelo = new DefaultListModel();
-            Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "+"Fecha de Creacion:    "+"Estatus    ");
-            for(int i = 0; i< Listas.size(); i++)
-            {
-                Modelo.addElement(Listas.get(i).Nombre_lista+" "+Listas.get(i).Usuario+" "+Listas.get(i).Descripcion+" "+Listas.get(i).Numero_usuarios+" "+Listas.get(i).Fecha_creacion+" "+Listas.get(i).Status);
-            }
-            lstListas.setModel(Modelo);
+                pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
+                Archivo = new File(pathRuta);
+                FileReader Lectura = new FileReader(Archivo);
+                BufferedReader Leer = new BufferedReader(Lectura);
+                String Linea = Leer.readLine();
+                String[] Auxiliar;
+                List<Lista> Listas = new ArrayList<Lista>();
+                Lista NuevaLista;
+
+                while(Linea != null)
+                {
+                  Auxiliar = Linea.split("\\|"); 
+                  NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                  Listas.add(NuevaLista);
+                }
+
+                DefaultListModel Modelo = new DefaultListModel();
+                Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "
+                        +"Fecha de Creacion:    "+"Estatus    ");
+                
+                for(int i = 0; i< Listas.size(); i++)
+                {
+                    Modelo.addElement(Listas.get(i).Nombre_lista+" "+Listas.get(i).Usuario+" "+
+                            Listas.get(i).Descripcion+" "+Listas.get(i).Numero_usuarios+" "+
+                            Listas.get(i).Fecha_creacion+" "+Listas.get(i).Status);
+                }
+                
+                lstListas.setModel(Modelo);
             }
             
         }else
         {
             String pathRuta = "C:\\MEIA\\Lista.txt";
             File Archivo = new File(pathRuta);
+            
             if(Archivo.exists())
             {
-            FileReader Lectura = new FileReader(Archivo);
-            BufferedReader Leer = new BufferedReader(Lectura);
-            String Linea = Leer.readLine();
-            String[] Auxiliar;
-            List<Lista> Listas = new ArrayList<Lista>();
-            Lista NuevaLista;
-            
-            while(Linea != null)
-            {
-              Auxiliar = Linea.split("\\|"); 
-              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-              if(Auxiliar[1].equals(Usuario))
-              Listas.add(NuevaLista);
-            }
-            
-            DefaultListModel Modelo = new DefaultListModel();
-            Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "+"Fecha de Creacion:    "+"Estatus    ");
-            for(int i = 0; i< Listas.size(); i++)
-            {
-                Modelo.addElement(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Descripcion+"|"+Listas.get(i).Numero_usuarios+"|"+Listas.get(i).Fecha_creacion+"|"+Listas.get(i).Status);
-            }
-            lstListas.setModel(Modelo);  
+                FileReader Lectura = new FileReader(Archivo);
+                BufferedReader Leer = new BufferedReader(Lectura);
+                String Linea = Leer.readLine();
+                String[] Auxiliar;
+                List<Lista> Listas = new ArrayList<Lista>();
+                Lista NuevaLista;
+
+                while(Linea != null)
+                {
+                  Auxiliar = Linea.split("\\|"); 
+                  NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                  if(Auxiliar[1].equals(Usuario))
+                  Listas.add(NuevaLista);
+                }
+
+                DefaultListModel Modelo = new DefaultListModel();
+                Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "+
+                        "Fecha de Creacion:    "+"Estatus    ");
+                
+                for(int i = 0; i< Listas.size(); i++)
+                {
+                    Modelo.addElement(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+
+                            Listas.get(i).Descripcion+"|"+Listas.get(i).Numero_usuarios+"|"+
+                            Listas.get(i).Fecha_creacion+"|"+Listas.get(i).Status);
+                }
+                
+                lstListas.setModel(Modelo);  
             }
             else
             {
-            pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
-            Archivo = new File(pathRuta);   
-            FileReader Lectura = new FileReader(Archivo);
-            BufferedReader Leer = new BufferedReader(Lectura);
-            String Linea = Leer.readLine();
-            String[] Auxiliar;
-            List<Lista> Listas = new ArrayList<Lista>();
-            Lista NuevaLista;
-            
-            while(Linea != null)
-            {
-              Auxiliar = Linea.split("\\|"); 
-              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-              if(Auxiliar[1].equals(Usuario))
-              Listas.add(NuevaLista);
-            }
-            
-            DefaultListModel Modelo = new DefaultListModel();
-            Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "+"Fecha de Creacion:    "+"Estatus    ");
-            for(int i = 0; i< Listas.size(); i++)
-            {
-                Modelo.addElement(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Descripcion+"|"+Listas.get(i).Numero_usuarios+"|"+Listas.get(i).Fecha_creacion+"|"+Listas.get(i).Status);
-            }
-            lstListas.setModel(Modelo); 
+                pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
+                Archivo = new File(pathRuta);   
+                FileReader Lectura = new FileReader(Archivo);
+                BufferedReader Leer = new BufferedReader(Lectura);
+                String Linea = Leer.readLine();
+                String[] Auxiliar;
+                List<Lista> Listas = new ArrayList<Lista>();
+                Lista NuevaLista;
+
+                while(Linea != null)
+                {
+                  Auxiliar = Linea.split("\\|"); 
+                  NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                  if(Auxiliar[1].equals(Usuario))
+                  Listas.add(NuevaLista);
+                }
+
+                DefaultListModel Modelo = new DefaultListModel();
+                Modelo.addElement("Nombre Lista:    "+ "Usuario:    "+"Descripcion:    "+"Numero de Usuarios:    "
+                        +"Fecha de Creacion:    "+"Estatus    ");
+                for(int i = 0; i< Listas.size(); i++)
+                {
+                    Modelo.addElement(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+
+                            Listas.get(i).Descripcion+"|"+Listas.get(i).Numero_usuarios+"|"+
+                            Listas.get(i).Fecha_creacion+"|"+Listas.get(i).Status);
+                }
+                
+                lstListas.setModel(Modelo); 
             }
         }
     }
@@ -166,40 +188,40 @@ public class Listas extends javax.swing.JFrame {
         
             String pathRuta = "C:\\MEIA\\Lista.txt";
             File Archivo = new File(pathRuta);
+            
             if(Archivo.exists())
             {
-            FileReader Lectura = new FileReader(Archivo);
-            BufferedReader Leer = new BufferedReader(Lectura);
-            String Linea = Leer.readLine();
-            String[] Auxiliar;
-            Lista NuevaLista;
-            
-            while(Linea != null)
-            {
-              Auxiliar = Linea.split("\\|"); 
-              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-              if(Nombre.equals(Auxiliar[0]))
-                  Existe = true;
-            }
+                FileReader Lectura = new FileReader(Archivo);
+                BufferedReader Leer = new BufferedReader(Lectura);
+                String Linea = Leer.readLine();
+                String[] Auxiliar;
+                Lista NuevaLista;
+
+                while(Linea != null)
+                {
+                  Auxiliar = Linea.split("\\|"); 
+                  NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                  if(Nombre.equals(Auxiliar[0]))
+                      Existe = true;
+                }
             }
             else
             {
-            pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
-            Archivo = new File(pathRuta);
-            FileReader Lectura = new FileReader(Archivo);
-            BufferedReader Leer = new BufferedReader(Lectura);
-            String Linea = Leer.readLine();
-            String[] Auxiliar;
-            Lista NuevaLista;
-            
-            while(Linea != null)
-            {
-              Auxiliar = Linea.split("\\|"); 
-              NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-              if(Nombre.equals(Auxiliar[0]))
-                  Existe = true;
-            }
-                
+                pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
+                Archivo = new File(pathRuta);
+                FileReader Lectura = new FileReader(Archivo);
+                BufferedReader Leer = new BufferedReader(Lectura);
+                String Linea = Leer.readLine();
+                String[] Auxiliar;
+                Lista NuevaLista;
+
+                while(Linea != null)
+                {
+                  Auxiliar = Linea.split("\\|"); 
+                  NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                  if(Nombre.equals(Auxiliar[0]))
+                      Existe = true;
+                }
             }
 
         return Existe; 
@@ -373,9 +395,11 @@ public class Listas extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // Aca se programa modificar
+        //CrearLista Modificar = new CrearLista(Usuario, NombreLista, Descripcion, 1)
         //Se debe programar modificar descripcion solamente, lo demas no
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    
     private void btnCrearNuevaListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearNuevaListaActionPerformed
         CrearLista NuevaLista = new CrearLista(Usuario, Rol);
         NuevaLista.setLocationRelativeTo(null);

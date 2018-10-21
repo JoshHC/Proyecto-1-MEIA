@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class CrearLista extends javax.swing.JFrame {
 
+    private int Code;
     private String Rol;
     private static String Usuario;
     private static String NombreLista;
@@ -39,9 +40,10 @@ public class CrearLista extends javax.swing.JFrame {
             jTFUsuario.enable(false);
     }
     
-    public CrearLista(String Usuario, String NombreLista, String Descripcion) {
+    public CrearLista(String Usuario, String NombreLista, String Descripcion, int Code) {
         initComponents();
         
+        this.Code = Code;
         this.Usuario = Usuario;
         jTFUsuario.setText(Usuario);
         
@@ -50,6 +52,12 @@ public class CrearLista extends javax.swing.JFrame {
         
         this.Descripcion = Descripcion;
         jTADescripcion.setText(Descripcion);
+        
+        jLTitulo.setText("Modificar Lista");
+        jTFUsuario.enable(false);
+        jTFNombreLista.enable(false);
+        btnCrearLista.setText("Modificar");
+        
     }
 
     private CrearLista() {
@@ -63,7 +71,7 @@ public class CrearLista extends javax.swing.JFrame {
     private void initComponents() {
 
         btnCancelar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        jLTitulo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTFUsuario = new javax.swing.JTextField();
@@ -84,39 +92,40 @@ public class CrearLista extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 335, 180, 30));
+        getContentPane().add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 270, 180, 30));
 
-        jLabel2.setFont(new java.awt.Font("Calibri Light", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Crear Lista");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, -1, -1));
+        jLTitulo.setFont(new java.awt.Font("Calibri Light", 1, 48)); // NOI18N
+        jLTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        jLTitulo.setText("Crear Lista");
+        getContentPane().add(jLTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nombre de la Lista");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, 20));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, -1, 20));
 
         jLabel3.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Usuario");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, -1, -1));
-        getContentPane().add(jTFUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 140, 180, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, -1, -1));
+        getContentPane().add(jTFUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 180, -1));
 
         jLabel4.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Descripcion");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, -1, -1));
 
         jTFNombreLista.setToolTipText("");
-        getContentPane().add(jTFNombreLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 180, -1));
+        getContentPane().add(jTFNombreLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 180, -1));
 
         jTADescripcion.setColumns(20);
         jTADescripcion.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
-        jTADescripcion.setRows(5);
+        jTADescripcion.setLineWrap(true);
+        jTADescripcion.setRows(2);
         jTADescripcion.setAutoscrolls(false);
         jScrollPane1.setViewportView(jTADescripcion);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, 180, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 180, -1));
 
         btnCrearLista.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
         btnCrearLista.setText("Crear");
@@ -125,11 +134,11 @@ public class CrearLista extends javax.swing.JFrame {
                 btnCrearListaActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCrearLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 180, 31));
+        getContentPane().add(btnCrearLista, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, 180, 31));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
         jLabel5.setText("jLabel5");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 400));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 330));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -342,6 +351,11 @@ public class CrearLista extends javax.swing.JFrame {
         Acceso.DescriptorBitacoraLista(Nuevo);
     }
     
+    private void Modificar()
+    {
+        
+    }
+    
     //método donde se crea el Descriptor de Lista y se Actualiza
     public void DescriptorLista() throws FileNotFoundException, IOException
     {
@@ -416,8 +430,8 @@ public class CrearLista extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCrearLista;
+    private javax.swing.JLabel jLTitulo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
