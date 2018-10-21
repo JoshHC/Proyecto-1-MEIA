@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,6 +19,8 @@ import java.io.RandomAccessFile;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -41,6 +44,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
     static String Usuario;
     Procesos Acceso = new Procesos();
     static int ContadorListaIndizada;
+    static String Comienzo;
       
     public Modificacion_De_Listas(String Dato, String Usuario) throws IOException {
         
@@ -483,6 +487,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             ListaUsuario Nueva = new ListaUsuario(NombreLista,Proceso.RellenarCaracteres(Registros.get(0).Usuario,0),Usuario,Proceso.RellenarCaracteres(Registros.get(0).Descripcion,2),Registros.get(0).Fecha_creacion, "1");
             bw.write(Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Descripcion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status);
             DescriptorListaUsuario();
+            AgregarListaIndizada(Nueva);
             JOptionPane.showMessageDialog(null, "Usuario Ingresado con Exito");
             
         } catch (IOException ex) {
@@ -609,11 +614,99 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             File Archivo = new File(pathRuta);
             FileWriter Escritor = new FileWriter(Archivo,true);
             BufferedWriter bw = new BufferedWriter(Escritor);
-            String Listaparaescribir = ContadorListaIndizada+"|"+"Posicion"+"|"+Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+"Siguiente"+Nueva.Status;
-
-            bw.newLine();
-            bw.write(Listaparaescribir);
+            String Posicion = "1"+"."+ContadorListaIndizada;
+            ListaIndizada NuevaLista = new ListaIndizada(String.valueOf(ContadorListaIndizada),Posicion,Nueva.Nombre_lista,Nueva.Usuario,Nueva.Usuario_Asociado,"0",Nueva.Status);
+            bw.write(NuevaLista.NoRegistro+"|"+NuevaLista.Posicion+"|"+NuevaLista.Nombre_Lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Usuario_Asociado+"|"+NuevaLista.Siguiente+"|"+NuevaLista.Status);
+            AsignarSiguiente();
             DescriptorListaIndizada();
+            ContadorListaIndizada++;
+            bw.close();
+            Escritor.close();
+            
+            
+    }
+    
+    //Reorganiza los Indices y el Siguiente de la ListaIndizada
+    private void AsignarSiguiente() throws FileNotFoundException, IOException
+    {
+            String pathRuta = "C:\\MEIA\\ListaUsuarioIndizada.txt";
+            File Archivo = new File(pathRuta);
+            FileReader Lector = new FileReader(Archivo);
+            BufferedReader bw = new BufferedReader(Lector);
+            List<ListaIndizada> Listas = new ArrayList<ListaIndizada>();
+            String Linea = bw.readLine();
+            String Siguiente = "";
+            
+            if(Linea == null)
+            {
+                
+                Siguiente = "0";
+            }
+            else
+            {
+                
+                while(Linea != null)
+                {
+                    String [] Auxiliar = Linea.split("\\|");
+                    ListaIndizada Nueva = new ListaIndizada(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5],Auxiliar[6]);
+                    Listas.add(Nueva);
+                }
+                Lector.close();
+                bw.close();
+                
+                Collections.sort(Listas, new Comparator<ListaIndizada>(){
+                @Override
+                public int compare(ListaIndizada p1, ListaIndizada p2) {
+		int resultado = p1.Nombre_Lista.compareTo(p2.Nombre_Lista);
+                if ( resultado != 0 ) { return resultado;}
+                
+                resultado = p1.Usuario.compareTo(p2.Usuario);
+                if ( resultado != 0 ) { return resultado;}
+                
+                resultado = p1.Usuario_Asociado.compareTo(p2.Usuario_Asociado);
+                if ( resultado != 0 ) { return resultado;}
+                
+                return resultado;
+                }
+                });
+                
+                Comienzo = Listas.get(0).NoRegistro;
+                
+                for(int i = 0; i<Listas.size();i++)
+                {
+                    if(Listas.get(i+1).NoRegistro != null)
+                    {
+                        Listas.get(i).Siguiente = Listas.get(i).NoRegistro;
+                    }
+                    else
+                    {
+                        Listas.get(i).Siguiente = "0";
+                    }
+                }
+                
+                Collections.sort(Listas, new Comparator<ListaIndizada>(){
+                @Override
+                public int compare(ListaIndizada p1, ListaIndizada p2) {
+                return p1.NoRegistro.compareTo(p2.NoRegistro);
+                }
+                });
+                
+                FileOutputStream writer = new FileOutputStream(Archivo);
+                writer.write(("").getBytes());
+                writer.close();     
+               
+                FileWriter Escritor = new FileWriter(Archivo);
+                BufferedWriter bs = new BufferedWriter(Escritor);
+                
+                for(int i= 0;i<Listas.size();i++)
+                {
+                    bs.write(Listas.get(i).NoRegistro+"|"+Listas.get(i).Posicion+"|"+Listas.get(i).Nombre_Lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Usuario_Asociado+"|"+Listas.get(i).Siguiente+"|"+Listas.get(i).Status);
+                }
+                Escritor.close();
+                bs.close();
+
+            }
+    
     }
     
     //Cuando se Elimine en ListaUsuarios se debe llamar a Este Metodo en donde se agregara tambien el registro
@@ -627,7 +720,40 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
     //método donde se crea el Descriptor de Lista y se Actualiza
     public void DescriptorListaIndizada() throws FileNotFoundException, IOException
     {
-     
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\ListaUsuarioIndizada.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 6 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[6].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[6].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        Descriptor_ListaUsuarioIndizada Nuevo = new Descriptor_ListaUsuarioIndizada(NombreLista,Fecha.toString(),Usuario,Fecha.toString(),Usuario,Comienzo,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        Acceso.DescriptorListaIndizada(Nuevo);
     }
     /**
      * @param args the command line arguments
