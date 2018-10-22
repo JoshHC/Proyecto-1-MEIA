@@ -339,7 +339,7 @@ public class CrearLista extends javax.swing.JFrame {
             {
                 //Se Inserta el Nuevo Registro               
                 bw.write(Acceso.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+Acceso.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+Acceso.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
-                bw.newLine();
+                bw.write(System.lineSeparator());
                 bw.close();
                 Escribir.close();
                 DescriptorBitacoraLista();      

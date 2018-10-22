@@ -616,8 +616,8 @@ public class Listas extends javax.swing.JFrame {
                 AuxUsuario = Auxiliar[1].trim();
                 if(AuxNombre.equals(Nombre) && AuxUsuario.equals(Usuario))
                 {
-                    Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0], 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1], 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2], 2),ArregloCadena[3], ArregloCadena[4], "0");
-                    String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status;
+                    Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0].trim(), 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1].trim(), 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2].trim(), 2),ArregloCadena[3].trim(), ArregloCadena[4].trim(), "0");
+                    String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator();
                     ArchivoSustitucion.writeBytes(Sustitucion);
                 }
                 LineaAdelantada = buferU.readLine();
