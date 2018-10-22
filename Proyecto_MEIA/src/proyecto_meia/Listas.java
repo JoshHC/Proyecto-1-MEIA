@@ -1,9 +1,11 @@
 package proyecto_meia;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
@@ -555,9 +557,9 @@ public class Listas extends javax.swing.JFrame {
         
         String Cadena = lstListas.getSelectedValue();
         String []ArregloCadena = Cadena.split("\\|");
-        String Nombre = ArregloCadena[0];
+        String Nombre = ArregloCadena[0].trim();
         NombreListaSeleccionada = Nombre;
-        String Usuario = ArregloCadena[1];
+        String Usuario = ArregloCadena[1].trim();
         Procesos TamañoFijo = new Procesos();
         
         if(Cadena!= "")
@@ -567,44 +569,59 @@ public class Listas extends javax.swing.JFrame {
             String AuxUsuario = "";
             String pathRuta = "C:\\MEIA\\Lista.txt";
             File Archivo = new File(pathRuta);
+            
+            if(Archivo.exists())
+            {
+            FileReader lectorU = new FileReader(Archivo);
+            BufferedReader buferU = new BufferedReader(lectorU);
+            String LineaAdelantada = buferU.readLine();
+            
             RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
-            String Linea = ArchivoSustitucion.readLine();
+            String Linea = "";
             String [] Auxiliar;
          
                
-            while(Linea != null)
+            while(LineaAdelantada != null)
             {
-                Auxiliar = Linea.split("\\|"); 
-                AuxNombre = Auxiliar[0];
-                AuxUsuario = Auxiliar[1];
+                Auxiliar = LineaAdelantada.split("\\|");
+                AuxNombre = Auxiliar[0].trim();
+                AuxUsuario = Auxiliar[1].trim();
                 if(AuxNombre.equals(Nombre) && AuxUsuario.equals(Usuario))
                 {
                     Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0], 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1], 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2], 2),ArregloCadena[3], ArregloCadena[4], "0");
                     String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status;
                     ArchivoSustitucion.writeBytes(Sustitucion);
                 }
-                Linea = ArchivoSustitucion.readLine();
+                LineaAdelantada = buferU.readLine();
+                Linea = ArchivoSustitucion.readLine();         
             }
-            
+           
+            }
             
             pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
             Archivo = new File(pathRuta);
-            ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
-            Linea = ArchivoSustitucion.readLine();
-         
+            
+            FileReader lectorU = new FileReader(Archivo);
+            BufferedReader buferU = new BufferedReader(lectorU);
+            String LineaAdelantada = buferU.readLine();
+            
+            RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+            String Linea = "";
+            String [] Auxiliar;
                
-            while(Linea != null)
+            while(LineaAdelantada != null)
             {
-                Auxiliar = Linea.split("\\|");
-                AuxNombre = Auxiliar[0];
-                AuxUsuario = Auxiliar[1];
-                if(Acceso.RellenarCaracteres(AuxNombre,1).equals(Acceso.RellenarCaracteres(Nombre,1)) && Acceso.RellenarCaracteres(AuxUsuario,0).equals(Acceso.RellenarCaracteres(Usuario,0)))
+                Auxiliar = LineaAdelantada.split("\\|");
+                AuxNombre = Auxiliar[0].trim();
+                AuxUsuario = Auxiliar[1].trim();
+                if(AuxNombre.equals(Nombre) && AuxUsuario.equals(Usuario))
                 {
                     Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0], 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1], 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2], 2),ArregloCadena[3], ArregloCadena[4], "0");
                     String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status;
                     ArchivoSustitucion.writeBytes(Sustitucion);
                 }
-                Linea = ArchivoSustitucion.readLine();
+                LineaAdelantada = buferU.readLine();
+                Linea = ArchivoSustitucion.readLine();         
             }
             
             DescriptorLista();
