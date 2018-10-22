@@ -20,8 +20,8 @@ import javax.swing.JOptionPane;
 public class CrearLista extends javax.swing.JFrame {
 
     private int Code;
-    private String Rol;
-    private static String Usuario;
+    static String Rol;
+    static String Usuario;
     private static String NombreLista;
     private static String Descripcion;
     Procesos Acceso = new Procesos();
@@ -40,11 +40,11 @@ public class CrearLista extends javax.swing.JFrame {
             jTFUsuario.enable(false);
     }
     
-    public CrearLista(String Usuario, String NombreLista, String Descripcion, int Code, String Rol) {
+    public CrearLista(String Usuario, String NombreLista, String Descripcion, int Code, String UsuarioLogeado ,String Rol) {
         initComponents();
         
         this.Code = Code;
-        this.Usuario = Usuario;
+        this.Usuario = UsuarioLogeado;
         this.Rol = Rol;
         
         jTFUsuario.setText(Usuario);
@@ -187,10 +187,10 @@ public class CrearLista extends javax.swing.JFrame {
     
     
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        Listas Nueva = null;
+        
         try 
         {
-            Nueva = new Listas(Usuario, Rol);
+            Listas Nueva = new Listas(Usuario, Rol);
             Nueva.setLocationRelativeTo(null);
             Nueva.show();
             this.dispose();

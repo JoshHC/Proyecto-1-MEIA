@@ -23,14 +23,11 @@ public class Listas extends javax.swing.JFrame {
     
     Procesos procesos = new Procesos();
     
-    private String Usuario;
-    private String Rol;
+    static String Usuario;
+    static String Rol;
     private static String NombreListaSeleccionada;
     Procesos Acceso = new Procesos();
     
-    private Listas() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     public Listas(String Usuario, String Rol) throws IOException {
         initComponents();
@@ -46,6 +43,11 @@ public class Listas extends javax.swing.JFrame {
             BuscarListas(Usuario);
     }
 
+    private Listas() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
     //En esta Funcion se Buscan las Listas para llenar La Lista del Menu Principal.
     private void BuscarListas(String Usuario) throws FileNotFoundException, IOException
     {
@@ -425,7 +427,7 @@ public class Listas extends javax.swing.JFrame {
         String usuario = procesos.EliminarCaracteres(Campos[1]);
         String desc = procesos.EliminarCaracteres(Campos[2]);
          
-        CrearLista Modificar = new CrearLista(usuario, nombre, desc, 1, Rol);
+        CrearLista Modificar = new CrearLista(usuario, nombre, desc, 1, Usuario, Rol);
         Modificar.setLocationRelativeTo(null);
         Modificar.show();
         this.dispose();
@@ -639,6 +641,8 @@ public class Listas extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -664,6 +668,7 @@ public class Listas extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Listas().setVisible(true);

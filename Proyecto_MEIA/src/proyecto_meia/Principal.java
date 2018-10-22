@@ -33,8 +33,8 @@ import org.apache.commons.io.FileUtils;
 public class Principal extends javax.swing.JFrame {
 
     Procesos procesos = new Procesos();
-    String Usuario;
-    String Rol;
+    static String Usuario;
+    static String Rol;
     
     public Principal(String usuario, String Rol) throws IOException {
         initComponents();
