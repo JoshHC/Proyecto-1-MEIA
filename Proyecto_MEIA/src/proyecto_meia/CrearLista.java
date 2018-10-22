@@ -202,7 +202,7 @@ public class CrearLista extends javax.swing.JFrame {
        
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    //AQUI NO TIENE NADA QUE VER LA LISTA INDIZADA
+    //ESTO NO TIENE NADA QUE VER LA LISTA INDIZADA
     private void CrearLista(Lista NuevaLista) throws IOException
     {
         if (ListaExiste(NuevaLista))
@@ -249,6 +249,7 @@ public class CrearLista extends javax.swing.JFrame {
         }
     }
     
+    //METODO DUPLICADO HAY OTRO CON LA MISMA FUNCIONALIDAD EN PROCESOS
     private boolean VerificarEspacioBitacora() throws FileNotFoundException, IOException
     {
         boolean HayEspacio = true;

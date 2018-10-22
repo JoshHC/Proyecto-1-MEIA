@@ -422,8 +422,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    //PENDIENTE Aqui hay que actualizar el Archivo de ListaIndizada y su Descriptor
-    //Se Elimina un Usuario de la Lista y se Actualizan los Descriptores
+    //Se Elimina un Usuario de la Lista y se Actualizan los Descriptores tanto de ListaUsuario como ListaIndizada
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         
         String Cadena = lstUsuariosLista.getSelectedValue();
@@ -446,14 +445,16 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                 Auxiliar = Linea.split("\\|"); 
                 if(Auxiliar[0].equals(Nombre) && Auxiliar[1].equals(Usuario))
                 {
-                    Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0], 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1], 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2], 2),ArregloCadena[3], ArregloCadena[4], "0");
-                    String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status;
+                    ListaUsuario NuevaLista = new ListaUsuario(TamañoFijo.RellenarCaracteres(ArregloCadena[0], 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1], 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2], 2),ArregloCadena[3], ArregloCadena[4],"0");
+                    String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status;
                     ArchivoSustitucion.writeBytes(Sustitucion);
+                    EliminarListaIndizada(NuevaLista);
                 }
                 Linea = ArchivoSustitucion.readLine();
             }
             
-            DescriptorListaUsuario();          
+            DescriptorListaUsuario();
+            DescriptorListaIndizada();
            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
@@ -467,8 +468,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    //PENDIENTE Aqui hay que actualizar el Archivo de ListaIndizada y su Descriptor
-    //se Agrega un Usuario a la Lista y se Actualizan los Descriptores
+    //se Agrega un Usuario a la Lista y se Actualizan los Descriptores tanto de ListaUsuario como ListaIndizada
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
        
         try {
@@ -607,7 +607,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
     }//GEN-LAST:event_ComboBoxUsuariosActionPerformed
 
     //Cuando se Agregue en ListaUsuarios se debe llamar a Este Metodo en donde se agregara tambien el registro
-    //y se actualizara su descriptor
+    //y se actualizara su descriptor, YA LLAMADO
     public void AgregarListaIndizada(ListaUsuario Nueva) throws IOException
     {
             String pathRuta = "C:\\MEIA\\ListaUsuarioIndizada.txt";
@@ -712,7 +712,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
     }
     
     //Cuando se Elimine en ListaUsuarios se debe llamar a Este Metodo en donde se agregara tambien el registro
-    //y se actualizara su descriptor
+    //y se actualizara su descriptor, YA LLAMADO
     public void EliminarListaIndizada(ListaUsuario Nueva) throws IOException
     {
         
