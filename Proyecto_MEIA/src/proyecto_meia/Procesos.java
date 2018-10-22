@@ -886,6 +886,7 @@ public class Procesos {
         
     }
      
+     //NO ESTA EN USO
       public void DescriptorBitacoraListaUsuario(Descriptor_Bitacora_ListaUsuario Descriptor) throws IOException
     {
         String pathRuta = "C:\\MEIA\\desc_Bitacora_ListaUsuario.txt";
@@ -1022,7 +1023,7 @@ public class Procesos {
         /*FileReader Leer = new FileReader(Archivo);
         BufferedReader bs = new BufferedReader(Leer);*/
         String Auxiliar = ArchivoSustitucion.readLine();
-        //String [] AuxTamaño = Auxiliar.split("\\|");
+        String [] AuxTamaño = Auxiliar.split("\\|");
         
         
         if(Descriptor.NumerodeRegistros.equals("1"))
@@ -1043,6 +1044,8 @@ public class Procesos {
             ArchivoSustitucion.writeBytes("Registros Activos"+"|"+Descriptor.RegistrosActivos);
             ArchivoSustitucion.writeBytes("\r\n");
             ArchivoSustitucion.writeBytes("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Max. Reorganizacion"+"|"+Descriptor.Max_Reorganizacion);
             ArchivoSustitucion.writeBytes("\r\n");
             ArchivoSustitucion.close();
         }
@@ -1071,6 +1074,10 @@ public class Procesos {
             
             ArchivoSustitucion.readLine();
             Sustitucion = "Registros Inactivos"+"|"+Descriptor.RegistrosInactivos;
+            ArchivoSustitucion.writeBytes(Sustitucion);
+            
+            ArchivoSustitucion.readLine();
+            Sustitucion = "Max. Reorganizacion"+"|"+Descriptor.Max_Reorganizacion;
             ArchivoSustitucion.writeBytes(Sustitucion);
         }
         

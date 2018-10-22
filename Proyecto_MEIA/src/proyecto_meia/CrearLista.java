@@ -37,7 +37,7 @@ public class CrearLista extends javax.swing.JFrame {
         
         jTFUsuario.setText(Usuario);
         
-        if (Rol == "Administrador")
+        if (Rol.equals("Administrador"))
             jTFUsuario.enable(true);
         else
             jTFUsuario.enable(false);
@@ -183,6 +183,8 @@ public class CrearLista extends javax.swing.JFrame {
         try 
         {
             CrearLista(NuevaLista);
+            jTFUsuario.setText(Usuario);
+            
         } 
         catch (IOException ex) 
         {
@@ -330,17 +332,18 @@ public class CrearLista extends javax.swing.JFrame {
             String pathRutaLista = "C:\\MEIA\\Bitacora_Lista.txt";
             File ArchivoLista = new File(pathRutaLista);
                 
-            FileWriter Escribir = new FileWriter(ArchivoLista);
+            FileWriter Escribir = new FileWriter(ArchivoLista,true);
             BufferedWriter bw = new BufferedWriter(Escribir);
             
             if (VerificarEspacioBitacora())
             {
                 //Se Inserta el Nuevo Registro               
                 bw.write(Acceso.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+Acceso.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+Acceso.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
+                bw.newLine();
                 bw.close();
                 Escribir.close();
                 DescriptorBitacoraLista();      
-                JOptionPane.showMessageDialog(this,"Lista Creada","La Lista se ha Creado Exitosamente",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this,"La Lista se ha Creado Exitosamente","Lista Creada",JOptionPane.INFORMATION_MESSAGE);
             }
             else
             {
@@ -351,7 +354,7 @@ public class CrearLista extends javax.swing.JFrame {
                 Escribir.close();
                 DescriptorBitacoraLista();
                 DescriptorLista();
-                JOptionPane.showMessageDialog(this,"Lista Creada","La Lista se ha Creado Exitosamente",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this,"La Lista se ha Creado Exitosamente","Lista Creada",JOptionPane.INFORMATION_MESSAGE);
             }
             
         jTFNombreLista.setText("");
@@ -368,6 +371,9 @@ public class CrearLista extends javax.swing.JFrame {
         
         String pathRutaBitacoraLista = "C:\\MEIA\\desc_Bitacora_Lista.txt";
         File ArchivoBitacoraLista = new File(pathRutaBitacoraLista);
+        
+        if(ArchivoBitacoraLista.exists())
+        {
         FileReader Leer = new FileReader(ArchivoBitacoraLista);
         BufferedReader leerArchivo = new BufferedReader(Leer);
         String Linea = leerArchivo.readLine();
@@ -384,6 +390,7 @@ public class CrearLista extends javax.swing.JFrame {
 
         if (n1 == n2)
             HayEspacio = false;
+        }
         
         return HayEspacio;   
     }
@@ -451,6 +458,8 @@ public class CrearLista extends javax.swing.JFrame {
         int NoRegistros = 0;
         int Activos = 0;
         int Inactivos = 0;        
+        String AuxLinea = "";
+        String MaxRepeticiones = "";
         
         //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
         while(Linea != null)
@@ -470,13 +479,31 @@ public class CrearLista extends javax.swing.JFrame {
         }
         
 
+            String paths = "C:\\MEIA\\desc_Bitacora_Lista.txt";
+            File Archivos = new File(paths);
+            FileReader Leers = new FileReader(Archivos);
+            BufferedReader leerArchivos = new BufferedReader(Leers);
+            String Lineas = "";
+            Lineas = leerArchivos.readLine();
+
+            while(Lineas != null)
+            {
+                AuxLinea = Lineas;
+                Lineas = leerArchivos.readLine();
+                if(Lineas == null)
+                {
+                    String[] Separador = AuxLinea.split("\\|");
+                    MaxRepeticiones = Separador[1];
+                }
+            }
+        
         Leer.close();
         leerArchivo.close();
         
         Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista("Bitacora_Lista",
                 Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Fecha.toString(),
                 Acceso.RellenarCaracteres(Usuario,0),Integer.toString(NoRegistros),Integer.toString(Activos),
-                Integer.toString(Inactivos),"");
+                Integer.toString(Inactivos),MaxRepeticiones);
         Acceso.DescriptorBitacoraLista(Nuevo);
     }
     
@@ -491,7 +518,8 @@ public class CrearLista extends javax.swing.JFrame {
         String Linea = leerArchivo.readLine();
         int NoRegistros = 0;
         int Activos = 0;
-        int Inactivos = 0;        
+        int Inactivos = 0;   
+   
         
         //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
         while(Linea != null)
@@ -509,6 +537,8 @@ public class CrearLista extends javax.swing.JFrame {
             Linea = leerArchivo.readLine();
             NoRegistros++;
         }
+        
+            
         
 
         Leer.close();

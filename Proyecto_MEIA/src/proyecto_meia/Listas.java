@@ -47,7 +47,7 @@ public class Listas extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
+    //REVISAR LA TABULACION DE LAS LISTAS
     //En esta Funcion se Buscan las Listas para llenar La Lista del Menu Principal.
     private void BuscarListas(String Usuario) throws FileNotFoundException, IOException
     {
@@ -86,6 +86,32 @@ public class Listas extends javax.swing.JFrame {
                             Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
                             Listas.get(i).Fecha_creacion+Listas.get(i).Status);
                 }
+                
+               int  bandera = Listas.size();
+                
+                pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
+                Archivo = new File(pathRuta);
+                Lectura = new FileReader(Archivo);
+                Leer = new BufferedReader(Lectura);
+                Linea = Leer.readLine();
+
+                while(Linea != null)
+                {
+                    Auxiliar = Linea.split("\\|"); 
+                    NuevaLista = new Lista(Auxiliar[0]+"  |",Auxiliar[1]+"|",Auxiliar[2]+"|",procesos.RellenarCaracteres(Auxiliar[3], 0)+"|"
+                            ,Auxiliar[4] + "   "+"|",Auxiliar[5]);
+                    Listas.add(NuevaLista);
+
+                    Linea = Leer.readLine();
+                }
+
+                for(int i = bandera; i< Listas.size()+bandera; i++)
+                {
+                    Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
+                            Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
+                            Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                }
+                
                 
                 lstListas.setModel(Modelo);
             }
@@ -164,7 +190,38 @@ public class Listas extends javax.swing.JFrame {
                             Listas.get(i).Fecha_creacion+Listas.get(i).Status);
                 }
                 
-                lstListas.setModel(Modelo);  
+             
+                int bandera = Listas.size();
+                
+                pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
+                Archivo = new File(pathRuta);   
+                Lectura = new FileReader(Archivo);
+                Leer = new BufferedReader(Lectura);
+                Linea = Leer.readLine();
+                
+                while(Linea != null)
+                {
+                    Auxiliar = Linea.split("\\|"); 
+                    NuevaLista = new Lista(Auxiliar[0]+"  |",Auxiliar[1]+"|",Auxiliar[2]+"|",procesos.RellenarCaracteres(Auxiliar[3], 0)+"|"
+                            ,Auxiliar[4] + "   "+"|",Auxiliar[5]);
+
+                    if(Auxiliar[1].equals(Usuario))
+                      Listas.add(NuevaLista);
+
+                    Linea = Leer.readLine();
+                }
+
+                
+                for(int i = bandera; i< Listas.size()+bandera; i++)
+                {
+                    Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
+                            Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
+                            Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                }
+                
+               lstListas.setModel(Modelo); 
+                
+                
             }
             else
             {
@@ -245,6 +302,7 @@ public class Listas extends javax.swing.JFrame {
                   NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
                   if(Nombre.equals(Auxiliar[0]))
                       Existe = true;
+                  Linea = Leer.readLine();
                 }
             }
 
@@ -336,28 +394,26 @@ public class Listas extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btnModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnEliminarLista)
-                        .addContainerGap())))
+                        .addGap(372, 372, 372)
+                        .addComponent(btnEliminarLista))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9)
+                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModificar)
                     .addComponent(btnEliminarLista))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 670, 280));
@@ -446,6 +502,7 @@ public class Listas extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         
         String Nombre = txtListaaBuscar.getText();
+        Nombre = Acceso.RellenarCaracteres(Nombre, 1);
         try {
             if(ListaExiste(Nombre) == true)
             {
@@ -506,6 +563,8 @@ public class Listas extends javax.swing.JFrame {
         if(Cadena!= "")
         {
         try {
+            String AuxNombre = "";
+            String AuxUsuario = "";
             String pathRuta = "C:\\MEIA\\Lista.txt";
             File Archivo = new File(pathRuta);
             RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
@@ -516,7 +575,9 @@ public class Listas extends javax.swing.JFrame {
             while(Linea != null)
             {
                 Auxiliar = Linea.split("\\|"); 
-                if(Auxiliar[0].equals(Nombre) && Auxiliar[1].equals(Usuario))
+                AuxNombre = Auxiliar[0];
+                AuxUsuario = Auxiliar[1];
+                if(AuxNombre.equals(Nombre) && AuxUsuario.equals(Usuario))
                 {
                     Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0], 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1], 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2], 2),ArregloCadena[3], ArregloCadena[4], "0");
                     String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status;
@@ -535,7 +596,9 @@ public class Listas extends javax.swing.JFrame {
             while(Linea != null)
             {
                 Auxiliar = Linea.split("\\|");
-                if(Auxiliar[0].equals(Nombre) && Auxiliar[1].equals(Usuario))
+                AuxNombre = Auxiliar[0];
+                AuxUsuario = Auxiliar[1];
+                if(Acceso.RellenarCaracteres(AuxNombre,1).equals(Acceso.RellenarCaracteres(Nombre,1)) && Acceso.RellenarCaracteres(AuxUsuario,0).equals(Acceso.RellenarCaracteres(Usuario,0)))
                 {
                     Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0], 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1], 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2], 2),ArregloCadena[3], ArregloCadena[4], "0");
                     String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status;
