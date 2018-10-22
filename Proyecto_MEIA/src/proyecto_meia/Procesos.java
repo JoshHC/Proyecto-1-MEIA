@@ -43,12 +43,10 @@ public class Procesos {
             Leer = new FileReader(Archivo);
             leerArchivo = new BufferedReader(Leer);
             Linea = leerArchivo.readLine();
-
-            String[] Secciones = Linea.split(" ");
             
-            while(Linea != null)
+            while(Linea != null && ExisteUsuarios == false)
             {
-                if(Secciones[0].equals(user))
+                if(Linea.contains(user))
                     ExisteUsuarios = true;
 
                 Linea = leerArchivo.readLine();
@@ -71,7 +69,7 @@ public class Procesos {
                 leerArchivo = new BufferedReader(Leer);
                 Linea = leerArchivo.readLine();
 
-                while(Linea != null)
+                while(Linea != null && ExisteBitacora == false)
                 {
                     if(Linea.contains(user))
                         ExisteBitacora = true;
@@ -169,9 +167,9 @@ public class Procesos {
             return "No Existe";
     }
     
-    public String[] ImplementacionSplit(String condiciones)
+    public String[] ImplementacionSplit(String condiciones, int cant)
     {
-        String[] porciones = new String[10];
+        String[] porciones = new String[cant];
         int contador = 0;
         
         char[] Caracteres = condiciones.toCharArray();
@@ -1027,26 +1025,26 @@ public class Procesos {
         //String [] AuxTamaño = Auxiliar.split("\\|");
         
         
-        if(Auxiliar == null)
+        if(Descriptor.NumerodeRegistros.equals("1"))
         {
-         ArchivoSustitucion.seek(0);
-         ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_simbolico);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Usuario que lo creo"+"|"+Descriptor.Usuario_Creacion);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Numero de Registros"+"|"+Descriptor.NumerodeRegistros);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Registros Activos"+"|"+Descriptor.RegistrosActivos);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.close();
+            ArchivoSustitucion.seek(0);
+            ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_simbolico);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Usuario que lo creo"+"|"+Descriptor.Usuario_Creacion);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Numero de Registros"+"|"+Descriptor.NumerodeRegistros);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Registros Activos"+"|"+Descriptor.RegistrosActivos);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.close();
         }
         else
         {
@@ -1073,10 +1071,6 @@ public class Procesos {
             
             ArchivoSustitucion.readLine();
             Sustitucion = "Registros Inactivos"+"|"+Descriptor.RegistrosInactivos;
-            ArchivoSustitucion.writeBytes(Sustitucion);
-            
-            ArchivoSustitucion.readLine();
-            Sustitucion = "Max. Reorganizacion"+"|"+Descriptor.Max_Reorganizacion;
             ArchivoSustitucion.writeBytes(Sustitucion);
         }
         

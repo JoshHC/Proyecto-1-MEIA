@@ -82,9 +82,9 @@ public class Listas extends javax.swing.JFrame {
                 
                 for(int i = 0; i< Listas.size(); i++)
                 {
-                    Modelo.addElement(Listas.get(i).Nombre_lista+" "+Listas.get(i).Usuario+" "+
-                            Listas.get(i).Descripcion+" "+Listas.get(i).Numero_usuarios+" "+
-                            Listas.get(i).Fecha_creacion+" "+Listas.get(i).Status);
+                    Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
+                            Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
+                            Listas.get(i).Fecha_creacion+Listas.get(i).Status);
                 }
                 
                 lstListas.setModel(Modelo);
@@ -117,9 +117,9 @@ public class Listas extends javax.swing.JFrame {
                 
                 for(int i = 0; i< Listas.size(); i++)
                 {
-                    Modelo.addElement(Listas.get(i).Nombre_lista+" "+Listas.get(i).Usuario+" "+
-                            Listas.get(i).Descripcion+" "+Listas.get(i).Numero_usuarios+" "+
-                            Listas.get(i).Fecha_creacion+" "+Listas.get(i).Status);
+                    Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
+                            Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
+                            Listas.get(i).Fecha_creacion+Listas.get(i).Status);
                 }
                 
                 lstListas.setModel(Modelo);
@@ -159,9 +159,9 @@ public class Listas extends javax.swing.JFrame {
                 
                 for(int i = 0; i< Listas.size(); i++)
                 {
-                    Modelo.addElement(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+
-                            Listas.get(i).Descripcion+"|"+Listas.get(i).Numero_usuarios+"|"+
-                            Listas.get(i).Fecha_creacion+"|"+Listas.get(i).Status);
+                    Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
+                            Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
+                            Listas.get(i).Fecha_creacion+Listas.get(i).Status);
                 }
                 
                 lstListas.setModel(Modelo);  
@@ -196,9 +196,9 @@ public class Listas extends javax.swing.JFrame {
                 
                 for(int i = 0; i< Listas.size(); i++)
                 {
-                    Modelo.addElement(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+
-                            Listas.get(i).Descripcion+"|"+Listas.get(i).Numero_usuarios+"|"+
-                            Listas.get(i).Fecha_creacion+"|"+Listas.get(i).Status);
+                    Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
+                            Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
+                            Listas.get(i).Fecha_creacion+Listas.get(i).Status);
                 }
                 
                 lstListas.setModel(Modelo); 
@@ -223,7 +223,7 @@ public class Listas extends javax.swing.JFrame {
 
                 while(Linea != null)
                 {
-                  Auxiliar = Linea.split("\\|"); 
+                  Auxiliar = Linea.split("\\|");
                   NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
                   if(Nombre.equals(Auxiliar[0]))
                       Existe = true;
@@ -241,7 +241,7 @@ public class Listas extends javax.swing.JFrame {
 
                 while(Linea != null)
                 {
-                  Auxiliar = Linea.split("\\|"); 
+                  Auxiliar = Linea.split("\\|");
                   NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
                   if(Nombre.equals(Auxiliar[0]))
                       Existe = true;
@@ -421,7 +421,7 @@ public class Listas extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // Aca se programa modificar
-        String[] Campos = lstListas.getSelectedValue().toString().split("\\|");
+        String[] Campos = lstListas.getSelectedValue().split("\\|");
         
         String nombre = procesos.EliminarCaracteres(Campos[0]);
         String usuario = procesos.EliminarCaracteres(Campos[1]);
@@ -534,7 +534,7 @@ public class Listas extends javax.swing.JFrame {
                
             while(Linea != null)
             {
-                Auxiliar = Linea.split("\\|"); 
+                Auxiliar = Linea.split("\\|");
                 if(Auxiliar[0].equals(Nombre) && Auxiliar[1].equals(Usuario))
                 {
                     Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0], 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1], 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2], 2),ArregloCadena[3], ArregloCadena[4], "0");
@@ -577,7 +577,7 @@ public class Listas extends javax.swing.JFrame {
         //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
         while(Linea != null)
         {
-            String [] Auxiliar = Linea.split("\\|");
+            String [] Auxiliar = Linea.split("\\|"); 
             
             if(Auxiliar[5].equals("1"))
             {
@@ -616,7 +616,7 @@ public class Listas extends javax.swing.JFrame {
         //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
         while(Linea != null)
         {
-            String [] Auxiliar = Linea.split("\\|");
+            String [] Auxiliar = Linea.split("\\|"); 
             
             if(Auxiliar[5].equals("1"))
             {

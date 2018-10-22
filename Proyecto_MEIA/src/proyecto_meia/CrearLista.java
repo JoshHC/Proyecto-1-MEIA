@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -19,12 +20,14 @@ import javax.swing.JOptionPane;
  */
 public class CrearLista extends javax.swing.JFrame {
 
+    Procesos Acceso = new Procesos();
+    
     private int Code;
     static String Rol;
     static String Usuario;
     private static String NombreLista;
     private static String Descripcion;
-    Procesos Acceso = new Procesos();
+    
 
     public CrearLista(String Usuario, String Rol) {
         initComponents();
@@ -148,7 +151,14 @@ public class CrearLista extends javax.swing.JFrame {
     private void btnCrearListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearListaActionPerformed
         if (Code == 1)
         {
-            // MODIFICAR
+            try 
+            {
+                Modificar();
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(CrearLista.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else
         {
@@ -180,9 +190,109 @@ public class CrearLista extends javax.swing.JFrame {
         }
     }
     
-    private void Modificar()
+    private void Modificar() throws IOException
     {
-    
+        boolean Finalizado = false;
+        
+        String Nombre = jTFNombreLista.getText();
+        String UsuarioPropietario = jTFUsuario.getText();
+        String Descripcion = jTADescripcion.getText();
+        
+        try
+        {   
+            File Archivo1 = new File("C:\\MEIA\\Lista.txt");
+            FileReader Lectura = new FileReader(Archivo1);
+            BufferedReader Leer = new BufferedReader(Lectura);
+            
+            File Archivo = new File("C:\\MEIA\\Lista.txt");
+            RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+            String Auxiliar = ArchivoSustitucion.readLine();
+
+            int contIteraciones = 0;
+            String Linea = Leer.readLine();
+            String[] LineaOriginal;
+            
+            while(Linea != null || Finalizado != true)
+            {
+                LineaOriginal = Linea.split("\\|");
+                
+                if (LineaOriginal[0].compareTo(Acceso.RellenarCaracteres(Nombre, 1)) == 0 && 
+                        LineaOriginal[1].compareTo(Acceso.RellenarCaracteres(UsuarioPropietario, 0)) == 0)
+                {
+                    LineaOriginal = Linea.split("\\|");
+                    
+                    String Sustitucion = LineaOriginal[0] +"|"+ LineaOriginal[1] +"|"+ 
+                            Acceso.RellenarCaracteres(Descripcion, 2) +"|"+  LineaOriginal[3] +"|"+
+                            LineaOriginal[4] +"|"+ LineaOriginal[5];
+                    
+                    ArchivoSustitucion.writeBytes(Sustitucion);
+                    Finalizado = true;
+                }
+
+                if (Finalizado == false)
+                    Linea = Leer.readLine();
+            }
+
+        }
+        catch(IOException e)
+        {
+        
+        }
+        
+        try
+        {   
+            File Archivo1 = new File("C:\\MEIA\\Bitacora_Lista.txt");
+            FileReader Lectura = new FileReader(Archivo1);
+            BufferedReader Leer = new BufferedReader(Lectura);
+            
+            File Archivo = new File("C:\\MEIA\\Bitacora_Lista.txt");
+            RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+            String Auxiliar;
+
+            int contIteraciones = 0;
+            String Linea = Leer.readLine();
+            String[] LineaOriginal;
+            
+            while(Linea != null && Finalizado != true)
+            {
+                LineaOriginal = Linea.split("\\|");
+                
+                if (LineaOriginal[0].equals(Acceso.RellenarCaracteres(Nombre, 1)) && LineaOriginal[1].equals(Acceso.RellenarCaracteres(UsuarioPropietario, 0)))
+                {
+                    String Sustitucion = LineaOriginal[0] +"|"+ LineaOriginal[1] +"|"+ 
+                            Acceso.RellenarCaracteres(Descripcion, 2) +"|"+  LineaOriginal[3] +"|"+
+                            LineaOriginal[4] +"|"+ LineaOriginal[5];
+                    
+                    ArchivoSustitucion.writeBytes(Sustitucion);
+                    Finalizado = true;
+                }
+
+                if (Finalizado == false)
+                {
+                    Linea = Leer.readLine();
+                    ArchivoSustitucion.readLine();
+                }
+                    
+            }
+
+        }
+        catch(IOException e)
+        {
+        
+        }
+        
+        if (Finalizado == true)
+        {
+            DescriptorBitacoraLista(); 
+            
+            JOptionPane.showMessageDialog(this,"Lista Modificada","La Lista se ha Modificado Exitosamente",
+                        JOptionPane.INFORMATION_MESSAGE);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this,"Algo ha salido mal","Ha ocurrido un error en algun lugar de la galaxia",
+                        JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     
@@ -202,6 +312,8 @@ public class CrearLista extends javax.swing.JFrame {
        
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    
+    
     //ESTO NO TIENE NADA QUE VER LA LISTA INDIZADA
     private void CrearLista(Lista NuevaLista) throws IOException
     {
@@ -223,7 +335,7 @@ public class CrearLista extends javax.swing.JFrame {
             
             if (VerificarEspacioBitacora())
             {
-                //Se Inserta el Nuevo Registro
+                //Se Inserta el Nuevo Registro               
                 bw.write(Acceso.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+Acceso.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+Acceso.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
                 bw.close();
                 Escribir.close();
@@ -254,33 +366,24 @@ public class CrearLista extends javax.swing.JFrame {
     {
         boolean HayEspacio = true;
         
-        String pathRutaBitacoraLista = "C:\\MEIA\\Bitacora_Lista.txt";
+        String pathRutaBitacoraLista = "C:\\MEIA\\desc_Bitacora_Lista.txt";
         File ArchivoBitacoraLista = new File(pathRutaBitacoraLista);
         FileReader Leer = new FileReader(ArchivoBitacoraLista);
         BufferedReader leerArchivo = new BufferedReader(Leer);
         String Linea = leerArchivo.readLine();
             
-        if(Linea == null)
-        {
-            HayEspacio = true;
-        }
-        else
-        {
         for(int i = 0; i < 6; i++)
             Linea = leerArchivo.readLine();
+
+        char n1 = Linea.charAt(18);
         
-        String[] Trozos = new String[2];
-        Trozos = Linea.split("\\|");
-        
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < 2; i++)
             Linea = leerArchivo.readLine();
-        
-        String[] trozos = new String[2];
-        trozos = Linea.split("\\|");
-        
-        if (Trozos[1].equals(trozos[1]))
+
+        char n2 = Linea.charAt(20);
+
+        if (n1 == n2)
             HayEspacio = false;
-        }
         
         return HayEspacio;   
     }
@@ -322,18 +425,14 @@ public class CrearLista extends javax.swing.JFrame {
             BufferedReader leerArchivo = new BufferedReader(Leer);
             String Linea = leerArchivo.readLine();
             
-            if(Linea != null)
+            while (Linea != null)
             {
-                while (!"".equals(Linea))
-                {
-                    String[] Datos = new String[6];
-                    Datos = Linea.split("\\|");
+                String[] Datos = Linea.split("\\|");
 
-                    if (NuevaLista.Nombre_lista.equals(Datos[0]) && NuevaLista.Usuario.equals(Datos[1]) && Datos[5].equals("1"))
-                        Existe = true;
+                if (NuevaLista.Nombre_lista.equals(Datos[0]) && NuevaLista.Usuario.equals(Datos[1]) && Datos[5].equals("1"))
+                    Existe = true;
 
-                    Linea = leerArchivo.readLine();
-                }
+                Linea = leerArchivo.readLine();
             }
         }
         
@@ -374,8 +473,10 @@ public class CrearLista extends javax.swing.JFrame {
         Leer.close();
         leerArchivo.close();
         
-        String Nombre = jTFNombreLista.getText();
-        Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista(Acceso.RellenarCaracteres(Nombre,1),Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),"");
+        Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista("Bitacora_Lista",
+                Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Fecha.toString(),
+                Acceso.RellenarCaracteres(Usuario,0),Integer.toString(NoRegistros),Integer.toString(Activos),
+                Integer.toString(Inactivos),"");
         Acceso.DescriptorBitacoraLista(Nuevo);
     }
     

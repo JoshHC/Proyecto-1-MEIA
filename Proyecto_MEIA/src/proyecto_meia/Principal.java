@@ -204,7 +204,7 @@ public class Principal extends javax.swing.JFrame {
                 {
                     if(Linea.contains(Usuario))
                     {                    
-                        String[] SegmentosInfo = procesos.ImplementacionSplit(Linea);
+                        String[] SegmentosInfo = Linea.split("\\|");
                         
                         String pathImagen = SegmentosInfo[8];
                         
@@ -247,7 +247,7 @@ public class Principal extends javax.swing.JFrame {
                 {
                     if(Linea.contains(Usuario))
                     {
-                        String[] SegmentosInfo = procesos.ImplementacionSplit(Linea);
+                        String[] SegmentosInfo = Linea.split("\\|");
                         
                         String pathImagen = SegmentosInfo[8];
                         
