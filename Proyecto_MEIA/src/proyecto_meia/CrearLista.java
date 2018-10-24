@@ -27,49 +27,6 @@ public class CrearLista extends javax.swing.JFrame {
     static String Usuario;
     private static String NombreLista;
     private static String Descripcion;
-    
-
-    public CrearLista(String Usuario, String Rol) {
-        initComponents();
-        
-        this.Usuario = Usuario;
-        this.Rol = Rol;
-        
-        jTFUsuario.setText(Usuario);
-        
-        if (Rol.equals("Administrador"))
-            jTFUsuario.enable(true);
-        else
-            jTFUsuario.enable(false);
-    }
-    
-    public CrearLista(String Usuario, String NombreLista, String Descripcion, int Code, String UsuarioLogeado ,String Rol) {
-        initComponents();
-        
-        this.Code = Code;
-        this.Usuario = UsuarioLogeado;
-        this.Rol = Rol;
-        
-        jTFUsuario.setText(Usuario);
-        
-        this.NombreLista = NombreLista;
-        jTFNombreLista.setText(NombreLista);
-        
-        this.Descripcion = Descripcion;
-        jTADescripcion.setText(Descripcion);
-        
-        jLTitulo.setText("Modificar Lista");
-        jTFUsuario.enable(false);
-        jTFNombreLista.enable(false);
-        btnCrearLista.setText("Modificar");
-        
-    }
-
-    private CrearLista() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -148,8 +105,8 @@ public class CrearLista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void btnCrearListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearListaActionPerformed
-        
         
         // VALIDACIONES DE TAMAÑO DE LAS CADENAS
         // VALIDACION DE QUE EL USUARIO EXISTA
@@ -233,7 +190,7 @@ public class CrearLista extends javax.swing.JFrame {
         
         String Nombre = jTFNombreLista.getText();
         String UsuarioPropietario = jTFUsuario.getText();
-        String Descripcion = jTADescripcion.getText();
+        Descripcion = jTADescripcion.getText();
         
         try
         {   
@@ -249,15 +206,13 @@ public class CrearLista extends javax.swing.JFrame {
             String Linea = Leer.readLine();
             String[] LineaOriginal;
             
-            while(Linea != null || Finalizado != true)
+            while(Linea != null && Finalizado != true)
             {
                 LineaOriginal = Linea.split("\\|");
                 
                 if (LineaOriginal[0].compareTo(procesos.RellenarCaracteres(Nombre, 1)) == 0 && 
                         LineaOriginal[1].compareTo(procesos.RellenarCaracteres(UsuarioPropietario, 0)) == 0)
-                {
-                    LineaOriginal = Linea.split("\\|");
-                    
+                {   
                     String Sustitucion = LineaOriginal[0] +"|"+ LineaOriginal[1] +"|"+ 
                             procesos.RellenarCaracteres(Descripcion, 2) +"|"+  LineaOriginal[3] +"|"+
                             LineaOriginal[4] +"|"+ LineaOriginal[5];
@@ -267,7 +222,11 @@ public class CrearLista extends javax.swing.JFrame {
                 }
 
                 if (Finalizado == false)
+                {
                     Linea = Leer.readLine();
+                    Auxiliar = ArchivoSustitucion.readLine();
+                }
+                    
             }
 
         }
@@ -348,6 +307,48 @@ public class CrearLista extends javax.swing.JFrame {
         }
        
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    
+    public CrearLista(String Usuario, String Rol) {
+        initComponents();
+        
+        this.Usuario = Usuario;
+        this.Rol = Rol;
+        
+        jTFUsuario.setText(Usuario);
+        
+        if (Rol.equals("Administrador"))
+            jTFUsuario.enable(true);
+        else
+            jTFUsuario.enable(false);
+    }
+    
+    public CrearLista(String Usuario, String NombreLista, String Descripcion, int Code, String UsuarioLogeado ,String Rol) {
+        initComponents();
+        
+        this.Code = Code;
+        this.Usuario = UsuarioLogeado;
+        this.Rol = Rol;
+        
+        jTFUsuario.setText(Usuario);
+        
+        this.NombreLista = NombreLista;
+        jTFNombreLista.setText(NombreLista);
+        
+        this.Descripcion = Descripcion;
+        jTADescripcion.setText(Descripcion);
+        
+        jLTitulo.setText("Modificar Lista");
+        jTFUsuario.enable(false);
+        jTFNombreLista.enable(false);
+        btnCrearLista.setText("Modificar");
+        
+    }
+
+    private CrearLista() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
     
     
