@@ -423,6 +423,47 @@ public class Procesos {
         return tetsto;
     }
     
+    
+    public Boolean ListaExiste(String Nombre) throws FileNotFoundException, IOException
+    {
+        boolean Existe = false;
+        
+            String pathRuta = "C:\\MEIA\\Lista.txt";
+            File Archivo = new File(pathRuta);
+            
+                FileReader Lectura = new FileReader(Archivo);
+                BufferedReader Leer = new BufferedReader(Lectura);
+                String Linea = Leer.readLine();
+                String[] Auxiliar;
+                Lista NuevaLista;
+
+                while(Linea != null)
+                {
+                  Auxiliar = Linea.split("\\|");
+                  NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                  if(Nombre.equals(Auxiliar[0]))
+                      Existe = true;
+                }
+
+                pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
+                Archivo = new File(pathRuta);
+                Lectura = new FileReader(Archivo);
+                Leer = new BufferedReader(Lectura);
+                Linea = Leer.readLine();
+
+                while(Linea != null)
+                {
+                  Auxiliar = Linea.split("\\|");
+                  NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                  if(Nombre.equals(Auxiliar[0]))
+                      Existe = true;
+                  Linea = Leer.readLine();
+                }
+
+        return Existe; 
+    }
+    
+    
     // Elimina los espacios
     public String EliminarCaracteres (String Texto)
     {
