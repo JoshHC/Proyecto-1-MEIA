@@ -46,6 +46,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
     Procesos Acceso = new Procesos();
     static int ContadorListaIndizada;
     static String Comienzo;
+    static int contador;
       
     public Modificacion_De_Listas(String Dato, String Usuario, String Rol) throws IOException {
         
@@ -499,17 +500,19 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             {
              Nueva = new ListaUsuario(Proceso.RellenarCaracteres(NombreLista,1),Proceso.RellenarCaracteres(this.Usuario,0),Proceso.RellenarCaracteres(Usuario,0),Proceso.RellenarCaracteres(Descripcion,2),Fecha.toString(), "1");
              bw.write(Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Descripcion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status);
+             bw.write(System.lineSeparator());
             }
             else
             {
-            Nueva = new ListaUsuario(NombreLista,Proceso.RellenarCaracteres(Registros.get(0).Usuario,0),Usuario,Proceso.RellenarCaracteres(Registros.get(0).Descripcion,2),Registros.get(0).Fecha_creacion, "1");
+            Nueva = new ListaUsuario(NombreLista,Proceso.RellenarCaracteres(Registros.get(0).Usuario,0),Usuario,Proceso.RellenarCaracteres(Descripcion,2),Registros.get(0).Fecha_creacion, "1");
             bw.write(Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Descripcion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status);
+            bw.write(System.lineSeparator());
             }
             bw.close();
             Escritor.close();
             DescriptorListaUsuario();
             AgregarListaIndizada(Nueva);
-            JOptionPane.showMessageDialog(null, "Usuario Ingresado con Exito");
+            JOptionPane.showMessageDialog(this, "Ingreso Exitoso","El Usuario se ha Ingresado Exitosamente", JOptionPane.INFORMATION_MESSAGE);
             BuscarListas(this.Usuario, this.Rol);
             
         } catch (IOException ex) {
@@ -658,7 +661,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             {
               Auxiliar = Linea.split("\\|"); 
               NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-              if(NombreLista.equals(Auxiliar[0]) && Usuario.equals(Auxiliar[1]))
+              if(NombreLista.trim().equals(Auxiliar[0].trim()) && Usuario.trim().equals(Auxiliar[1].trim()))
               Listas.add(NuevaLista);
               Linea = Leer.readLine();
             }
@@ -678,14 +681,16 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             File Archivo = new File(pathRuta);
             FileWriter Escritor = new FileWriter(Archivo,true);
             BufferedWriter bw = new BufferedWriter(Escritor);
-            String Posicion = "1"+"."+ContadorListaIndizada;
-            ListaIndizada NuevaLista = new ListaIndizada(String.valueOf(ContadorListaIndizada),Posicion,Nueva.Nombre_lista,Nueva.Usuario,Nueva.Usuario_Asociado,"0",Nueva.Status);
+            String Posicion = "1"+"."+(ContadorListaIndizada+1);
+            ListaIndizada NuevaLista = new ListaIndizada(String.valueOf(ContadorListaIndizada+1),Posicion,Nueva.Nombre_lista,Nueva.Usuario,Nueva.Usuario_Asociado,"0",Nueva.Status);
             bw.write(NuevaLista.NoRegistro+"|"+NuevaLista.Posicion+"|"+NuevaLista.Nombre_Lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Usuario_Asociado+"|"+NuevaLista.Siguiente+"|"+NuevaLista.Status);
-            AsignarSiguiente();
+            bw.write(System.lineSeparator());
             bw.close();
             Escritor.close();
+            AsignarSiguiente(); 
             DescriptorListaIndizada();
             ContadorListaIndizada++;
+            contador++;
             
             
             
@@ -702,15 +707,14 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             String Linea = bw.readLine();
             String Siguiente = "";
             
-            if(Linea == null)
+            if(contador == 0)
             {
                 
                 Siguiente = "0";
                 Comienzo = "1";
             }
             else
-            {
-                
+            {             
                 while(Linea != null)
                 {
                     String [] Auxiliar = Linea.split("\\|");
@@ -741,10 +745,11 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                 
                 for(int i = 0; i<Listas.size();i++)
                 {
-                    if(Listas.get(i+1).NoRegistro != null)
+                    if(i+1 <= Listas.size())
                     {
-                        if(Listas.get(i).Siguiente.equals("0") == false)
-                        Listas.get(i).Siguiente = Listas.get(i+1).NoRegistro;
+                        if(Listas.get(i).Siguiente.equals("0") == true)
+                        if(i != 0)
+                        Listas.get(i-1).Siguiente = Listas.get(i).NoRegistro;
                     }
                     else
                     {
@@ -769,10 +774,10 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                 for(int i= 0;i<Listas.size();i++)
                 {
                     bs.write(Listas.get(i).NoRegistro+"|"+Listas.get(i).Posicion+"|"+Listas.get(i).Nombre_Lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Usuario_Asociado+"|"+Listas.get(i).Siguiente+"|"+Listas.get(i).Status);
+                    bs.write(System.lineSeparator());
                 }
-                Escritor.close();
                 bs.close();
-
+                Escritor.close();           
             }
     
     }
