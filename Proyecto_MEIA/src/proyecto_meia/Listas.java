@@ -647,6 +647,7 @@ public class Listas extends javax.swing.JFrame {
                             String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator();
                             ArchivoSustitucion.writeBytes(Sustitucion);
                             if(NuevaLista.Numero_usuarios.equals("0") == false)
+                             
                             EliminarUsuariosAsociados(NuevaLista);
                         }
                         LineaAdelantada = buferU.readLine();
@@ -677,6 +678,9 @@ public class Listas extends javax.swing.JFrame {
                         String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator();
                         ArchivoSustitucion.writeBytes(Sustitucion);
                         if(NuevaLista.Numero_usuarios.equals("0") == false)
+                        buferU.close();
+                        lectorU.close();
+                        ArchivoSustitucion.close();
                         EliminarUsuariosAsociados(NuevaLista);
                     }
                     LineaAdelantada = buferU.readLine();
@@ -824,16 +828,18 @@ public class Listas extends javax.swing.JFrame {
             Auxiliar = LineaAdelantada.split("\\|");
             if(NombreLista.equals(Auxiliar[0].trim()) && UsuarioCreador.equals(Auxiliar[1].trim()))
             {
-                ListaUsuario Nueva = new ListaUsuario(Acceso.RellenarCaracteres(Auxiliar[0].trim(), 1),Acceso.RellenarCaracteres(Auxiliar[1].trim(), 0), Acceso.RellenarCaracteres(Auxiliar[2].trim(), 2),Auxiliar[3].trim(), Auxiliar[4].trim(), "0");
-                String Sustitucion = Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Fecha_creacion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status+System.lineSeparator();
+                ListaUsuario Nueva = new ListaUsuario(Acceso.RellenarCaracteres(Auxiliar[0].trim(), 1),Acceso.RellenarCaracteres(Auxiliar[1].trim(), 0), Acceso.RellenarCaracteres(Auxiliar[2].trim(), 0),Acceso.RellenarCaracteres(Auxiliar[3].trim(), 2), Auxiliar[4].trim(), "0");
+                String Sustitucion = Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Descripcion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status+System.lineSeparator();
                 ArchivoSustitucion.writeBytes(Sustitucion);
                 DescriptorListaUsuario(Nueva);
-                break;
             }
             LineaAdelantada = buferU.readLine();
             Linea = ArchivoSustitucion.readLine();         
         }
 
+                        buferU.close();
+                        lectorU.close();
+                        ArchivoSustitucion.close();
 
         pathRuta = "C:\\MEIA\\ListaUsuarioIndizada.txt";
         Archivo = new File(pathRuta);
@@ -859,7 +865,10 @@ public class Listas extends javax.swing.JFrame {
             Linea = ArchivoSustitucion.readLine();         
         }
 
-
+                        buferU.close();
+                        lectorU.close();
+                        ArchivoSustitucion.close();
+        
         DescriptorBitacoraLista();
     }
     
