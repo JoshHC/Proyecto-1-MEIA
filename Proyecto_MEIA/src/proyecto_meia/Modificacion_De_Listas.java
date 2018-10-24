@@ -557,6 +557,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             String pathRuta = "C:\\MEIA\\Lista.txt";
             File Archivo = new File(pathRuta);
             
+
             FileReader Lectura = new FileReader(Archivo);
             BufferedReader Leer = new BufferedReader(Lectura);
             String Linea = Leer.readLine();
@@ -569,11 +570,11 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             {
               Auxiliar = Linea.split("\\|"); 
               NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
-              if(NombreLista.equals(Auxiliar[0]) && Usuario.equals(Auxiliar[1]))
+              if(NombreLista.equals(Auxiliar[0].trim()) && Usuario.equals(Auxiliar[1].trim()))
               Descripcion = Auxiliar[2];
               Linea = Leer.readLine();
             }
-            
+
             pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
             Archivo = new File(pathRuta);
             Lectura = new FileReader(Archivo);
@@ -936,7 +937,10 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                      int Numero = Integer.valueOf(Auxiliar[3])+1;
                      NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],String.valueOf(Numero),Auxiliar[4],Auxiliar[5]);
                     }
+                    else
+                    {
                     NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                    }
                     Listas.add(NuevaLista);
                     Linea = Leer.readLine();
                 }
@@ -948,11 +952,13 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                     
                     for(int i = 0; i<Listas.size();i++)
                     {
-                        Escribir.write(NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator());
+                        Escribir.write(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Descripcion+"|"+Listas.get(i).Numero_usuarios+"|"+Listas.get(i).Fecha_creacion+"|"+Listas.get(i).Status+System.lineSeparator());
                     }
                     Escribir.close();
-                    Escribir.close();
+                    Escritura.close();
                 }
+                
+                Listas.clear();
                 
                 pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
                 Archivo = new File(pathRuta);
@@ -970,7 +976,10 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                      int Numero = Integer.valueOf(Auxiliar[3])+1;
                      NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],String.valueOf(Numero),Auxiliar[4],Auxiliar[5]);
                     }
+                    else
+                    {
                     NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                    }
                     Listas.add(NuevaLista);
                     Linea = Leer.readLine();
                 }
@@ -982,10 +991,10 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                     
                     for(int i = 0; i<Listas.size();i++)
                     {
-                        Escribir.write(NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator());
+                         Escribir.write(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Descripcion+"|"+Listas.get(i).Numero_usuarios+"|"+Listas.get(i).Fecha_creacion+"|"+Listas.get(i).Status+System.lineSeparator());
                     }
                     Escribir.close();
-                    Escribir.close();
+                    Escritura.close();
                 }
                 
                 
@@ -1032,7 +1041,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
         leerArchivo.close();
         
         
-        Descriptor_Listas Nuevo = new Descriptor_Listas("Descriptor Lista",Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        Descriptor_Listas Nuevo = new Descriptor_Listas("Descriptor Lista",Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
         Acceso.DescriptorLista(Nuevo);
     }
     
@@ -1066,12 +1075,32 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             NoRegistros++;
         }
         
+        String paths = "C:\\MEIA\\desc_Bitacora_Lista.txt";
+            File Archivos = new File(paths);
+            FileReader Leers = new FileReader(Archivos);
+            BufferedReader leerArchivos = new BufferedReader(Leers);
+            String Lineas = "";
+            Lineas = leerArchivos.readLine();
+            String AuxLinea;
+            String MaxRepeticiones = "";
+
+            while(Lineas != null)
+            {
+                AuxLinea = Lineas;
+                Lineas = leerArchivos.readLine();
+                if(Lineas == null)
+                {
+                    String[] Separador = AuxLinea.split("\\|");
+                    MaxRepeticiones = Separador[1];
+                }
+            }
+        
 
         Leer.close();
         leerArchivo.close();
         
         
-        Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista("Bitacora Lista",Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),"");
+        Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista("Bitacora Lista",Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),MaxRepeticiones);
         Acceso.DescriptorBitacoraLista(Nuevo);
     }
     
