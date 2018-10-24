@@ -29,6 +29,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import static proyecto_meia.Listas.Usuario;
 
 /**
  *
@@ -535,6 +536,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             Escritor.close();
             DescriptorListaUsuario();
             AgregarListaIndizada(Nueva);
+            ModificarNumerodeUsuariosLista(NombreLista, this.Usuario);
            JOptionPane.showMessageDialog(this,"El Usuario se ha Ingresado Exitosamente","Ingreso Exitoso", JOptionPane.INFORMATION_MESSAGE);
             BuscarListas(this.Usuario, this.Rol);
             
@@ -909,6 +911,170 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
+    
+    public void ModificarNumerodeUsuariosLista(String NombreLista, String Usuario) throws FileNotFoundException, IOException
+    {
+                NombreLista = NombreLista.trim();
+                String pathRuta = "C:\\MEIA\\Lista.txt";
+                File Archivo = new File(pathRuta);
+
+                FileReader Lectura = new FileReader(Archivo);
+                BufferedReader Leer = new BufferedReader(Lectura);
+                String Linea = Leer.readLine();
+                String[] Auxiliar;
+                List<Lista> Listas = new ArrayList<Lista>();
+                Lista NuevaLista = null;
+
+                while(Linea != null)
+                {
+                    Auxiliar = Linea.split("\\|");
+                    String AuxNombre = Auxiliar[0].trim();
+                    String AuxUsuario = Auxiliar[1].trim();
+                    if(AuxNombre.equals(NombreLista) && AuxUsuario.equals(Usuario))
+                    {
+                     int Numero = Integer.valueOf(Auxiliar[3])+1;
+                     NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],String.valueOf(Numero),Auxiliar[4],Auxiliar[5]);
+                    }
+                    NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                    Listas.add(NuevaLista);
+                    Linea = Leer.readLine();
+                }
+                
+                if(Listas.size() != 0)
+                {
+                    FileWriter Escritura = new FileWriter(Archivo);
+                    BufferedWriter Escribir = new BufferedWriter(Escritura);
+                    
+                    for(int i = 0; i<Listas.size();i++)
+                    {
+                        Escribir.write(NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator());
+                    }
+                    Escribir.close();
+                    Escribir.close();
+                }
+                
+                pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
+                Archivo = new File(pathRuta);
+                Lectura = new FileReader(Archivo);
+                Leer = new BufferedReader(Lectura);
+                Linea = Leer.readLine();
+
+                while(Linea != null)
+                {
+                    Auxiliar = Linea.split("\\|");
+                    String AuxNombre = Auxiliar[0].trim();
+                    String AuxUsuario = Auxiliar[1].trim();
+                    if(AuxNombre.equals(NombreLista) && AuxUsuario.equals(Usuario))
+                    {
+                     int Numero = Integer.valueOf(Auxiliar[3])+1;
+                     NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],String.valueOf(Numero),Auxiliar[4],Auxiliar[5]);
+                    }
+                    NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                    Listas.add(NuevaLista);
+                    Linea = Leer.readLine();
+                }
+                
+                if(Listas.size() != 0)
+                {
+                    FileWriter Escritura = new FileWriter(Archivo);
+                    BufferedWriter Escribir = new BufferedWriter(Escritura);
+                    
+                    for(int i = 0; i<Listas.size();i++)
+                    {
+                        Escribir.write(NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator());
+                    }
+                    Escribir.close();
+                    Escribir.close();
+                }
+                
+                
+                DescriptorLista();
+                DescriptorBitacoraLista();
+            
+    }
+    
+    
+    //método donde se crea el Descriptor de Lista y se Actualiza
+    public void DescriptorLista() throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\Lista.txt";
+        File Archivo = new File(path);
+        if(Archivo.exists() == false)
+        Archivo.createNewFile();
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|"); 
+            
+            if(Auxiliar[5].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[5].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        Descriptor_Listas Nuevo = new Descriptor_Listas("Descriptor Lista",Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        Acceso.DescriptorLista(Nuevo);
+    }
+    
+     //método donde se crea el Descriptor de la Bitacora de Lista y se Actualiza
+    public void DescriptorBitacoraLista() throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\Bitacora_Lista.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|"); 
+            
+            if(Auxiliar[5].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[5].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista("Bitacora Lista",Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),"");
+        Acceso.DescriptorBitacoraLista(Nuevo);
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

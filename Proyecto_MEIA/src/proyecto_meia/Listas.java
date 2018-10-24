@@ -729,7 +729,7 @@ public class Listas extends javax.swing.JFrame {
         leerArchivo.close();
         
         
-        Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista(NombreListaSeleccionada,Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),"");
+        Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista("Bitacora Lista",Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),"");
         Acceso.DescriptorBitacoraLista(Nuevo);
     }
     
