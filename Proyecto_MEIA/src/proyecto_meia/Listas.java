@@ -47,6 +47,7 @@ public class Listas extends javax.swing.JFrame {
         
         if(Archivo1.exists() || Archivo2.exists())
             BuscarListas(Usuario);
+        
     }
 
     private Listas() {
@@ -87,14 +88,22 @@ public class Listas extends javax.swing.JFrame {
                         procesos.RellenarCaracteres("Descripcion", 2) + "      " +"|"+ procesos.RellenarCaracteres("Numero de Usuarios", 0) +"|"+
                         "Fecha de Creacion               " +"|"+ procesos.RellenarCaracteres("Estatus", 0));
                 
-                for(int i = 0; i< Listas.size(); i++)
+                try
                 {
-                    Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
-                            Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
-                            Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                    for(int i = 0; i< Listas.size(); i++)
+                    {
+                        Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
+                                Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
+                                Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                    }
+                }
+                catch(Exception e)
+                {
+                
                 }
                 
-               int  bandera = Listas.size();
+                
+                int bandera = Listas.size();
                 
                 pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
                 Archivo = new File(pathRuta);
@@ -112,12 +121,20 @@ public class Listas extends javax.swing.JFrame {
                     Linea = Leer.readLine();
                 }
 
-                for(int i = bandera; i< Listas.size()+bandera; i++)
+                try
                 {
-                    Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
-                            Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
-                            Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                    for(int i = bandera; i < Listas.size(); i++)
+                    {
+                        Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
+                                Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
+                                Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                    }
                 }
+                catch(Exception e)
+                {
+                
+                }
+                
                 
                 lstListas.setModel(Modelo);
             }
@@ -147,12 +164,20 @@ public class Listas extends javax.swing.JFrame {
                         procesos.RellenarCaracteres("Descripcion", 2) + "      " +"|"+ procesos.RellenarCaracteres("Numero de Usuarios", 0) +"|"+
                         "Fecha de Creacion               " +"|"+ procesos.RellenarCaracteres("Estatus", 0));
                 
-                for(int i = 0; i< Listas.size(); i++)
+                try
                 {
-                    Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
-                            Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
-                            Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                    for(int i = 0; i< Listas.size(); i++)
+                    {
+                        Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
+                                Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
+                                Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                    }
                 }
+                catch(Exception e)
+                {
+                
+                }
+                
                 
                 lstListas.setModel(Modelo);
             }
@@ -189,12 +214,20 @@ public class Listas extends javax.swing.JFrame {
                         procesos.RellenarCaracteres("Descripcion", 2) + "      " +"|"+ procesos.RellenarCaracteres("Numero de Usuarios", 0) +"|"+
                         "Fecha de Creacion               " +"|"+ procesos.RellenarCaracteres("Estatus", 0));
                 
-                for(int i = 0; i< Listas.size(); i++)
+                try
                 {
-                    Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
-                            Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
-                            Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                    for(int i = 0; i< Listas.size(); i++)
+                    {
+                        Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
+                                Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
+                                Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                    }
                 }
+                catch(Exception e)
+                {
+                
+                }
+                
                 
              
                 int bandera = Listas.size();
@@ -217,15 +250,22 @@ public class Listas extends javax.swing.JFrame {
                     Linea = Leer.readLine();
                 }
 
-                
-                for(int i = bandera; i< Listas.size()+bandera; i++)
+                try
                 {
-                    Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
-                            Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
-                            Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                    for(int i = bandera; i< Listas.size()+bandera; i++)
+                    {
+                        Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
+                                Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
+                                Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                    }
+                }
+                catch(Exception e)
+                {
+                
                 }
                 
-               lstListas.setModel(Modelo); 
+                
+                lstListas.setModel(Modelo); 
                 
                 
             }
@@ -257,11 +297,18 @@ public class Listas extends javax.swing.JFrame {
                         procesos.RellenarCaracteres("Descripcion", 2) + "      " +"|"+ procesos.RellenarCaracteres("Numero de Usuarios", 0) +"|"+
                         "Fecha de Creacion               " +"|"+ procesos.RellenarCaracteres("Estatus", 0));
                 
-                for(int i = 0; i< Listas.size(); i++)
+                try
                 {
-                    Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
-                            Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
-                            Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                    for(int i = 0; i< Listas.size(); i++)
+                    {
+                        Modelo.addElement(Listas.get(i).Nombre_lista+Listas.get(i).Usuario+
+                                Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
+                                Listas.get(i).Fecha_creacion+Listas.get(i).Status);
+                    }
+                }
+                catch(Exception e)
+                {
+                
                 }
            
                 lstListas.setModel(Modelo); 

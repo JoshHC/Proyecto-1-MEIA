@@ -773,6 +773,7 @@ public class Procesos {
         List<Lista> Lista = new ArrayList<Lista>();
 
         String Linea = bw.readLine();
+        
         while(Linea != null)
         {
             String []Auxiliar = Linea.split("\\|"); 
@@ -780,17 +781,22 @@ public class Procesos {
             Lista.add(NuevaLista);
             Linea = bw.readLine(); 
         }
+        
         Leer.close();
         bw.close();
         
         String path = "C:\\MEIA\\Lista.txt";
         File Archivou = new File(path);
-            if(Archivou.exists() == true)
-            {
+        
+        if(Archivou.exists() == true)
+        {
             FileReader Leeru = new FileReader(Archivou);
             BufferedReader bs = new BufferedReader(Leeru);
 
             String Lineau = bs.readLine();
+
+            try
+            {
                 while(Lineau != null)
                 {
                     String []Auxiliar = Linea.split("\\|"); 
@@ -798,9 +804,18 @@ public class Procesos {
                     Lista.add(NuevaLista);
                     Lineau = bs.readLine(); 
                 }
+            }
+            catch(Exception e)
+            {
+            
+            }
+            
+
             Leer.close();
             bw.close();
-            }
+        }
+            
+        /*
         Collections.sort(Lista, new Comparator<Lista>() {
             
         public int compare(Lista obj1, Lista obj2) 
@@ -808,6 +823,21 @@ public class Procesos {
             return obj1.Nombre_lista.compareTo(obj2.Nombre_lista);
         }
         
+        });
+            */
+        
+        Collections.sort(Lista, new Comparator<Lista>(){
+            public int compare(Lista p1, Lista p2) 
+            {
+                int resultado = p1.Nombre_lista.compareTo(p2.Nombre_lista);
+                if ( resultado != 0 ) { return resultado;}
+
+                resultado = p1.Usuario.compareTo(p2.Usuario);
+                if ( resultado != 0 ) { return resultado;}
+
+                return resultado;
+            }
+
         });
         
         FileOutputStream writer = new FileOutputStream(Archivo);
@@ -819,7 +849,8 @@ public class Procesos {
         
         for(int i = 0; i<= Lista.size()-1; i++)
         { 
-            wr.write("Nombre Lista"+"|"+Lista.get(i).Nombre_lista+"Usuario"+"|"+Lista.get(i).Usuario+"UsuarioAsociado"+"|"+"Descripcion"+"|"+Lista.get(i).Descripcion+"Fecha de Creacion "+"|"+Lista.get(i).Fecha_creacion+"Estatus"+"|"+Lista.get(i).Status);
+            wr.write(Lista.get(i).Nombre_lista+"|"+ Lista.get(i).Usuario+"|"+ Lista.get(i).Descripcion+"|" 
+                    +Lista.get(i).Numero_usuarios+"|" +Lista.get(i).Fecha_creacion+"|" +Lista.get(i).Status);
             wr.write("\r\n");
         }
         wr.close();
