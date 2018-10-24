@@ -1097,10 +1097,11 @@ public class Procesos {
         /*FileReader Leer = new FileReader(Archivo);
         BufferedReader bs = new BufferedReader(Leer);*/
         String Auxiliar = ArchivoSustitucion.readLine();
-        String [] AuxTamaño = Auxiliar.split("\\|");
+        //String [] AuxTamaño = Auxiliar.split("\\|");
         
         
-        if(Descriptor.NumerodeRegistros.equals("1"))
+        //if(Descriptor.NumerodeRegistros.equals("1"))
+        if(Auxiliar == null)
         {
             ArchivoSustitucion.seek(0);
             ArchivoSustitucion.writeBytes("Nombre Simbolico|Bitacora_Lista");
