@@ -588,7 +588,7 @@ public class Listas extends javax.swing.JFrame {
             
             try 
             {
-                Modificacion_De_Listas RealizarModificacion = new Modificacion_De_Listas(DatosdeEnvio[0],Usuario,Rol);
+                Modificacion_De_Listas RealizarModificacion = new Modificacion_De_Listas(DatosdeEnvio[0],DatosdeEnvio[1],Usuario,Rol);
                 RealizarModificacion.setLocationRelativeTo(null);
                 RealizarModificacion.show();
                 this.dispose();

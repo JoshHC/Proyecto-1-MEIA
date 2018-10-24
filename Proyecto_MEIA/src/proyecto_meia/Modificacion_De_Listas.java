@@ -36,6 +36,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
      * Creates new form Modificacion_De_Listas
      */
     
+    static String ListaPropietario;
     static String NombreLista;
     static String Usuario;
     static String Rol;
@@ -44,9 +45,10 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
     static String Comienzo;
     static int contador;
       
-    public Modificacion_De_Listas(String Dato, String Usuario, String Rol) throws IOException {
+    public Modificacion_De_Listas(String Dato, String Propietario, String Usuario, String Rol) throws IOException {
         
-        NombreLista = Dato.trim();
+        this.ListaPropietario = Propietario;
+        this.NombreLista = Dato.trim();
         this.Rol = Rol;
         this.Usuario = Usuario;
         String Cadena = "Lista: "+NombreLista;
@@ -503,8 +505,10 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
 
     //se Agrega un Usuario a la Lista y se Actualizan los Descriptores tanto de ListaUsuario como ListaIndizada
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       
-        if(ComboBoxUsuarios.getSelectedItem() != Usuario)
+        
+        String usuarioSeleccionado = ComboBoxUsuarios.getSelectedItem().toString();
+                
+        if(!usuarioSeleccionado.equals(ListaPropietario))
         {
             try 
             {
