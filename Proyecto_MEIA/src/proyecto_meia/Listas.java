@@ -10,12 +10,16 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListCellRenderer.UIResource;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import static proyecto_meia.Login.Usuario;
+import static proyecto_meia.Modificacion_De_Listas.NombreLista;
 
 /**
  *
@@ -53,6 +57,7 @@ public class Listas extends javax.swing.JFrame {
     //En esta Funcion se Buscan las Listas para llenar La Lista del Menu Principal.
     private void BuscarListas(String Usuario) throws FileNotFoundException, IOException
     {
+        
         if(Rol.equals("Administrador"))
         {
             String pathRuta = "C:\\MEIA\\Lista.txt";
@@ -114,7 +119,6 @@ public class Listas extends javax.swing.JFrame {
                             Listas.get(i).Fecha_creacion+Listas.get(i).Status);
                 }
                 
-                
                 lstListas.setModel(Modelo);
             }
             else
@@ -174,7 +178,7 @@ public class Listas extends javax.swing.JFrame {
                     NuevaLista = new Lista(Auxiliar[0]+"  |",Auxiliar[1]+"|",Auxiliar[2]+"|",procesos.RellenarCaracteres(Auxiliar[3], 0)+"|"
                             ,Auxiliar[4] + "   "+"|",Auxiliar[5]);
                     
-                    if(Auxiliar[1].equals(Usuario))
+                    if(Auxiliar[1].trim().equals(Usuario))
                         Listas.add(NuevaLista);
                     
                     Linea = Leer.readLine();
@@ -207,7 +211,7 @@ public class Listas extends javax.swing.JFrame {
                     NuevaLista = new Lista(Auxiliar[0]+"  |",Auxiliar[1]+"|",Auxiliar[2]+"|",procesos.RellenarCaracteres(Auxiliar[3], 0)+"|"
                             ,Auxiliar[4] + "   "+"|",Auxiliar[5]);
 
-                    if(Auxiliar[1].equals(Usuario))
+                    if(Auxiliar[1].trim().equals(Usuario))
                       Listas.add(NuevaLista);
 
                     Linea = Leer.readLine();
@@ -242,7 +246,7 @@ public class Listas extends javax.swing.JFrame {
                     NuevaLista = new Lista(Auxiliar[0]+"  |",Auxiliar[1]+"|",Auxiliar[2]+"|",procesos.RellenarCaracteres(Auxiliar[3], 0)+"|"
                             ,Auxiliar[4] + "   "+"|",Auxiliar[5]);
 
-                    if(Auxiliar[1].equals(Usuario))
+                    if(Auxiliar[1].trim().equals(Usuario))
                       Listas.add(NuevaLista);
 
                     Linea = Leer.readLine();
@@ -259,7 +263,7 @@ public class Listas extends javax.swing.JFrame {
                             Listas.get(i).Descripcion+Listas.get(i).Numero_usuarios+
                             Listas.get(i).Fecha_creacion+Listas.get(i).Status);
                 }
-                
+           
                 lstListas.setModel(Modelo); 
             }
         }
@@ -272,8 +276,6 @@ public class Listas extends javax.swing.JFrame {
             String pathRuta = "C:\\MEIA\\Lista.txt";
             File Archivo = new File(pathRuta);
             
-            if(Archivo.exists())
-            {
                 FileReader Lectura = new FileReader(Archivo);
                 BufferedReader Leer = new BufferedReader(Lectura);
                 String Linea = Leer.readLine();
@@ -287,16 +289,12 @@ public class Listas extends javax.swing.JFrame {
                   if(Nombre.equals(Auxiliar[0]))
                       Existe = true;
                 }
-            }
-            else
-            {
+
                 pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
                 Archivo = new File(pathRuta);
-                FileReader Lectura = new FileReader(Archivo);
-                BufferedReader Leer = new BufferedReader(Lectura);
-                String Linea = Leer.readLine();
-                String[] Auxiliar;
-                Lista NuevaLista;
+                Lectura = new FileReader(Archivo);
+                Leer = new BufferedReader(Lectura);
+                Linea = Leer.readLine();
 
                 while(Linea != null)
                 {
@@ -306,7 +304,6 @@ public class Listas extends javax.swing.JFrame {
                       Existe = true;
                   Linea = Leer.readLine();
                 }
-            }
 
         return Existe; 
     }
@@ -509,9 +506,11 @@ public class Listas extends javax.swing.JFrame {
             if(ListaExiste(Nombre) == true)
             {
                 JOptionPane.showMessageDialog(jMenu1,"La Lista que busca SI Existe","Aviso",JOptionPane.INFORMATION_MESSAGE);
+                txtListaaBuscar.setText("");
             }else
             {
                 JOptionPane.showMessageDialog(jMenu1,"La Lista que busca NO Existe","Aviso",JOptionPane.INFORMATION_MESSAGE);
+                txtListaaBuscar.setText("");
             }
         } catch (IOException ex) {
             Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
@@ -540,7 +539,7 @@ public class Listas extends javax.swing.JFrame {
         if(lstListas.getSelectedValue() != "")
         {
             try {
-                Modificacion_De_Listas RealizarModificacion = new Modificacion_De_Listas(DatosdeEnvio[0],Usuario);
+                Modificacion_De_Listas RealizarModificacion = new Modificacion_De_Listas(DatosdeEnvio[0],Usuario,Rol);
                 RealizarModificacion.setLocationRelativeTo(null);
                 RealizarModificacion.show();
                 this.dispose();
@@ -556,14 +555,16 @@ public class Listas extends javax.swing.JFrame {
     private void btnEliminarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarListaActionPerformed
         
         String Cadena = lstListas.getSelectedValue();
+         
+        if(Cadena!= null)
+        {
+            
         String []ArregloCadena = Cadena.split("\\|");
         String Nombre = ArregloCadena[0].trim();
         NombreListaSeleccionada = Nombre;
         String Usuario = ArregloCadena[1].trim();
         Procesos TamañoFijo = new Procesos();
-        
-        if(Cadena!= "")
-        {
+            
         try {
             String AuxNombre = "";
             String AuxUsuario = "";
@@ -591,6 +592,8 @@ public class Listas extends javax.swing.JFrame {
                     Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0].trim(), 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1].trim(), 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2].trim(), 2),ArregloCadena[3].trim(), ArregloCadena[4].trim(), "0");
                     String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator();
                     ArchivoSustitucion.writeBytes(Sustitucion);
+                    if(NuevaLista.Numero_usuarios.equals("0") == false)
+                    EliminarUsuariosAsociados(NuevaLista);
                 }
                 LineaAdelantada = buferU.readLine();
                 Linea = ArchivoSustitucion.readLine();         
@@ -619,6 +622,8 @@ public class Listas extends javax.swing.JFrame {
                     Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0].trim(), 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1].trim(), 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2].trim(), 2),ArregloCadena[3].trim(), ArregloCadena[4].trim(), "0");
                     String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator();
                     ArchivoSustitucion.writeBytes(Sustitucion);
+                    if(NuevaLista.Numero_usuarios.equals("0") == false)
+                    EliminarUsuariosAsociados(NuevaLista);
                 }
                 LineaAdelantada = buferU.readLine();
                 Linea = ArchivoSustitucion.readLine();         
@@ -626,6 +631,7 @@ public class Listas extends javax.swing.JFrame {
             
             DescriptorLista();
             DescriptorBitacoraLista();
+            JOptionPane.showMessageDialog(jMenu1,"Lista Eliminada Exitosamente de Forma Logica", "Lista Eliminada",JOptionPane.INFORMATION_MESSAGE);
             
             
         } catch (FileNotFoundException ex) {
@@ -636,7 +642,7 @@ public class Listas extends javax.swing.JFrame {
         }
         else
         {
-            JOptionPane.showMessageDialog(jMenu1, "No Ha Seleccionado Ningun Elemento");
+            JOptionPane.showMessageDialog(jMenu1,"No ha Seleccionado ningun elemento", "Error",JOptionPane.ERROR_MESSAGE);
         }
             
     }//GEN-LAST:event_btnEliminarListaActionPerformed
@@ -686,6 +692,8 @@ public class Listas extends javax.swing.JFrame {
         Date Fecha = new Date();
         String path = "C:\\MEIA\\Lista.txt";
         File Archivo = new File(path);
+        if(Archivo.exists() == false)
+        Archivo.createNewFile();
         FileReader Leer = new FileReader(Archivo);
         BufferedReader leerArchivo = new BufferedReader(Leer);
         String Linea = leerArchivo.readLine();
@@ -715,12 +723,153 @@ public class Listas extends javax.swing.JFrame {
         leerArchivo.close();
         
         
-        Descriptor_Listas Nuevo = new Descriptor_Listas(NombreListaSeleccionada,Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        Descriptor_Listas Nuevo = new Descriptor_Listas("Descriptor Lista",Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
         Acceso.DescriptorLista(Nuevo);
     }
+    
+    //Revisar si hay que quitar el LineSeparator
+    private void EliminarUsuariosAsociados(Lista NuevaLista) throws FileNotFoundException, IOException
+    {
+       
+            String NombreLista = NuevaLista.Nombre_lista.trim();
+            String UsuarioCreador = NuevaLista.Usuario.trim();
+            
+            String pathRuta = "C:\\MEIA\\ListaUsuario.txt";
+            File Archivo = new File(pathRuta);
+            
+            FileReader lectorU = new FileReader(Archivo);
+            BufferedReader buferU = new BufferedReader(lectorU);
+            String LineaAdelantada = buferU.readLine();
+            
+            RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+            String Linea = "";
+            String [] Auxiliar;
+         
+               
+            while(LineaAdelantada != null)
+            {
+                Auxiliar = LineaAdelantada.split("\\|");
+                if(NombreLista.equals(Auxiliar[0].trim()) && UsuarioCreador.equals(Auxiliar[0].trim()))
+                {
+                    ListaUsuario Nueva = new ListaUsuario(Acceso.RellenarCaracteres(Auxiliar[0].trim(), 1),Acceso.RellenarCaracteres(Auxiliar[1].trim(), 0), Acceso.RellenarCaracteres(Auxiliar[2].trim(), 2),Auxiliar[3].trim(), Auxiliar[4].trim(), "0");
+                    String Sustitucion = Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Fecha_creacion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status+System.lineSeparator();
+                    ArchivoSustitucion.writeBytes(Sustitucion);
+                    DescriptorListaUsuario(Nueva);
+                }
+                LineaAdelantada = buferU.readLine();
+                Linea = ArchivoSustitucion.readLine();         
+            }
+           
+            
+            pathRuta = "C:\\MEIA\\ListaUsuarioIndizada.txt";
+            Archivo = new File(pathRuta);
+            
+            lectorU = new FileReader(Archivo);
+            buferU = new BufferedReader(lectorU);
+            LineaAdelantada = buferU.readLine();
+            
+            ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+            Linea = "";
+               
+            while(LineaAdelantada != null)
+            {
+                Auxiliar = LineaAdelantada.split("\\|");
+                if(NombreLista.equals(Auxiliar[2].trim()) && UsuarioCreador.equals(Auxiliar[3].trim()))
+                {
+                      ListaIndizada Nueva = new ListaIndizada(Auxiliar[0],Auxiliar[1],Acceso.RellenarCaracteres(Auxiliar[2].trim(), 1),Acceso.RellenarCaracteres(Auxiliar[3].trim(), 0), Acceso.RellenarCaracteres(Auxiliar[4].trim(), 0),Auxiliar[5].trim(), "0");
+                    String Sustitucion = Nueva.NoRegistro+"|"+Nueva.Posicion+"|"+Nueva.Nombre_Lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Status+System.lineSeparator();
+                    ArchivoSustitucion.writeBytes(Sustitucion);
+                    DescriptorListaIndizada(Nueva);
+                }
+                LineaAdelantada = buferU.readLine();
+                Linea = ArchivoSustitucion.readLine();         
+            }
+            
+            
+            DescriptorBitacoraLista();
+    }
+    
     /**
      * @param args the command line arguments
      */
+    
+     //método donde se crea el Descriptor de Lista y se Actualiza
+    public void DescriptorListaUsuario(ListaUsuario Lista) throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\ListaUsuario.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[5].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[5].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        Descriptor_ListaUsuario Nuevo = new Descriptor_ListaUsuario(Lista.Nombre_lista,Fecha.toString(),Lista.Usuario,Fecha.toString(),Lista.Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        Acceso.DescriptorListaUsuario(Nuevo);
+    }
+    
+     //método donde se crea el Descriptor de Lista y se Actualiza
+    public void DescriptorListaIndizada(ListaIndizada Lista) throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\ListaUsuarioIndizada.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 6 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[6].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[6].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+
+        Leer.close();
+        leerArchivo.close();       
+        
+        Descriptor_ListaUsuarioIndizada Nuevo = new Descriptor_ListaUsuarioIndizada("Lista Indizada",Fecha.toString(),Lista.Usuario,Fecha.toString(),Lista.Usuario,Lista.Posicion,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        Acceso.DescriptorListaIndizada(Nuevo);
+    }
+    
     
     
     public static void main(String args[]) {

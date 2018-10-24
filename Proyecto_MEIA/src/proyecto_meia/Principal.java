@@ -219,13 +219,13 @@ public class Principal extends javax.swing.JFrame {
                         if(SegmentosInfo[4].equals("1"))
                         {
                             lblNiveldeAcceso.setText("Nivel de acceso ➙ Maestro");
-                            lblRol.setText("Rol ➙ Administrador");
+                            lblRol.setText("Rol → Administrador");
                             Rol = "Administrador";
                         }
                         else
                         {
                             lblNiveldeAcceso.setText("Nivel de acceso ➙ Estandar");
-                            lblRol.setText("Rol ➙ Usuario");
+                            lblRol.setText("Rol → Usuario");
                             Rol = "Usuario";
                         }
                     }
@@ -262,13 +262,13 @@ public class Principal extends javax.swing.JFrame {
                         if(SegmentosInfo[4].equals("1"))
                         {
                             lblNiveldeAcceso.setText("Nivel de acceso ➙ Maestro");
-                            lblRol.setText("Rol ➙ Administrador");
+                            lblRol.setText("Rol → Administrador");
                             Rol = "Administrador";
                         }
                         else
                         {
                             lblNiveldeAcceso.setText("Nivel de acceso ➙ Estandar");
-                            lblRol.setText("Rol ➙ Usuario");
+                            lblRol.setText("Rol → Usuario");
                             Rol = "Usuario";
                         }
                     }

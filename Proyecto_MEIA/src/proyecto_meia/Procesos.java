@@ -198,7 +198,7 @@ public class Procesos {
         String [] AuxTamaño = Auxiliar.split("\\|");
         
         
-        if(AuxTamaño[1].equals("        "))
+        if(Descriptor.NumerodeRegistros.equals("1"))
         {
          ArchivoSustitucion.seek(0);
          ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_simbolico);
@@ -216,6 +216,8 @@ public class Procesos {
          ArchivoSustitucion.writeBytes("Registros Activos"+"|"+Descriptor.RegistrosActivos);
          ArchivoSustitucion.writeBytes("\r\n");
          ArchivoSustitucion.writeBytes("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos);
+         ArchivoSustitucion.writeBytes("\r\n");
+         ArchivoSustitucion.writeBytes("Max. Reorganizacion"+"|"+Descriptor.Max_Reorganizacion);
          ArchivoSustitucion.writeBytes("\r\n");
          ArchivoSustitucion.close();
         }
