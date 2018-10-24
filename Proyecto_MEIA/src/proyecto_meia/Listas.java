@@ -580,23 +580,29 @@ public class Listas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        String Datos = lstListas.getSelectedValue();
-        String []DatosdeEnvio = Datos.split("\\|");
         
-        if(lstListas.getSelectedValue() != "")
+        if (lstListas.getSelectedValue() != null)
         {
-            try {
+            String Datos = lstListas.getSelectedValue();
+            String[] DatosdeEnvio = Datos.split("\\|");
+            
+            try 
+            {
                 Modificacion_De_Listas RealizarModificacion = new Modificacion_De_Listas(DatosdeEnvio[0],Usuario,Rol);
                 RealizarModificacion.setLocationRelativeTo(null);
                 RealizarModificacion.show();
                 this.dispose();
-            } catch (IOException ex) {
+            } 
+            catch (IOException ex) 
+            {
                 Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else
-        {
-            JOptionPane.showMessageDialog(jMenu1, "No ha seleccionado ningun elemento");
         }
+        else
+        {
+            JOptionPane.showMessageDialog(this,"No hay ningun elemento seleccionado","      Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarListaActionPerformed
@@ -606,90 +612,91 @@ public class Listas extends javax.swing.JFrame {
         if(Cadena!= null)
         {
             
-        String []ArregloCadena = Cadena.split("\\|");
-        String Nombre = ArregloCadena[0].trim();
-        NombreListaSeleccionada = Nombre;
-        String Usuario = ArregloCadena[1].trim();
-        Procesos TamañoFijo = new Procesos();
+            String []ArregloCadena = Cadena.split("\\|");
+            String Nombre = ArregloCadena[0].trim();
+            NombreListaSeleccionada = Nombre;
+            String Usuario = ArregloCadena[1].trim();
+            Procesos TamañoFijo = new Procesos();
             
-        try {
-            String AuxNombre = "";
-            String AuxUsuario = "";
-            String pathRuta = "C:\\MEIA\\Lista.txt";
-            File Archivo = new File(pathRuta);
-            
-            if(Archivo.exists())
+            try 
             {
-            FileReader lectorU = new FileReader(Archivo);
-            BufferedReader buferU = new BufferedReader(lectorU);
-            String LineaAdelantada = buferU.readLine();
-            
-            RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
-            String Linea = "";
-            String [] Auxiliar;
-         
-               
-            while(LineaAdelantada != null)
-            {
-                Auxiliar = LineaAdelantada.split("\\|");
-                AuxNombre = Auxiliar[0].trim();
-                AuxUsuario = Auxiliar[1].trim();
-                if(AuxNombre.equals(Nombre) && AuxUsuario.equals(Usuario))
+                String AuxNombre = "";
+                String AuxUsuario = "";
+                String pathRuta = "C:\\MEIA\\Lista.txt";
+                File Archivo = new File(pathRuta);
+
+                if(Archivo.exists())
                 {
-                    Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0].trim(), 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1].trim(), 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2].trim(), 2),ArregloCadena[3].trim(), ArregloCadena[4].trim(), "0");
-                    String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator();
-                    ArchivoSustitucion.writeBytes(Sustitucion);
-                    if(NuevaLista.Numero_usuarios.equals("0") == false)
-                    EliminarUsuariosAsociados(NuevaLista);
-                }
-                LineaAdelantada = buferU.readLine();
-                Linea = ArchivoSustitucion.readLine();         
-            }
+                    FileReader lectorU = new FileReader(Archivo);
+                    BufferedReader buferU = new BufferedReader(lectorU);
+                    String LineaAdelantada = buferU.readLine();
+
+                    RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+                    String Linea = "";
+                    String [] Auxiliar;
+
+
+                    while(LineaAdelantada != null)
+                    {
+                        Auxiliar = LineaAdelantada.split("\\|");
+                        AuxNombre = Auxiliar[0].trim();
+                        AuxUsuario = Auxiliar[1].trim();
+                        if(AuxNombre.equals(Nombre) && AuxUsuario.equals(Usuario))
+                        {
+                            Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0].trim(), 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1].trim(), 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2].trim(), 2),ArregloCadena[3].trim(), ArregloCadena[4].trim(), "0");
+                            String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator();
+                            ArchivoSustitucion.writeBytes(Sustitucion);
+                            if(NuevaLista.Numero_usuarios.equals("0") == false)
+                            EliminarUsuariosAsociados(NuevaLista);
+                        }
+                        LineaAdelantada = buferU.readLine();
+                        Linea = ArchivoSustitucion.readLine();         
+                    }
            
-            }
-            
-            pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
-            Archivo = new File(pathRuta);
-            
-            FileReader lectorU = new FileReader(Archivo);
-            BufferedReader buferU = new BufferedReader(lectorU);
-            String LineaAdelantada = buferU.readLine();
-            
-            RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
-            String Linea = "";
-            String [] Auxiliar;
-               
-            while(LineaAdelantada != null)
-            {
-                Auxiliar = LineaAdelantada.split("\\|");
-                AuxNombre = Auxiliar[0].trim();
-                AuxUsuario = Auxiliar[1].trim();
-                if(AuxNombre.equals(Nombre) && AuxUsuario.equals(Usuario))
-                {
-                    Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0].trim(), 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1].trim(), 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2].trim(), 2),ArregloCadena[3].trim(), ArregloCadena[4].trim(), "0");
-                    String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator();
-                    ArchivoSustitucion.writeBytes(Sustitucion);
-                    if(NuevaLista.Numero_usuarios.equals("0") == false)
-                    EliminarUsuariosAsociados(NuevaLista);
                 }
-                LineaAdelantada = buferU.readLine();
-                Linea = ArchivoSustitucion.readLine();         
-            }
+            
+                pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
+                Archivo = new File(pathRuta);
+
+                FileReader lectorU = new FileReader(Archivo);
+                BufferedReader buferU = new BufferedReader(lectorU);
+                String LineaAdelantada = buferU.readLine();
+
+                RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+                String Linea = "";
+                String [] Auxiliar;
+
+                while(LineaAdelantada != null)
+                {
+                    Auxiliar = LineaAdelantada.split("\\|");
+                    AuxNombre = Auxiliar[0].trim();
+                    AuxUsuario = Auxiliar[1].trim();
+                    if(AuxNombre.equals(Nombre) && AuxUsuario.equals(Usuario))
+                    {
+                        Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0].trim(), 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1].trim(), 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2].trim(), 2),ArregloCadena[3].trim(), ArregloCadena[4].trim(), "0");
+                        String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator();
+                        ArchivoSustitucion.writeBytes(Sustitucion);
+                        if(NuevaLista.Numero_usuarios.equals("0") == false)
+                        EliminarUsuariosAsociados(NuevaLista);
+                    }
+                    LineaAdelantada = buferU.readLine();
+                    Linea = ArchivoSustitucion.readLine();         
+                }
             
             DescriptorLista();
             DescriptorBitacoraLista();
             JOptionPane.showMessageDialog(jMenu1,"Lista Eliminada Exitosamente de Forma Logica", "Lista Eliminada",JOptionPane.INFORMATION_MESSAGE);
             
             
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else
         {
-            JOptionPane.showMessageDialog(jMenu1,"No ha Seleccionado ningun elemento", "Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(jMenu1,"No ha Seleccionado ningun elemento", "        Error",JOptionPane.ERROR_MESSAGE);
         }
             
     }//GEN-LAST:event_btnEliminarListaActionPerformed
@@ -777,63 +784,62 @@ public class Listas extends javax.swing.JFrame {
     //Revisar si hay que quitar el LineSeparator
     private void EliminarUsuariosAsociados(Lista NuevaLista) throws FileNotFoundException, IOException
     {
-       
-            String NombreLista = NuevaLista.Nombre_lista.trim();
-            String UsuarioCreador = NuevaLista.Usuario.trim();
-            
-            String pathRuta = "C:\\MEIA\\ListaUsuario.txt";
-            File Archivo = new File(pathRuta);
-            
-            FileReader lectorU = new FileReader(Archivo);
-            BufferedReader buferU = new BufferedReader(lectorU);
-            String LineaAdelantada = buferU.readLine();
-            
-            RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
-            String Linea = "";
-            String [] Auxiliar;
-         
-               
-            while(LineaAdelantada != null)
+        String NombreLista = NuevaLista.Nombre_lista.trim();
+        String UsuarioCreador = NuevaLista.Usuario.trim();
+
+        String pathRuta = "C:\\MEIA\\ListaUsuario.txt";
+        File Archivo = new File(pathRuta);
+
+        FileReader lectorU = new FileReader(Archivo);
+        BufferedReader buferU = new BufferedReader(lectorU);
+        String LineaAdelantada = buferU.readLine();
+
+        RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+        String Linea = "";
+        String [] Auxiliar;
+
+
+        while(LineaAdelantada != null)
+        {
+            Auxiliar = LineaAdelantada.split("\\|");
+            if(NombreLista.equals(Auxiliar[0].trim()) && UsuarioCreador.equals(Auxiliar[0].trim()))
             {
-                Auxiliar = LineaAdelantada.split("\\|");
-                if(NombreLista.equals(Auxiliar[0].trim()) && UsuarioCreador.equals(Auxiliar[0].trim()))
-                {
-                    ListaUsuario Nueva = new ListaUsuario(Acceso.RellenarCaracteres(Auxiliar[0].trim(), 1),Acceso.RellenarCaracteres(Auxiliar[1].trim(), 0), Acceso.RellenarCaracteres(Auxiliar[2].trim(), 2),Auxiliar[3].trim(), Auxiliar[4].trim(), "0");
-                    String Sustitucion = Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Fecha_creacion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status+System.lineSeparator();
-                    ArchivoSustitucion.writeBytes(Sustitucion);
-                    DescriptorListaUsuario(Nueva);
-                }
-                LineaAdelantada = buferU.readLine();
-                Linea = ArchivoSustitucion.readLine();         
+                ListaUsuario Nueva = new ListaUsuario(Acceso.RellenarCaracteres(Auxiliar[0].trim(), 1),Acceso.RellenarCaracteres(Auxiliar[1].trim(), 0), Acceso.RellenarCaracteres(Auxiliar[2].trim(), 2),Auxiliar[3].trim(), Auxiliar[4].trim(), "0");
+                String Sustitucion = Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Fecha_creacion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status+System.lineSeparator();
+                ArchivoSustitucion.writeBytes(Sustitucion);
+                DescriptorListaUsuario(Nueva);
             }
-           
-            
-            pathRuta = "C:\\MEIA\\ListaUsuarioIndizada.txt";
-            Archivo = new File(pathRuta);
-            
-            lectorU = new FileReader(Archivo);
-            buferU = new BufferedReader(lectorU);
             LineaAdelantada = buferU.readLine();
-            
-            ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
-            Linea = "";
-               
-            while(LineaAdelantada != null)
+            Linea = ArchivoSustitucion.readLine();         
+        }
+
+
+        pathRuta = "C:\\MEIA\\ListaUsuarioIndizada.txt";
+        Archivo = new File(pathRuta);
+
+        lectorU = new FileReader(Archivo);
+        buferU = new BufferedReader(lectorU);
+        LineaAdelantada = buferU.readLine();
+
+        ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+        Linea = "";
+
+        while(LineaAdelantada != null)
+        {
+            Auxiliar = LineaAdelantada.split("\\|");
+            if(NombreLista.equals(Auxiliar[2].trim()) && UsuarioCreador.equals(Auxiliar[3].trim()))
             {
-                Auxiliar = LineaAdelantada.split("\\|");
-                if(NombreLista.equals(Auxiliar[2].trim()) && UsuarioCreador.equals(Auxiliar[3].trim()))
-                {
-                      ListaIndizada Nueva = new ListaIndizada(Auxiliar[0],Auxiliar[1],Acceso.RellenarCaracteres(Auxiliar[2].trim(), 1),Acceso.RellenarCaracteres(Auxiliar[3].trim(), 0), Acceso.RellenarCaracteres(Auxiliar[4].trim(), 0),Auxiliar[5].trim(), "0");
-                    String Sustitucion = Nueva.NoRegistro+"|"+Nueva.Posicion+"|"+Nueva.Nombre_Lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Status+System.lineSeparator();
-                    ArchivoSustitucion.writeBytes(Sustitucion);
-                    DescriptorListaIndizada(Nueva);
-                }
-                LineaAdelantada = buferU.readLine();
-                Linea = ArchivoSustitucion.readLine();         
+                  ListaIndizada Nueva = new ListaIndizada(Auxiliar[0],Auxiliar[1],Acceso.RellenarCaracteres(Auxiliar[2].trim(), 1),Acceso.RellenarCaracteres(Auxiliar[3].trim(), 0), Acceso.RellenarCaracteres(Auxiliar[4].trim(), 0),Auxiliar[5].trim(), "0");
+                String Sustitucion = Nueva.NoRegistro+"|"+Nueva.Posicion+"|"+Nueva.Nombre_Lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Status+System.lineSeparator();
+                ArchivoSustitucion.writeBytes(Sustitucion);
+                DescriptorListaIndizada(Nueva);
             }
-            
-            
-            DescriptorBitacoraLista();
+            LineaAdelantada = buferU.readLine();
+            Linea = ArchivoSustitucion.readLine();         
+        }
+
+
+        DescriptorBitacoraLista();
     }
     
     /**

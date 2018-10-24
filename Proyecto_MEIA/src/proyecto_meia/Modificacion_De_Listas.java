@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package proyecto_meia;
 
 import java.awt.Color;
@@ -100,6 +95,11 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
 
         btnRegresar.setFont(new java.awt.Font("Calibri Light", 1, 13)); // NOI18N
         btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 455, 120, 30));
 
         lblLista.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
@@ -504,50 +504,57 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
     //se Agrega un Usuario a la Lista y se Actualizan los Descriptores tanto de ListaUsuario como ListaIndizada
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
        
-        try {
-            Date Fecha = new Date();
-            String Usuario = ComboBoxUsuarios.getSelectedItem().toString();
-            String pathRuta = "C:\\MEIA\\ListaUsuario.txt";
-            File Archivo = new File(pathRuta);
-            FileWriter Escritor = new FileWriter(Archivo,true);
-            BufferedWriter bw = new BufferedWriter(Escritor);
-            
-            Procesos Proceso = new Procesos();
-            Usuario = Proceso.RellenarCaracteres(Usuario, 0);
-            NombreLista = Proceso.RellenarCaracteres(NombreLista, 1);
-            List<Lista> Registros = new ArrayList<Lista>();
-            Registros = ListaRequerida();
-            ListaUsuario Nueva;
-            String Descripcion = ObtenerDescripcion(NombreLista, this.Usuario);
-            
-            if(Registros.size() == 0)
+        if(ComboBoxUsuarios.getSelectedItem() != Usuario)
+        {
+            try 
             {
-             Nueva = new ListaUsuario(Proceso.RellenarCaracteres(NombreLista,1),Proceso.RellenarCaracteres(this.Usuario,0),Proceso.RellenarCaracteres(Usuario,0),Proceso.RellenarCaracteres(Descripcion,2),Fecha.toString(), "1");
-             bw.write(Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Descripcion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status);
-             bw.write(System.lineSeparator());
-            }
-            else
+                Date Fecha = new Date();
+                String Usuario = ComboBoxUsuarios.getSelectedItem().toString();
+                String pathRuta = "C:\\MEIA\\ListaUsuario.txt";
+                File Archivo = new File(pathRuta);
+                FileWriter Escritor = new FileWriter(Archivo,true);
+                BufferedWriter bw = new BufferedWriter(Escritor);
+
+                Procesos Proceso = new Procesos();
+                Usuario = Proceso.RellenarCaracteres(Usuario, 0);
+                NombreLista = Proceso.RellenarCaracteres(NombreLista, 1);
+                List<Lista> Registros = new ArrayList<Lista>();
+                Registros = ListaRequerida();
+                ListaUsuario Nueva;
+                String Descripcion = ObtenerDescripcion(NombreLista, this.Usuario);
+
+                if(Registros.size() == 0)
+                {
+                    Nueva = new ListaUsuario(Proceso.RellenarCaracteres(NombreLista,1),Proceso.RellenarCaracteres(this.Usuario,0),Proceso.RellenarCaracteres(Usuario,0),Proceso.RellenarCaracteres(Descripcion,2),Fecha.toString(), "1");
+                    bw.write(Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Descripcion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status);
+                    bw.write(System.lineSeparator());
+                }
+                else
+                {
+                    Nueva = new ListaUsuario(NombreLista,Proceso.RellenarCaracteres(Registros.get(0).Usuario,0),Usuario,Proceso.RellenarCaracteres(Descripcion,2),Registros.get(0).Fecha_creacion, "1");
+                    bw.write(Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Descripcion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status);
+                    bw.write(System.lineSeparator());
+                }
+                
+                bw.close();
+                Escritor.close();
+                DescriptorListaUsuario();
+                AgregarListaIndizada(Nueva);
+                ModificarNumerodeUsuariosLista(NombreLista, this.Usuario);
+                JOptionPane.showMessageDialog(this,"El Usuario se ha Ingresado Exitosamente","Ingreso Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                BuscarListas(this.Usuario, this.Rol);
+
+            } 
+            catch (IOException ex) 
             {
-            Nueva = new ListaUsuario(NombreLista,Proceso.RellenarCaracteres(Registros.get(0).Usuario,0),Usuario,Proceso.RellenarCaracteres(Descripcion,2),Registros.get(0).Fecha_creacion, "1");
-            bw.write(Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Descripcion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status);
-            bw.write(System.lineSeparator());
+                Logger.getLogger(Modificacion_De_Listas.class.getName()).log(Level.SEVERE, null, ex);
             }
-            bw.close();
-            Escritor.close();
-            DescriptorListaUsuario();
-            AgregarListaIndizada(Nueva);
-            ModificarNumerodeUsuariosLista(NombreLista, this.Usuario);
-           JOptionPane.showMessageDialog(this,"El Usuario se ha Ingresado Exitosamente","Ingreso Exitoso", JOptionPane.INFORMATION_MESSAGE);
-            BuscarListas(this.Usuario, this.Rol);
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Modificacion_De_Listas.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-            
-            
-            
-         
+        else
+        {
+            JOptionPane.showMessageDialog(this,"No puedes agregarte a ti a tu propia lista","      Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     
@@ -698,6 +705,20 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
     private void ComboBoxUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxUsuariosActionPerformed
 
     }//GEN-LAST:event_ComboBoxUsuariosActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        try 
+        {
+            Listas listas = new Listas(Usuario, Rol);
+            listas.setLocationRelativeTo(null);
+            listas.show();
+            this.dispose();
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(Modificacion_De_Listas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     //Cuando se Agregue en ListaUsuarios se debe llamar a Este Metodo en donde se agregara tambien el registro
     //y se actualizara su descriptor, YA LLAMADO
