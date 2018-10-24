@@ -179,7 +179,7 @@ public class Listas extends javax.swing.JFrame {
                 }
                 
                 
-                lstListas.setModel(Modelo);
+               lstListas.setModel(Modelo);
             }
             
         }
@@ -822,12 +822,13 @@ public class Listas extends javax.swing.JFrame {
         while(LineaAdelantada != null)
         {
             Auxiliar = LineaAdelantada.split("\\|");
-            if(NombreLista.equals(Auxiliar[0].trim()) && UsuarioCreador.equals(Auxiliar[0].trim()))
+            if(NombreLista.equals(Auxiliar[0].trim()) && UsuarioCreador.equals(Auxiliar[1].trim()))
             {
                 ListaUsuario Nueva = new ListaUsuario(Acceso.RellenarCaracteres(Auxiliar[0].trim(), 1),Acceso.RellenarCaracteres(Auxiliar[1].trim(), 0), Acceso.RellenarCaracteres(Auxiliar[2].trim(), 2),Auxiliar[3].trim(), Auxiliar[4].trim(), "0");
                 String Sustitucion = Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Fecha_creacion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status+System.lineSeparator();
                 ArchivoSustitucion.writeBytes(Sustitucion);
                 DescriptorListaUsuario(Nueva);
+                break;
             }
             LineaAdelantada = buferU.readLine();
             Linea = ArchivoSustitucion.readLine();         
@@ -850,7 +851,7 @@ public class Listas extends javax.swing.JFrame {
             if(NombreLista.equals(Auxiliar[2].trim()) && UsuarioCreador.equals(Auxiliar[3].trim()))
             {
                   ListaIndizada Nueva = new ListaIndizada(Auxiliar[0],Auxiliar[1],Acceso.RellenarCaracteres(Auxiliar[2].trim(), 1),Acceso.RellenarCaracteres(Auxiliar[3].trim(), 0), Acceso.RellenarCaracteres(Auxiliar[4].trim(), 0),Auxiliar[5].trim(), "0");
-                String Sustitucion = Nueva.NoRegistro+"|"+Nueva.Posicion+"|"+Nueva.Nombre_Lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Status+System.lineSeparator();
+                String Sustitucion = Nueva.NoRegistro+"|"+Nueva.Posicion+"|"+Nueva.Nombre_Lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Siguiente+"|"+Nueva.Status+System.lineSeparator();
                 ArchivoSustitucion.writeBytes(Sustitucion);
                 DescriptorListaIndizada(Nueva);
             }

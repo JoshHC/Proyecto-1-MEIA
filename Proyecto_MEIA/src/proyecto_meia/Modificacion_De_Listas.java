@@ -570,6 +570,8 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             File Archivo = new File(pathRuta);
             
 
+            if(Archivo.exists())
+            {
             FileReader Lectura = new FileReader(Archivo);
             BufferedReader Leer = new BufferedReader(Lectura);
             String Linea = Leer.readLine();
@@ -586,12 +588,17 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
               Descripcion = Auxiliar[2];
               Linea = Leer.readLine();
             }
-
+            }
             pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
             Archivo = new File(pathRuta);
-            Lectura = new FileReader(Archivo);
-            Leer = new BufferedReader(Lectura);
-            Linea = Leer.readLine();
+            FileReader Lectura = new FileReader(Archivo);
+            BufferedReader Leer = new BufferedReader(Lectura);
+            String Linea = Leer.readLine();
+            String[] Auxiliar;
+            List<Lista> Listas = new ArrayList<Lista>();
+            Lista NuevaLista;
+            String Descripcion = "";
+            
             
             while(Linea != null)
             {
@@ -794,6 +801,8 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                 }
                 });
                 
+                if(Listas.size() != 0)
+                {
                 Comienzo = Listas.get(0).NoRegistro;
                 
                 for(int i = 0; i<Listas.size();i++)
@@ -846,7 +855,8 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                     bs.write(System.lineSeparator());
                 }
                 bs.close();
-                Escritor.close();           
+                Escritor.close();      
+                }
             }
     
     }
@@ -945,13 +955,16 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                 NombreLista = NombreLista.trim();
                 String pathRuta = "C:\\MEIA\\Lista.txt";
                 File Archivo = new File(pathRuta);
+                List<Lista> Listas = new ArrayList<Lista>();
+                String[] Auxiliar;
+                Lista NuevaLista = null;
 
+                if(Archivo.exists())
+                {
                 FileReader Lectura = new FileReader(Archivo);
                 BufferedReader Leer = new BufferedReader(Lectura);
                 String Linea = Leer.readLine();
-                String[] Auxiliar;
-                List<Lista> Listas = new ArrayList<Lista>();
-                Lista NuevaLista = null;
+                
 
                 while(Linea != null)
                 {
@@ -983,14 +996,14 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                     Escribir.close();
                     Escritura.close();
                 }
-                
+                }
                 Listas.clear();
                 
                 pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
                 Archivo = new File(pathRuta);
-                Lectura = new FileReader(Archivo);
-                Leer = new BufferedReader(Lectura);
-                Linea = Leer.readLine();
+                FileReader Lectura = new FileReader(Archivo);
+                BufferedReader Leer = new BufferedReader(Lectura);
+                String Linea = Leer.readLine();
 
                 while(Linea != null)
                 {
