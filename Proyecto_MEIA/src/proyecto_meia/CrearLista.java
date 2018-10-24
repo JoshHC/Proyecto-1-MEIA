@@ -413,6 +413,7 @@ public class CrearLista extends javax.swing.JFrame {
         
         if(ArchivoBitacoraLista.exists())
         {
+        
         FileReader Leer = new FileReader(ArchivoBitacoraLista);
         BufferedReader leerArchivo = new BufferedReader(Leer);
         String Linea = leerArchivo.readLine();
@@ -420,6 +421,7 @@ public class CrearLista extends javax.swing.JFrame {
         for(int i = 0; i < 6; i++)
             Linea = leerArchivo.readLine();
 
+      
         char n1 = Linea.charAt(18);
         
         for(int i = 0; i < 2; i++)

@@ -731,12 +731,32 @@ public class Listas extends javax.swing.JFrame {
             NoRegistros++;
         }
         
+            String paths = "C:\\MEIA\\desc_Bitacora_Lista.txt";
+            File Archivos = new File(paths);
+            FileReader Leers = new FileReader(Archivos);
+            BufferedReader leerArchivos = new BufferedReader(Leers);
+            String Lineas = "";
+            Lineas = leerArchivos.readLine();
+            String AuxLinea = "";
+            String MaxRepeticiones = "";
+
+            while(Lineas != null)
+            {
+                AuxLinea = Lineas;
+                Lineas = leerArchivos.readLine();
+                if(Lineas == null)
+                {
+                    String[] Separador = AuxLinea.split("\\|");
+                    MaxRepeticiones = Separador[1];
+                }
+            }
+        
 
         Leer.close();
         leerArchivo.close();
         
         
-        Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista("Bitacora Lista",Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),"");
+        Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista("Bitacora Lista",Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),MaxRepeticiones);
         Acceso.DescriptorBitacoraLista(Nuevo);
     }
     
