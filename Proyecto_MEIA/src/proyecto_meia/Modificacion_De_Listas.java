@@ -400,8 +400,9 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             while(Linea != null)
             {
               Auxiliar = Linea.split("\\|"); 
-              if(Auxiliar[1].equals(Usuario) && Auxiliar[0].equals(NombreLista))
+              if(Auxiliar[2].trim().equals(Usuario) && Auxiliar[0].trim().equals(NombreLista))
               Existe = true;
+              Linea = Leer.readLine();
             }
             
             }
@@ -416,19 +417,32 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
       
-        String Nombre = txtNombreUsuario.getText();
+        String Nombre = txtNombreUsuario.getText();    
+        String Temporal = lstUsuariosLista.getSelectedValue();
+        
+        if( Temporal != null)
+        {
+        String [] Auxiliar = lstUsuariosLista.getSelectedValue().split("\\|");
+        String NombredeLista = Auxiliar[0].trim();
         try {
             if(ListaExiste(NombreLista,Nombre) == true)
             {
                 JOptionPane.showMessageDialog(this,"El Nombre de Usuario que Busca SI Existe","Aviso",JOptionPane.INFORMATION_MESSAGE);
+                txtNombreUsuario.setText("");
             }else
             {
                 JOptionPane.showMessageDialog(this,"El Nombre de Usuario que Busca NO Existe","Aviso",JOptionPane.INFORMATION_MESSAGE);
+                txtNombreUsuario.setText("");
             }
         } catch (IOException ex) {
             Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this,"NO ha seleccionado ninguna lista para buscar","Aviso",JOptionPane.INFORMATION_MESSAGE);
+            txtNombreUsuario.setText("");
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     //Se Elimina un Usuario de la Lista y se Actualizan los Descriptores tanto de ListaUsuario como ListaIndizada
@@ -438,39 +452,48 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
         String []ArregloCadena = Cadena.split("\\|");
         String Nombre = ArregloCadena[0];
         String Usuario = ArregloCadena[1];
+        String UsuarioAsociado = ArregloCadena[2];
         Procesos TamañoFijo = new Procesos();
         if(Cadena != "")
         {
         try {
             String pathRuta = "C:\\MEIA\\ListaUsuario.txt";
             File Archivo = new File(pathRuta);
+            
+            FileReader lectorU = new FileReader(Archivo);
+            BufferedReader buferU = new BufferedReader(lectorU);
+            String LineaAdelantada = buferU.readLine();
+            
             RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
-            String Linea = ArchivoSustitucion.readLine();
+            String Linea = "";
             String [] Auxiliar;
          
                
-            while(Linea != null)
+            while(LineaAdelantada != null)
             {
-                Auxiliar = Linea.split("\\|"); 
-                if(Auxiliar[0].equals(Nombre) && Auxiliar[1].equals(Usuario))
+                Auxiliar = LineaAdelantada.split("\\|"); 
+                if(Auxiliar[0].equals(Nombre) && Auxiliar[1].equals(Usuario) && Auxiliar[2].equals(UsuarioAsociado))
                 {
-                    ListaUsuario NuevaLista = new ListaUsuario(TamañoFijo.RellenarCaracteres(ArregloCadena[0], 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1], 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2], 2),ArregloCadena[3], ArregloCadena[4],"0");
-                    String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status;
+                    ListaUsuario NuevaLista = new ListaUsuario(TamañoFijo.RellenarCaracteres(ArregloCadena[0].trim(), 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1].trim(), 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2].trim(), 0),TamañoFijo.RellenarCaracteres(ArregloCadena[3].trim(),2), ArregloCadena[4],"0");
+                    String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Usuario_Asociado+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator();
                     ArchivoSustitucion.writeBytes(Sustitucion);
                     EliminarListaIndizada(NuevaLista);
                 }
-                Linea = ArchivoSustitucion.readLine();
+                LineaAdelantada = buferU.readLine();
+                Linea = ArchivoSustitucion.readLine();  
             }
             
             DescriptorListaUsuario();
-            DescriptorListaIndizada();
-           
+            JOptionPane.showMessageDialog(this,"El Usuario se ha Eliminado Exitosamente","Eliminacion Exitosa", JOptionPane.INFORMATION_MESSAGE);
+            BuscarListas(this.Usuario, this.Rol);
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
         }
         }
+        else
         {
             JOptionPane.showMessageDialog(this, "No ha seleccionado ningun elemento");
         }
@@ -512,7 +535,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             Escritor.close();
             DescriptorListaUsuario();
             AgregarListaIndizada(Nueva);
-            JOptionPane.showMessageDialog(this, "Ingreso Exitoso","El Usuario se ha Ingresado Exitosamente", JOptionPane.INFORMATION_MESSAGE);
+           JOptionPane.showMessageDialog(this,"El Usuario se ha Ingresado Exitosamente","Ingreso Exitoso", JOptionPane.INFORMATION_MESSAGE);
             BuscarListas(this.Usuario, this.Rol);
             
         } catch (IOException ex) {
@@ -719,6 +742,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                 {
                     String [] Auxiliar = Linea.split("\\|");
                     ListaIndizada Nueva = new ListaIndizada(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5],Auxiliar[6]);
+                    if(Nueva.Status.equals("0") == false)
                     Listas.add(Nueva);
                     Linea = bw.readLine();
                 }
@@ -757,6 +781,22 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                     }
                 }
                 
+                
+                 Lector = new FileReader(Archivo);
+                 bw = new BufferedReader(Lector);
+                 Linea = bw.readLine();
+                 
+                 while(Linea != null)
+                {
+                    String [] Auxiliar = Linea.split("\\|");
+                    ListaIndizada Nueva = new ListaIndizada(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5],Auxiliar[6]);
+                    if(Nueva.Status.equals("0"))
+                    Listas.add(Nueva);
+                    Linea = bw.readLine();
+                }
+                Lector.close();
+                bw.close();
+                
                 Collections.sort(Listas, new Comparator<ListaIndizada>(){
                 @Override
                 public int compare(ListaIndizada p1, ListaIndizada p2) {
@@ -791,7 +831,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             File Archivo = new File(pathRuta);
             FileReader Lector = new FileReader(Archivo);
             BufferedReader bw = new BufferedReader(Lector);
-            String Linea = bw.readLine();
+           String Linea = bw.readLine();
             List<ListaIndizada> Listas = new ArrayList<ListaIndizada>();
            
             
@@ -801,12 +841,12 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                 String[] Auxiliar = Linea.split("\\|");
                 if(Auxiliar[2].equals(Nueva.Nombre_lista) && Auxiliar[3].equals(Nueva.Usuario) && Auxiliar[4].equals(Nueva.Usuario_Asociado))
                 {
-                ListaIndizada Aux = new ListaIndizada(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5],Auxiliar[6]);
+                ListaIndizada Aux = new ListaIndizada(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],"0","0");
                 Listas.add(Aux);
                 }
                 else
                 {
-                 ListaIndizada Aux = new ListaIndizada(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4], "0","0");   
+                 ListaIndizada Aux = new ListaIndizada(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4], Auxiliar[5],Auxiliar[6]);   
                  Listas.add(Aux);
                 }
                 Linea = bw.readLine();
@@ -817,7 +857,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             
             for(int i = 0; i<Listas.size();i++)
             {
-                bs.write(Listas.get(i).NoRegistro+"|"+Listas.get(i).Posicion+"|"+Listas.get(i).Nombre_Lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Usuario_Asociado+"|"+Listas.get(i).Siguiente+"|"+Listas.get(i).Status);
+                bs.write(Listas.get(i).NoRegistro+"|"+Listas.get(i).Posicion+"|"+Listas.get(i).Nombre_Lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Usuario_Asociado+"|"+Listas.get(i).Siguiente+"|"+Listas.get(i).Status+System.lineSeparator());
             }
             bs.close();
             Escritor.close();
