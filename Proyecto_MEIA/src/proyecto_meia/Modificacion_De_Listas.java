@@ -487,6 +487,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             }
             
             DescriptorListaUsuario();
+            ModificarNumerodeUsuariosListaE(NombreLista,Usuario);
             JOptionPane.showMessageDialog(this,"El Usuario se ha Eliminado Exitosamente","Eliminacion Exitosa", JOptionPane.INFORMATION_MESSAGE);
             BuscarListas(this.Usuario, this.Rol);
             
@@ -999,6 +1000,95 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
                     if(AuxNombre.equals(NombreLista) && AuxUsuario.equals(Usuario))
                     {
                      int Numero = Integer.valueOf(Auxiliar[3])+1;
+                     NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],String.valueOf(Numero),Auxiliar[4],Auxiliar[5]);
+                    }
+                    else
+                    {
+                    NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                    }
+                    Listas.add(NuevaLista);
+                    Linea = Leer.readLine();
+                }
+                
+                if(Listas.size() != 0)
+                {
+                    FileWriter Escritura = new FileWriter(Archivo);
+                    BufferedWriter Escribir = new BufferedWriter(Escritura);
+                    
+                    for(int i = 0; i<Listas.size();i++)
+                    {
+                         Escribir.write(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Descripcion+"|"+Listas.get(i).Numero_usuarios+"|"+Listas.get(i).Fecha_creacion+"|"+Listas.get(i).Status+System.lineSeparator());
+                    }
+                    Escribir.close();
+                    Escritura.close();
+                }
+                
+                
+                DescriptorLista();
+                DescriptorBitacoraLista();
+            
+    }
+    
+    public void ModificarNumerodeUsuariosListaE(String NombreLista, String Usuario) throws FileNotFoundException, IOException
+    {
+                NombreLista = NombreLista.trim();
+                String pathRuta = "C:\\MEIA\\Lista.txt";
+                File Archivo = new File(pathRuta);
+
+                FileReader Lectura = new FileReader(Archivo);
+                BufferedReader Leer = new BufferedReader(Lectura);
+                String Linea = Leer.readLine();
+                String[] Auxiliar;
+                List<Lista> Listas = new ArrayList<Lista>();
+                Lista NuevaLista = null;
+
+                while(Linea != null)
+                {
+                    Auxiliar = Linea.split("\\|");
+                    String AuxNombre = Auxiliar[0].trim();
+                    String AuxUsuario = Auxiliar[1].trim();
+                    if(AuxNombre.equals(NombreLista) && AuxUsuario.equals(Usuario.trim()))
+                    {
+                     int Numero = Integer.valueOf(Auxiliar[3])-1;
+                     NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],String.valueOf(Numero),Auxiliar[4],Auxiliar[5]);
+                    }
+                    else
+                    {
+                    NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
+                    }
+                    Listas.add(NuevaLista);
+                    Linea = Leer.readLine();
+                }
+                
+                if(Listas.size() != 0)
+                {
+                    FileWriter Escritura = new FileWriter(Archivo);
+                    BufferedWriter Escribir = new BufferedWriter(Escritura);
+                    
+                    for(int i = 0; i<Listas.size();i++)
+                    {
+                        Escribir.write(Listas.get(i).Nombre_lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Descripcion+"|"+Listas.get(i).Numero_usuarios+"|"+Listas.get(i).Fecha_creacion+"|"+Listas.get(i).Status+System.lineSeparator());
+                    }
+                    Escribir.close();
+                    Escritura.close();
+                }
+                
+                Listas.clear();
+                
+                pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
+                Archivo = new File(pathRuta);
+                Lectura = new FileReader(Archivo);
+                Leer = new BufferedReader(Lectura);
+                Linea = Leer.readLine();
+
+                while(Linea != null)
+                {
+                    Auxiliar = Linea.split("\\|");
+                    String AuxNombre = Auxiliar[0].trim();
+                    String AuxUsuario = Auxiliar[1].trim();
+                    if(AuxNombre.equals(NombreLista) && AuxUsuario.equals(Usuario.trim()))
+                    {
+                     int Numero = Integer.valueOf(Auxiliar[3])-1;
                      NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],String.valueOf(Numero),Auxiliar[4],Auxiliar[5]);
                     }
                     else
