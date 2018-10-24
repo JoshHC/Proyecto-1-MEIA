@@ -162,9 +162,8 @@ public class Login extends javax.swing.JFrame {
                     this.dispose();
                 }
                 else
-                    JOptionPane.showMessageDialog(null, "Error\n"
-                            + "El usuario o contraseña ingresados no son validos\n"
-                            + "Intenta de nuevo");
+                    JOptionPane.showMessageDialog(this,"El usuario o contraseña ingresados no son validos\n"
+                            + "Intenta de nuevo","      Error", JOptionPane.ERROR_MESSAGE);
             }
             catch (IOException ex) 
             {
