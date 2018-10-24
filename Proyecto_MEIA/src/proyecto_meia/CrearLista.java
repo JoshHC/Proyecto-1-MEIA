@@ -200,9 +200,7 @@ public class CrearLista extends javax.swing.JFrame {
             
             File Archivo = new File("C:\\MEIA\\Lista.txt");
             RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
-            String Auxiliar = ArchivoSustitucion.readLine();
 
-            int contIteraciones = 0;
             String Linea = Leer.readLine();
             String[] LineaOriginal;
             
@@ -224,7 +222,7 @@ public class CrearLista extends javax.swing.JFrame {
                 if (Finalizado == false)
                 {
                     Linea = Leer.readLine();
-                    Auxiliar = ArchivoSustitucion.readLine();
+                    ArchivoSustitucion.readLine();
                 }
                     
             }
@@ -243,9 +241,7 @@ public class CrearLista extends javax.swing.JFrame {
             
             File Archivo = new File("C:\\MEIA\\Bitacora_Lista.txt");
             RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
-            String Auxiliar;
 
-            int contIteraciones = 0;
             String Linea = Leer.readLine();
             String[] LineaOriginal;
             

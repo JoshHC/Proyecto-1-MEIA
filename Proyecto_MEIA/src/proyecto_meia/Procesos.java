@@ -1062,7 +1062,7 @@ public class Procesos {
         if(Descriptor.NumerodeRegistros.equals("1"))
         {
             ArchivoSustitucion.seek(0);
-            ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_simbolico);
+            ArchivoSustitucion.writeBytes("Nombre Simbolico|Bitacora_Lista");
             ArchivoSustitucion.writeBytes("\r\n");
             ArchivoSustitucion.writeBytes("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion);
             ArchivoSustitucion.writeBytes("\r\n");
@@ -1130,7 +1130,7 @@ public class Procesos {
         if(Auxiliar == null)
         {
          ArchivoSustitucion.seek(0);
-         ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_simbolico);
+         ArchivoSustitucion.writeBytes("Nombre Simbolico|Lista");
          ArchivoSustitucion.writeBytes("\r\n");
          ArchivoSustitucion.writeBytes("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion);
          ArchivoSustitucion.writeBytes("\r\n");
