@@ -857,7 +857,7 @@ public class Procesos {
         Escribir.close();
     }
     
-     public void DescriptorListaUsuario(Descriptor_ListaUsuario Descriptor) throws IOException
+    public void DescriptorListaUsuario(Descriptor_ListaUsuario Descriptor) throws IOException
     {
         String pathRuta = "C:\\MEIA\\desc_ListaUsuario.txt";
         File Archivo = new File(pathRuta);
@@ -920,7 +920,7 @@ public class Procesos {
     }
      
      //NO ESTA EN USO
-      public void DescriptorBitacoraListaUsuario(Descriptor_Bitacora_ListaUsuario Descriptor) throws IOException
+    public void DescriptorBitacoraListaUsuario(Descriptor_Bitacora_ListaUsuario Descriptor) throws IOException
     {
         String pathRuta = "C:\\MEIA\\desc_Bitacora_ListaUsuario.txt";
         File Archivo = new File(pathRuta);
@@ -1048,7 +1048,7 @@ public class Procesos {
         
     }
       
-       public void DescriptorBitacoraLista(Descriptor_Bitacora_Lista Descriptor) throws IOException
+    public void DescriptorBitacoraLista(Descriptor_Bitacora_Lista Descriptor) throws IOException
     {
         String pathRuta = "C:\\MEIA\\desc_Bitacora_Lista.txt";
         File Archivo = new File(pathRuta);
@@ -1116,7 +1116,7 @@ public class Procesos {
         
     }
       
-      public void DescriptorListaIndizada(Descriptor_ListaUsuarioIndizada Descriptor) throws IOException
+    public void DescriptorListaIndizada(Descriptor_ListaUsuarioIndizada Descriptor) throws IOException
     {
         String pathRuta = "C:\\MEIA\\desc_ListaUsuarioIndizada.txt";
         File Archivo = new File(pathRuta);
@@ -1183,4 +1183,86 @@ public class Procesos {
         }
         
     }
+      
+    public void Reorganizacion() throws FileNotFoundException, IOException
+    {
+        String[] path = {"C:\\MEIA\\Bitacora_Lista.txt", "C:\\MEIA\\Lista.txt", "C:\\MEIA\\ListaUsuario.txt"};
+        
+        for(int i = 0; i < 3; i++)
+        {
+            List<String> Lineas = new ArrayList<String>();
+            File Archivo = new File(path[i]);
+            
+            if (Archivo.exists())
+            {
+                FileReader Leer = new FileReader(Archivo);
+                BufferedReader leerArchivo = new BufferedReader(Leer);
+                String Linea = leerArchivo.readLine();
+                
+                while(Linea != null)
+                {
+                    String[] Auxiliar = Linea.split("\\|");
+                    
+                    if (Auxiliar[5].equals("1"))
+                        Lineas.add(Linea);
+                }
+                
+                Leer.close();
+                leerArchivo.close();
+                
+                FileOutputStream writer = new FileOutputStream(Archivo);
+                writer.write(("").getBytes());
+                writer.close(); 
+                
+                
+                FileWriter Escritor = new FileWriter(Archivo,true);
+                BufferedWriter bw = new BufferedWriter(Escritor);
+                
+                for (String line : Lineas)
+                    bw.write(line);
+                
+                Leer.close();
+                bw.close();
+            }
+        }
+        
+            List<String> Lineas = new ArrayList<String>();
+            File Archivo = new File("C:\\MEIA\\ListaUsuarioIndizada.txt");
+            
+            if (Archivo.exists())
+            {
+                FileReader Leer = new FileReader(Archivo);
+                BufferedReader leerArchivo = new BufferedReader(Leer);
+                String Linea = leerArchivo.readLine();
+                
+                while(Linea != null)
+                {
+                    String[] Auxiliar = Linea.split("\\|");
+                    
+                    if (Auxiliar[6].equals("1"))
+                        Lineas.add(Linea);
+                }
+                
+                Leer.close();
+                leerArchivo.close();
+                
+                FileOutputStream writer = new FileOutputStream(Archivo);
+                writer.write(("").getBytes());
+                writer.close(); 
+                
+                
+                FileWriter Escritor = new FileWriter(Archivo,true);
+                BufferedWriter bw = new BufferedWriter(Escritor);
+                
+                for (String line : Lineas)
+                    bw.write(line);
+                
+                Leer.close();
+                bw.close();
+                
+            }
+
+    }
+    
+    
 }
