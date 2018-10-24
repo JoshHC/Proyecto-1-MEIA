@@ -373,7 +373,10 @@ public class CrearLista extends javax.swing.JFrame {
             if (VerificarEspacioBitacora())
             {
                 //Se Inserta el Nuevo Registro               
-                bw.write(procesos.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+procesos.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+procesos.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
+                bw.write(procesos.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+
+                        procesos.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+
+                        procesos.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+
+                        NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
                 bw.write(System.lineSeparator());
                 bw.close();
                 Escribir.close();
@@ -384,7 +387,11 @@ public class CrearLista extends javax.swing.JFrame {
             {
                 procesos.ReorganizarLista();
                 //Se Inserta el Nuevo Registro
-                bw.write(procesos.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+procesos.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+procesos.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
+                bw.write(procesos.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+
+                        procesos.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+
+                        procesos.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+
+                        NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
+                bw.write(System.lineSeparator());
                 bw.close();
                 Escribir.close();
                 DescriptorBitacoraLista();
@@ -448,7 +455,7 @@ public class CrearLista extends javax.swing.JFrame {
             
             if(Linea != null)
             {
-                while (!"".equals(Linea))
+                while (!"".equals(Linea) && Linea != null)
                 {
                     String[] Datos = new String[6];
                     Datos = Linea.split("\\|");
@@ -480,6 +487,7 @@ public class CrearLista extends javax.swing.JFrame {
         
         return Existe;
     }
+
     
     //método donde se crea el Descriptor de la Bitacora de Lista y se Actualiza
     public void DescriptorBitacoraLista() throws FileNotFoundException, IOException
