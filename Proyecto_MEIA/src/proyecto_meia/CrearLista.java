@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class CrearLista extends javax.swing.JFrame {
 
-    Procesos Acceso = new Procesos();
+    Procesos procesos = new Procesos();
     
     private int Code;
     static String Rol;
@@ -149,24 +149,59 @@ public class CrearLista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearListaActionPerformed
-        if (Code == 1)
+        
+        
+        // VALIDACIONES DE TAMAÑO DE LAS CADENAS
+        // VALIDACION DE QUE EL USUARIO EXISTA
+        if (jTFNombreLista.getText().length() <= 30 && jTADescripcion.getText().length() <= 40)
         {
+            String Encontrado = null;
+                    
             try 
             {
-                Modificar();
-            } 
+                Encontrado = procesos.EncontrarUsuario(jTFUsuario.getText());
+            }
             catch (IOException ex) 
             {
                 Logger.getLogger(CrearLista.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            if (!Encontrado.equals("No Existe"))
+            {
+                if (Code == 1)
+                {
+                    try 
+                    {
+                        Modificar();
+                    } 
+                    catch (IOException ex) 
+                    {
+                        Logger.getLogger(CrearLista.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else
+                {
+                    Crear();
+                }
+            } 
+            else  
+            {
+                JOptionPane.showMessageDialog(this,"El usuario al que quieres asignar la lista no existe",
+                        "       Error", JOptionPane.ERROR_MESSAGE);
+                
+                jTFUsuario.setText("");
+            }
         }
         else
         {
-            Crear();
+            if (jTFNombreLista.getText().length() > 30)
+                JOptionPane.showMessageDialog(this,"El nombre de la lista no debe superar los 30 caracteres",
+                        "       Error", JOptionPane.ERROR_MESSAGE);
+            else
+                JOptionPane.showMessageDialog(this,"La descripcion de la lista no debe superar los 40 caracteres",
+                        "       Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-        
-        
+   
     }//GEN-LAST:event_btnCrearListaActionPerformed
 
     private void Crear()
@@ -218,13 +253,13 @@ public class CrearLista extends javax.swing.JFrame {
             {
                 LineaOriginal = Linea.split("\\|");
                 
-                if (LineaOriginal[0].compareTo(Acceso.RellenarCaracteres(Nombre, 1)) == 0 && 
-                        LineaOriginal[1].compareTo(Acceso.RellenarCaracteres(UsuarioPropietario, 0)) == 0)
+                if (LineaOriginal[0].compareTo(procesos.RellenarCaracteres(Nombre, 1)) == 0 && 
+                        LineaOriginal[1].compareTo(procesos.RellenarCaracteres(UsuarioPropietario, 0)) == 0)
                 {
                     LineaOriginal = Linea.split("\\|");
                     
                     String Sustitucion = LineaOriginal[0] +"|"+ LineaOriginal[1] +"|"+ 
-                            Acceso.RellenarCaracteres(Descripcion, 2) +"|"+  LineaOriginal[3] +"|"+
+                            procesos.RellenarCaracteres(Descripcion, 2) +"|"+  LineaOriginal[3] +"|"+
                             LineaOriginal[4] +"|"+ LineaOriginal[5];
                     
                     ArchivoSustitucion.writeBytes(Sustitucion);
@@ -259,10 +294,10 @@ public class CrearLista extends javax.swing.JFrame {
             {
                 LineaOriginal = Linea.split("\\|");
                 
-                if (LineaOriginal[0].equals(Acceso.RellenarCaracteres(Nombre, 1)) && LineaOriginal[1].equals(Acceso.RellenarCaracteres(UsuarioPropietario, 0)))
+                if (LineaOriginal[0].equals(procesos.RellenarCaracteres(Nombre, 1)) && LineaOriginal[1].equals(procesos.RellenarCaracteres(UsuarioPropietario, 0)))
                 {
                     String Sustitucion = LineaOriginal[0] +"|"+ LineaOriginal[1] +"|"+ 
-                            Acceso.RellenarCaracteres(Descripcion, 2) +"|"+  LineaOriginal[3] +"|"+
+                            procesos.RellenarCaracteres(Descripcion, 2) +"|"+  LineaOriginal[3] +"|"+
                             LineaOriginal[4] +"|"+ LineaOriginal[5];
                     
                     ArchivoSustitucion.writeBytes(Sustitucion);
@@ -287,12 +322,12 @@ public class CrearLista extends javax.swing.JFrame {
         {
             DescriptorBitacoraLista(); 
             
-            JOptionPane.showMessageDialog(this,"Lista Modificada","La Lista se ha Modificado Exitosamente",
+            JOptionPane.showMessageDialog(this,"La Lista se ha Modificado Exitosamente","Lista Modificada",
                         JOptionPane.INFORMATION_MESSAGE);
         }
         else
         {
-            JOptionPane.showMessageDialog(this,"Algo ha salido mal","Ha ocurrido un error en algun lugar de la galaxia",
+            JOptionPane.showMessageDialog(this,"Ha ocurrido un error en algun lugar de la galaxia","Algo ha salido mal",
                         JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -338,7 +373,7 @@ public class CrearLista extends javax.swing.JFrame {
             if (VerificarEspacioBitacora())
             {
                 //Se Inserta el Nuevo Registro               
-                bw.write(Acceso.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+Acceso.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+Acceso.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
+                bw.write(procesos.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+procesos.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+procesos.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
                 bw.write(System.lineSeparator());
                 bw.close();
                 Escribir.close();
@@ -347,9 +382,9 @@ public class CrearLista extends javax.swing.JFrame {
             }
             else
             {
-                Acceso.ReorganizarLista();
+                procesos.ReorganizarLista();
                 //Se Inserta el Nuevo Registro
-                bw.write(Acceso.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+Acceso.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+Acceso.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
+                bw.write(procesos.RellenarCaracteres(NuevaLista.Nombre_lista,1)+"|"+procesos.RellenarCaracteres(NuevaLista.Usuario,0)+"|"+procesos.RellenarCaracteres(NuevaLista.Descripcion,2)+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status);
                 bw.close();
                 Escribir.close();
                 DescriptorBitacoraLista();
@@ -501,10 +536,10 @@ public class CrearLista extends javax.swing.JFrame {
         leerArchivo.close();
         
         Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista("Bitacora_Lista",
-                Fecha.toString(),Acceso.RellenarCaracteres(Usuario,0),Fecha.toString(),
-                Acceso.RellenarCaracteres(Usuario,0),Integer.toString(NoRegistros),Integer.toString(Activos),
+                Fecha.toString(),procesos.RellenarCaracteres(Usuario,0),Fecha.toString(),
+                procesos.RellenarCaracteres(Usuario,0),Integer.toString(NoRegistros),Integer.toString(Activos),
                 Integer.toString(Inactivos),MaxRepeticiones);
-        Acceso.DescriptorBitacoraLista(Nuevo);
+        procesos.DescriptorBitacoraLista(Nuevo);
     }
     
     //método donde se crea el Descriptor de Lista y se Actualiza
@@ -546,7 +581,7 @@ public class CrearLista extends javax.swing.JFrame {
         
         
         Descriptor_Listas Nuevo = new Descriptor_Listas(NombreLista,Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
-        Acceso.DescriptorLista(Nuevo);
+        procesos.DescriptorLista(Nuevo);
     }
     
     public static void main(String args[]) {
