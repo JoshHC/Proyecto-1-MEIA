@@ -1246,6 +1246,8 @@ public class Procesos {
                     
                     if (Auxiliar[5].equals("1"))
                         Lineas.add(Linea);
+                    
+                    Linea = leerArchivo.readLine();
                 }
                 
                 Leer.close();
@@ -1260,7 +1262,10 @@ public class Procesos {
                 BufferedWriter bw = new BufferedWriter(Escritor);
                 
                 for (String line : Lineas)
+                {
                     bw.write(line);
+                    System.lineSeparator();
+                }
                 
                 Leer.close();
                 bw.close();
@@ -1282,6 +1287,8 @@ public class Procesos {
                     
                     if (Auxiliar[6].equals("1"))
                         Lineas.add(Linea);
+                    
+                    Linea = leerArchivo.readLine();
                 }
                 
                 Leer.close();
@@ -1296,7 +1303,11 @@ public class Procesos {
                 BufferedWriter bw = new BufferedWriter(Escritor);
                 
                 for (String line : Lineas)
+                {
                     bw.write(line);
+                    System.lineSeparator();
+                }
+                    
                 
                 Leer.close();
                 bw.close();

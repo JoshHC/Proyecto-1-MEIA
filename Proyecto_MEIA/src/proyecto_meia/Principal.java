@@ -428,6 +428,7 @@ public class Principal extends javax.swing.JFrame {
         try 
         {
             procesos.Reorganizar();
+            procesos.Reorganizacion();
             
             Actualizador.DescriptorBitácora();
             Actualizador.DescriptorUsuario();
