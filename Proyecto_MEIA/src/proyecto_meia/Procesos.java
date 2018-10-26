@@ -1258,7 +1258,6 @@ public class Procesos {
                 writer.write(("").getBytes());
                 writer.close(); 
                 
-                
                 FileWriter Escritor = new FileWriter(Archivo,true);
                 BufferedWriter bw = new BufferedWriter(Escritor);
                 
@@ -1273,47 +1272,46 @@ public class Procesos {
             }
         }
         
-            List<String> Lineas = new ArrayList<String>();
-            File Archivo = new File("C:\\MEIA\\ListaUsuarioIndizada.txt");
-            
-            if (Archivo.exists())
+        List<String> Lineas = new ArrayList<String>();
+        File Archivo = new File("C:\\MEIA\\ListaUsuarioIndizada.txt");
+
+        if (Archivo.exists())
+        {
+            FileReader Leer = new FileReader(Archivo);
+            BufferedReader leerArchivo = new BufferedReader(Leer);
+            String Linea = leerArchivo.readLine();
+
+            while(Linea != null)
             {
-                FileReader Leer = new FileReader(Archivo);
-                BufferedReader leerArchivo = new BufferedReader(Leer);
-                String Linea = leerArchivo.readLine();
-                
-                while(Linea != null)
-                {
-                    String[] Auxiliar = Linea.split("\\|");
-                    
-                    if (Auxiliar[6].equals("1"))
-                        Lineas.add(Linea);
-                    
-                    Linea = leerArchivo.readLine();
-                }
-                
-                Leer.close();
-                leerArchivo.close();
-                
-                FileOutputStream writer = new FileOutputStream(Archivo);
-                writer.write(("").getBytes());
-                writer.close(); 
-                
-                
-                FileWriter Escritor = new FileWriter(Archivo,true);
-                BufferedWriter bw = new BufferedWriter(Escritor);
-                
-                for (String line : Lineas)
-                {
-                    bw.write(line);
-                    System.lineSeparator();
-                }
-                    
-                
-                Leer.close();
-                bw.close();
-                
+                String[] Auxiliar = Linea.split("\\|");
+
+                if (Auxiliar[6].equals("1"))
+                    Lineas.add(Linea);
+
+                Linea = leerArchivo.readLine();
             }
+
+            Leer.close();
+            leerArchivo.close();
+
+            FileOutputStream writer = new FileOutputStream(Archivo);
+            writer.write(("").getBytes());
+            writer.close(); 
+
+
+            FileWriter Escritor = new FileWriter(Archivo,true);
+            BufferedWriter bw = new BufferedWriter(Escritor);
+
+            for (String line : Lineas)
+            {
+                bw.write(line);
+                System.lineSeparator();
+            }
+
+            Leer.close();
+            bw.close();
+
+        }
 
     }
     

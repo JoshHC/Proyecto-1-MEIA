@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -635,26 +636,56 @@ public class Listas extends javax.swing.JFrame {
                     String Linea = "";
                     String [] Auxiliar;
 
+                    List<String> LineasA = new ArrayList<>();
 
                     while(LineaAdelantada != null)
                     {
                         Auxiliar = LineaAdelantada.split("\\|");
                         AuxNombre = Auxiliar[0].trim();
                         AuxUsuario = Auxiliar[1].trim();
+                        
                         if(AuxNombre.equals(Nombre) && AuxUsuario.equals(Usuario))
                         {
                             Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0].trim(), 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1].trim(), 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2].trim(), 2),ArregloCadena[3].trim(), ArregloCadena[4].trim(), "0");
                             String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator();
-                            ArchivoSustitucion.writeBytes(Sustitucion);
+                            
+                            LineasA.add(Sustitucion);
+                            //ArchivoSustitucion.writeBytes(Sustitucion);
+                            
                             if(NuevaLista.Numero_usuarios.equals("0") == false)
-                             
-                            EliminarUsuariosAsociados(NuevaLista);
+                                EliminarUsuariosAsociados(NuevaLista);
                         }
+                        else
+                        {
+                            LineasA.add(LineaAdelantada+System.lineSeparator());
+                        }
+                        
                         LineaAdelantada = buferU.readLine();
                         Linea = ArchivoSustitucion.readLine();         
                     }
+                    
            
+                    buferU.close();
+                    lectorU.close();
+                    ArchivoSustitucion.close();
+                    
+                    FileOutputStream writerA = new FileOutputStream(Archivo);
+                    writerA.write(("").getBytes());
+                    writerA.close(); 
+
+                    FileWriter EscritorA = new FileWriter(Archivo,true);
+                    BufferedWriter bwA = new BufferedWriter(EscritorA);
+
+                    for (String line : LineasA)
+                        bwA.write(line);
+
+                    bwA.close();
+                    EscritorA.close();
+                    DescriptorBitacoraLista();
+                    
                 }
+                
+                
             
                 pathRuta = "C:\\MEIA\\Bitacora_Lista.txt";
                 Archivo = new File(pathRuta);
@@ -667,30 +698,56 @@ public class Listas extends javax.swing.JFrame {
                 String Linea = "";
                 String [] Auxiliar;
 
+                List<String> LineasB = new ArrayList<>();
+                
                 while(LineaAdelantada != null)
                 {
                     Auxiliar = LineaAdelantada.split("\\|");
                     AuxNombre = Auxiliar[0].trim();
                     AuxUsuario = Auxiliar[1].trim();
+                    
                     if(AuxNombre.equals(Nombre) && AuxUsuario.equals(Usuario))
                     {
                         Lista NuevaLista = new Lista(TamañoFijo.RellenarCaracteres(ArregloCadena[0].trim(), 1),TamañoFijo.RellenarCaracteres(ArregloCadena[1].trim(), 0), TamañoFijo.RellenarCaracteres(ArregloCadena[2].trim(), 2),ArregloCadena[3].trim(), ArregloCadena[4].trim(), "0");
                         String Sustitucion = NuevaLista.Nombre_lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Descripcion+"|"+NuevaLista.Numero_usuarios+"|"+NuevaLista.Fecha_creacion+"|"+NuevaLista.Status+System.lineSeparator();
-                        ArchivoSustitucion.writeBytes(Sustitucion);
+                        
+                        LineasB.add(Sustitucion);
+                        //ArchivoSustitucion.writeBytes(Sustitucion);
+                        
                         if(NuevaLista.Numero_usuarios.equals("0") == false)
-                        buferU.close();
-                        lectorU.close();
-                        ArchivoSustitucion.close();
-                        EliminarUsuariosAsociados(NuevaLista);
+                            EliminarUsuariosAsociados(NuevaLista);
                     }
+                    else
+                    {
+                        LineasB.add(LineaAdelantada+System.lineSeparator());
+                    }
+                    
                     LineaAdelantada = buferU.readLine();
                     Linea = ArchivoSustitucion.readLine();         
                 }
             
-            DescriptorLista();
-            DescriptorBitacoraLista();
-            JOptionPane.showMessageDialog(jMenu1,"Lista Eliminada Exitosamente de Forma Logica", "Lista Eliminada",JOptionPane.INFORMATION_MESSAGE);
-            
+                buferU.close();
+                lectorU.close();
+                ArchivoSustitucion.close();
+                
+                FileOutputStream writerB = new FileOutputStream(Archivo);
+                writerB.write(("").getBytes());
+                writerB.close(); 
+
+                FileWriter EscritorB = new FileWriter(Archivo,true);
+                BufferedWriter bwB = new BufferedWriter(EscritorB);
+
+                for (String line : LineasB)
+                    bwB.write(line);
+                
+
+                bwB.close();
+                EscritorB.close();
+                        
+                DescriptorLista();
+                DescriptorBitacoraLista();
+                JOptionPane.showMessageDialog(jMenu1,"Lista Eliminada Exitosamente de Forma Logica", "Lista Eliminada",JOptionPane.INFORMATION_MESSAGE);
+
             
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Listas.class.getName()).log(Level.SEVERE, null, ex);
@@ -724,41 +781,37 @@ public class Listas extends javax.swing.JFrame {
             String [] Auxiliar = Linea.split("\\|"); 
             
             if(Auxiliar[5].equals("1"))
-            {
                 Activos++;
-            }
             else if (Auxiliar[5].equals("0") == true)
-            {
                 Inactivos++;
-            }
+
             Linea = leerArchivo.readLine();
             NoRegistros++;
         }
         
-            String paths = "C:\\MEIA\\desc_Bitacora_Lista.txt";
-            File Archivos = new File(paths);
-            FileReader Leers = new FileReader(Archivos);
-            BufferedReader leerArchivos = new BufferedReader(Leers);
-            String Lineas = "";
-            Lineas = leerArchivos.readLine();
-            String AuxLinea = "";
-            String MaxRepeticiones = "";
+        String paths = "C:\\MEIA\\desc_Bitacora_Lista.txt";
+        File Archivos = new File(paths);
+        FileReader Leers = new FileReader(Archivos);
+        BufferedReader leerArchivos = new BufferedReader(Leers);
+        String Lineas = "";
+        Lineas = leerArchivos.readLine();
+        String AuxLinea = "";
+        String MaxRepeticiones = "";
 
-            while(Lineas != null)
+        while(Lineas != null)
+        {
+            AuxLinea = Lineas;
+            Lineas = leerArchivos.readLine();
+            
+            if(Lineas == null)
             {
-                AuxLinea = Lineas;
-                Lineas = leerArchivos.readLine();
-                if(Lineas == null)
-                {
-                    String[] Separador = AuxLinea.split("\\|");
-                    MaxRepeticiones = Separador[1];
-                }
+                String[] Separador = AuxLinea.split("\\|");
+                MaxRepeticiones = Separador[1];
             }
-        
+        }
 
         Leer.close();
         leerArchivo.close();
-        
         
         Descriptor_Bitacora_Lista Nuevo = new Descriptor_Bitacora_Lista("Bitacora Lista",Fecha.toString(),Usuario,Fecha.toString(),Usuario,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),MaxRepeticiones);
         Acceso.DescriptorBitacoraLista(Nuevo);
@@ -785,13 +838,10 @@ public class Listas extends javax.swing.JFrame {
             String [] Auxiliar = Linea.split("\\|"); 
             
             if(Auxiliar[5].equals("1"))
-            {
                 Activos++;
-            }
             else if (Auxiliar[5].equals("0") == true)
-            {
                 Inactivos++;
-            }
+
             Linea = leerArchivo.readLine();
             NoRegistros++;
         }
@@ -822,24 +872,51 @@ public class Listas extends javax.swing.JFrame {
         String Linea = "";
         String [] Auxiliar;
 
+        List<String> Lineas = new ArrayList<>();
 
         while(LineaAdelantada != null)
         {
             Auxiliar = LineaAdelantada.split("\\|");
+            
             if(NombreLista.equals(Auxiliar[0].trim()) && UsuarioCreador.equals(Auxiliar[1].trim()))
             {
                 ListaUsuario Nueva = new ListaUsuario(Acceso.RellenarCaracteres(Auxiliar[0].trim(), 1),Acceso.RellenarCaracteres(Auxiliar[1].trim(), 0), Acceso.RellenarCaracteres(Auxiliar[2].trim(), 0),Acceso.RellenarCaracteres(Auxiliar[3].trim(), 2), Auxiliar[4].trim(), "0");
                 String Sustitucion = Nueva.Nombre_lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Descripcion+"|"+Nueva.Fecha_creacion+"|"+Nueva.Status+System.lineSeparator();
-                ArchivoSustitucion.writeBytes(Sustitucion);
+                
+                Lineas.add(Sustitucion);
+                //ArchivoSustitucion.writeBytes(Sustitucion);
                 DescriptorListaUsuario(Nueva);
             }
+            
             LineaAdelantada = buferU.readLine();
             Linea = ArchivoSustitucion.readLine();         
         }
 
-                        buferU.close();
-                        lectorU.close();
-                        ArchivoSustitucion.close();
+        buferU.close();
+        lectorU.close();
+        ArchivoSustitucion.close();
+        
+        // ME VUELO EL ARCHIVO ACTUAL
+        FileOutputStream writer = new FileOutputStream(Archivo);
+        writer.write(("").getBytes());
+        writer.close(); 
+        
+        FileWriter Escritor = new FileWriter(Archivo,true);
+        BufferedWriter bw = new BufferedWriter(Escritor);
+        
+        for (String line : Lineas)
+        {
+            bw.write(line);
+            System.lineSeparator();
+        }
+
+        bw.close();
+        Escritor.close();
+        //DescriptorBitacoraLista();
+        
+        // SE ESCRIBIÓ LA NUEVA LISTA MODIFICADA
+        
+        
 
         pathRuta = "C:\\MEIA\\ListaUsuarioIndizada.txt";
         Archivo = new File(pathRuta);
@@ -850,24 +927,46 @@ public class Listas extends javax.swing.JFrame {
 
         ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
         Linea = "";
+        
+        List<String> LineasIndizadas = new ArrayList<>();
 
         while(LineaAdelantada != null)
         {
             Auxiliar = LineaAdelantada.split("\\|");
+            
             if(NombreLista.equals(Auxiliar[2].trim()) && UsuarioCreador.equals(Auxiliar[3].trim()))
             {
-                  ListaIndizada Nueva = new ListaIndizada(Auxiliar[0],Auxiliar[1],Acceso.RellenarCaracteres(Auxiliar[2].trim(), 1),Acceso.RellenarCaracteres(Auxiliar[3].trim(), 0), Acceso.RellenarCaracteres(Auxiliar[4].trim(), 0),Auxiliar[5].trim(), "0");
+                ListaIndizada Nueva = new ListaIndizada(Auxiliar[0],Auxiliar[1],Acceso.RellenarCaracteres(Auxiliar[2].trim(), 1),Acceso.RellenarCaracteres(Auxiliar[3].trim(), 0), Acceso.RellenarCaracteres(Auxiliar[4].trim(), 0),Auxiliar[5].trim(), "0");
                 String Sustitucion = Nueva.NoRegistro+"|"+Nueva.Posicion+"|"+Nueva.Nombre_Lista+"|"+Nueva.Usuario+"|"+Nueva.Usuario_Asociado+"|"+Nueva.Siguiente+"|"+Nueva.Status+System.lineSeparator();
-                ArchivoSustitucion.writeBytes(Sustitucion);
+                
+                LineasIndizadas.add(Sustitucion);
+                //ArchivoSustitucion.writeBytes(Sustitucion);
                 DescriptorListaIndizada(Nueva);
             }
+                        
             LineaAdelantada = buferU.readLine();
             Linea = ArchivoSustitucion.readLine();         
         }
 
-                        buferU.close();
-                        lectorU.close();
-                        ArchivoSustitucion.close();
+        buferU.close();
+        lectorU.close();
+        ArchivoSustitucion.close();
+        
+        FileOutputStream writerIndizado = new FileOutputStream(Archivo);
+        writerIndizado.write(("").getBytes());
+        writerIndizado.close(); 
+
+        FileWriter EscritorIndizado = new FileWriter(Archivo,true);
+        BufferedWriter bwI = new BufferedWriter(EscritorIndizado);
+
+        for (String line : LineasIndizadas)
+        {
+            bwI.write(line);
+            System.lineSeparator();
+        }
+
+        bwI.close();
+        EscritorIndizado.close();
         
         DescriptorBitacoraLista();
     }
@@ -895,13 +994,10 @@ public class Listas extends javax.swing.JFrame {
             String [] Auxiliar = Linea.split("\\|");
             
             if(Auxiliar[5].equals("1"))
-            {
                 Activos++;
-            }
             else if (Auxiliar[5].equals("0") == true)
-            {
                 Inactivos++;
-            }
+
             Linea = leerArchivo.readLine();
             NoRegistros++;
         }
