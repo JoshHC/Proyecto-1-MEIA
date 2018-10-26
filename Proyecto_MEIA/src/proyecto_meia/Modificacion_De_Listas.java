@@ -43,7 +43,6 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
     Procesos Acceso = new Procesos();
     static int ContadorListaIndizada;
     static String Comienzo;
-    static int contador;
       
     public Modificacion_De_Listas(String Dato, String Propietario, String Usuario, String Rol) throws IOException {
         
@@ -740,6 +739,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             File Archivo = new File(pathRuta);
             FileWriter Escritor = new FileWriter(Archivo,true);
             BufferedWriter bw = new BufferedWriter(Escritor);
+            ContadorListaIndizada = ObtenerPosicionContador();
             String Posicion = "1"+"."+(ContadorListaIndizada+1);
             ListaIndizada NuevaLista = new ListaIndizada(String.valueOf(ContadorListaIndizada+1),Posicion,Nueva.Nombre_lista,Nueva.Usuario,Nueva.Usuario_Asociado,"0",Nueva.Status);
             bw.write(NuevaLista.NoRegistro+"|"+NuevaLista.Posicion+"|"+NuevaLista.Nombre_Lista+"|"+NuevaLista.Usuario+"|"+NuevaLista.Usuario_Asociado+"|"+NuevaLista.Siguiente+"|"+NuevaLista.Status);
@@ -747,13 +747,31 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             bw.close();
             Escritor.close();
             AsignarSiguiente(); 
-            DescriptorListaIndizada();
-            ContadorListaIndizada++;
-            contador++;
-            
-            
-            
+            DescriptorListaIndizada();     
     }
+    
+    private int ObtenerPosicionContador() throws FileNotFoundException, IOException
+    {
+            String pathRuta = "C:\\MEIA\\ListaUsuarioIndizada.txt";
+            File Archivo = new File(pathRuta);
+            FileReader Lector = new FileReader(Archivo);
+            BufferedReader bw = new BufferedReader(Lector);
+            String Linea = bw.readLine();
+            int Contador = 0;
+           
+            
+            
+            while(Linea != null)
+            {
+                Contador++;
+                Linea = bw.readLine();
+            }
+            
+            
+            return Contador;
+        
+    }
+    
     
     //Reorganiza los Indices y el Siguiente de la ListaIndizada
     private void AsignarSiguiente() throws FileNotFoundException, IOException
@@ -766,7 +784,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             String Linea = bw.readLine();
             String Siguiente = "";
             
-            if(contador == 0)
+            if(ContadorListaIndizada == 0)
             {
                 
                 Siguiente = "0";

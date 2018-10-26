@@ -10,6 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +22,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import static proyecto_meia.Login.Usuario;
+import static proyecto_meia.Modificacion_De_Listas.ContadorListaIndizada;
 import static proyecto_meia.Modificacion_De_Listas.NombreLista;
 
 /**
@@ -34,6 +37,7 @@ public class Listas extends javax.swing.JFrame {
     static String Rol;
     private static String NombreListaSeleccionada;
     Procesos Acceso = new Procesos();
+    static String Comienzo;
     
     
     public Listas(String Usuario, String Rol) throws IOException {
@@ -941,6 +945,8 @@ public class Listas extends javax.swing.JFrame {
                 
                 LineasIndizadas.add(Sustitucion);
                 //ArchivoSustitucion.writeBytes(Sustitucion);
+                //Aqui se vuelven a reorganizar los Indices antes de borrarlo todo
+                AsignarSiguiente();
                 DescriptorListaIndizada(Nueva);
             }
                         
@@ -967,7 +973,6 @@ public class Listas extends javax.swing.JFrame {
 
         bwI.close();
         EscritorIndizado.close();
-        
         DescriptorBitacoraLista();
     }
     
@@ -1049,6 +1054,111 @@ public class Listas extends javax.swing.JFrame {
         Acceso.DescriptorListaIndizada(Nuevo);
     }
     
+    //Reorganiza los Indices y el Siguiente de la ListaIndizada
+    private void AsignarSiguiente() throws FileNotFoundException, IOException
+    {
+            String pathRuta = "C:\\MEIA\\ListaUsuarioIndizada.txt";
+            File Archivo = new File(pathRuta);
+            FileReader Lector = new FileReader(Archivo);
+            BufferedReader bw = new BufferedReader(Lector);
+            List<ListaIndizada> Listas = new ArrayList<ListaIndizada>();
+            String Linea = bw.readLine();
+            String Siguiente = "";
+            
+            if(ContadorListaIndizada == 0)
+            {
+                
+                Siguiente = "0";
+                Comienzo = "1";
+            }
+            else
+            {             
+                while(Linea != null)
+                {
+                    String [] Auxiliar = Linea.split("\\|");
+                    ListaIndizada Nueva = new ListaIndizada(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5],Auxiliar[6]);
+                    if(Nueva.Status.equals("0") == false)
+                    Listas.add(Nueva);
+                    Linea = bw.readLine();
+                }
+                Lector.close();
+                bw.close();
+                
+                Collections.sort(Listas, new Comparator<ListaIndizada>(){
+                @Override
+                public int compare(ListaIndizada p1, ListaIndizada p2) {
+		int resultado = p1.Nombre_Lista.compareTo(p2.Nombre_Lista);
+                if ( resultado != 0 ) { return resultado;}
+                
+                resultado = p1.Usuario.compareTo(p2.Usuario);
+                if ( resultado != 0 ) { return resultado;}
+                
+                resultado = p1.Usuario_Asociado.compareTo(p2.Usuario_Asociado);
+                if ( resultado != 0 ) { return resultado;}
+                
+                return resultado;
+                }
+                });
+                
+                if(Listas.size() != 0)
+                {
+                Comienzo = Listas.get(0).NoRegistro;
+                
+                for(int i = 0; i<Listas.size();i++)
+                {
+                    if(i+1 <= Listas.size())
+                    {
+                        if(Listas.get(i).Siguiente.equals("0") == true)
+                        if(i != 0)
+                        Listas.get(i-1).Siguiente = Listas.get(i).NoRegistro;
+                    }
+                    else
+                    {
+                        Listas.get(i).Siguiente = "0";
+                    }
+                }
+                
+                
+                 Lector = new FileReader(Archivo);
+                 bw = new BufferedReader(Lector);
+                 Linea = bw.readLine();
+                 
+                 while(Linea != null)
+                {
+                    String [] Auxiliar = Linea.split("\\|");
+                    ListaIndizada Nueva = new ListaIndizada(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5],Auxiliar[6]);
+                    if(Nueva.Status.equals("0"))
+                    Listas.add(Nueva);
+                    Linea = bw.readLine();
+                }
+                Lector.close();
+                bw.close();
+                
+                Collections.sort(Listas, new Comparator<ListaIndizada>(){
+                @Override
+                public int compare(ListaIndizada p1, ListaIndizada p2) {
+                return p1.NoRegistro.compareTo(p2.NoRegistro);
+                }
+                });
+                
+                FileOutputStream writer = new FileOutputStream(Archivo);
+                writer.write(("").getBytes());
+                writer.close();     
+               
+                FileWriter Escritor = new FileWriter(Archivo);
+                BufferedWriter bs = new BufferedWriter(Escritor);
+                
+                for(int i= 0;i<Listas.size();i++)
+                {
+                    bs.write(Listas.get(i).NoRegistro+"|"+Listas.get(i).Posicion+"|"+Listas.get(i).Nombre_Lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Usuario_Asociado+"|"+Listas.get(i).Siguiente+"|"+Listas.get(i).Status);
+                    bs.write(System.lineSeparator());
+                }
+                bs.close();
+                Escritor.close();      
+                }
+            }
+    
+    }
     
     
     public static void main(String args[]) {
