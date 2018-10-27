@@ -567,7 +567,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             NombreLista = NombreLista.trim();
             String pathRuta = "C:\\MEIA\\Lista.txt";
             File Archivo = new File(pathRuta);
-            
+            String Descripcion = "";
 
             if(Archivo.exists())
             {
@@ -577,7 +577,6 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             String[] Auxiliar;
             List<Lista> Listas = new ArrayList<Lista>();
             Lista NuevaLista;
-            String Descripcion = "";
             
             while(Linea != null)
             {
@@ -596,7 +595,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             String[] Auxiliar;
             List<Lista> Listas = new ArrayList<Lista>();
             Lista NuevaLista;
-            String Descripcion = "";
+            String Descripcionb = "";
             
             
             while(Linea != null)
@@ -604,12 +603,17 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
               Auxiliar = Linea.split("\\|"); 
               NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
               if(NombreLista.equals(Auxiliar[0].trim()) && Usuario.equals(Auxiliar[1].trim()))
-              Descripcion = Auxiliar[2];
+              Descripcionb = Auxiliar[2];
               Linea = Leer.readLine();
             }
             
-            
-            return Descripcion.trim();  
+            if(Descripcionb.equals(""))
+            {
+                return Descripcion.trim();
+            }else
+            {
+                return Descripcionb.trim();
+            }
     }
    
     //ESTE METODO NO SE UTILIZA
