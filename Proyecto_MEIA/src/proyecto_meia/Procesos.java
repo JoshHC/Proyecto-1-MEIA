@@ -1101,7 +1101,7 @@ public class Procesos {
         
         
         //if(Descriptor.NumerodeRegistros.equals("1"))
-        if(Auxiliar == null)
+        if(Descriptor.NumerodeRegistros.equals("1"))
         {
             ArchivoSustitucion.seek(0);
             ArchivoSustitucion.writeBytes("Nombre Simbolico|Bitacora_Lista");
