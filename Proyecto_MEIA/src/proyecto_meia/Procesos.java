@@ -192,34 +192,31 @@ public class Procesos {
         String pathRuta = "C:\\MEIA\\desc_Bitacora_Usuarios.txt";
         File Archivo = new File(pathRuta);
         RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
-        /*FileReader Leer = new FileReader(Archivo);
-        BufferedReader bs = new BufferedReader(Leer);*/
         String Auxiliar = ArchivoSustitucion.readLine();
         String [] AuxTamaño = Auxiliar.split("\\|");
         
-        
         if(Descriptor.NumerodeRegistros.equals("1"))
         {
-         ArchivoSustitucion.seek(0);
-         ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_simbolico);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Usuario que lo creo"+"|"+Descriptor.Usuario_Creacion);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Numero de Registros"+"|"+Descriptor.NumerodeRegistros);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Registros Activos"+"|"+Descriptor.RegistrosActivos);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Max. Reorganizacion"+"|"+Descriptor.Max_Reorganizacion);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.close();
+            ArchivoSustitucion.seek(0);
+            ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_simbolico);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Usuario que lo creo"+"|"+Descriptor.Usuario_Creacion);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Numero de Registros"+"|"+Descriptor.NumerodeRegistros);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Registros Activos"+"|"+Descriptor.RegistrosActivos);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Max. Reorganizacion"+"|"+Descriptor.Max_Reorganizacion);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.close();
         }
         else
         {
@@ -263,30 +260,47 @@ public class Procesos {
         RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
         String Auxiliar = ArchivoSustitucion.readLine();
         
-        
         if(Auxiliar == null)
         {
-         ArchivoSustitucion.seek(0);
-         ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_Simbolico);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Usuario que lo creo"+"|"+Descriptor.Usuario_Creacion);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Usuario que lo Modifico"+"|"+Descriptor.Fecha_Modificacion);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Numero de Registros"+"|"+Descriptor.NumerodeRegistros);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Registros Activos"+"|"+Descriptor.RegistrosActivos);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.writeBytes("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos);
-         ArchivoSustitucion.writeBytes("\r\n");
-         ArchivoSustitucion.close();
+            FileWriter Escritor = new FileWriter(Archivo,true);
+            BufferedWriter bw = new BufferedWriter(Escritor);
+
+            bw.write("Nombre Simbolico"+"|"+Descriptor.Nombre_Simbolico+System.lineSeparator());
+            bw.write("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion+System.lineSeparator());
+            bw.write("Usuario que lo creo"+"|"+Descriptor.Usuario_Creacion+System.lineSeparator());
+            bw.write("Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion+System.lineSeparator());
+            bw.write("Usuario que lo Modifico"+"|"+Descriptor.Usuario_modificacion+System.lineSeparator());
+            bw.write("Numero de Registros"+"|"+Descriptor.NumerodeRegistros+System.lineSeparator());
+            bw.write("Registros Activos"+"|"+Descriptor.RegistrosActivos+System.lineSeparator());
+            bw.write("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos+System.lineSeparator());
+            
+            bw.close();
+            Escritor.close();
+            
+            /*
+            ArchivoSustitucion.seek(0);
+            ArchivoSustitucion.writeBytes("Nombre Simbolico"+"|"+Descriptor.Nombre_Simbolico);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Fecha de Creacion"+"|"+Descriptor.Fecha_Creacion);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Usuario que lo creo"+"|"+Descriptor.Usuario_Creacion);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Fecha de Modificacion"+"|"+Descriptor.Fecha_Modificacion);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Usuario que lo Modifico"+"|"+Descriptor.Usuario_modificacion);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Numero de Registros"+"|"+Descriptor.NumerodeRegistros);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Registros Activos"+"|"+Descriptor.RegistrosActivos);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.writeBytes("Registros Inactivos"+"|"+Descriptor.RegistrosInactivos);
+            ArchivoSustitucion.writeBytes("\r\n");
+            ArchivoSustitucion.close();
+            */
         }
         else
         {
+            ArchivoSustitucion.seek(0);
             String Sustitucion;
             ArchivoSustitucion.readLine();
             ArchivoSustitucion.readLine();

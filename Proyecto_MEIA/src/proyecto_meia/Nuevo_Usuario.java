@@ -784,11 +784,9 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         Date Fecha = new Date();
         Login ObtenerDatos = new Login();
         String UsuarioActivo = ObtenerDatos.UsuarioLogeado();
-        if(UsuarioActivo == null)
-        {
-            UsuarioActivo = Acceso.RellenarCaracteres(txtUserName.getText(), 0) ;
-        }
         
+        if(UsuarioActivo == null)
+            UsuarioActivo = Acceso.RellenarCaracteres(txtUserName.getText(), 0) ;        
         
         String path = "C:\\MEIA\\Usuarios.txt";
         File Archivo = new File(path);
@@ -816,14 +814,13 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
             NoRegistros++;
         }
         
-
         Leer.close();
         leerArchivo.close();
-        
         
         Descriptor_Usuario Nuevo = new Descriptor_Usuario("Usuarios",Fecha.toString(),
                 Acceso.RellenarCaracteres(UsuarioActivo, 0) ,Fecha.toString(),Acceso.RellenarCaracteres(UsuarioActivo, 0),
                 Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        
         Acceso.DescriptorUsuario(Nuevo);
     }
     
@@ -833,65 +830,65 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         Date Fecha = new Date();
         Login ObtenerDatos = new Login();
         String UsuarioActivo = ObtenerDatos.UsuarioLogeado();
+        
         if(UsuarioActivo == null)
-        {
             UsuarioActivo = txtUserName.getText();
-        }
         
-            String path = "C:\\MEIA\\Bitacora_Usuarios.txt";
-            File Archivo = new File(path);
-            FileReader Leer = new FileReader(Archivo);
-            BufferedReader leerArchivo = new BufferedReader(Leer);
-            String Linea = "";
+        String path = "C:\\MEIA\\Bitacora_Usuarios.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = "";
+        Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;  
+        String MaxRepeticiones = "";
+        String AuxLinea = "";
+
+        //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+
+            if(Auxiliar[9].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[9].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            NoRegistros++;
             Linea = leerArchivo.readLine();
-            int NoRegistros = 0;
-            int Activos = 0;
-            int Inactivos = 0;  
-            String MaxRepeticiones = "";
-            String AuxLinea = "";
+        }
 
-            //Se compara en la posicion 9 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
-            while(Linea != null)
-            {
-                String [] Auxiliar = Linea.split("\\|");
+        Leer.close();
+        leerArchivo.close();
 
-                if(Auxiliar[9].equals("1"))
-                {
-                    Activos++;
-                }
-                else if (Auxiliar[9].equals("0") == true)
-                {
-                    Inactivos++;
-                }
-                NoRegistros++;
-                Linea = leerArchivo.readLine();
-            }
+        String paths = "C:\\MEIA\\desc_Bitacora_Usuarios.txt";
+        File Archivos = new File(paths);
+        FileReader Leers = new FileReader(Archivos);
+        BufferedReader leerArchivos = new BufferedReader(Leers);
+        String Lineas = "";
+        Lineas = leerArchivos.readLine();
 
-            Leer.close();
-            leerArchivo.close();
-        
-            String paths = "C:\\MEIA\\desc_Bitacora_Usuarios.txt";
-            File Archivos = new File(paths);
-            FileReader Leers = new FileReader(Archivos);
-            BufferedReader leerArchivos = new BufferedReader(Leers);
-            String Lineas = "";
+        while(Lineas != null)
+        {
+            AuxLinea = Lineas;
             Lineas = leerArchivos.readLine();
-
-            while(Lineas != null)
+            if(Lineas == null)
             {
-                AuxLinea = Lineas;
-                Lineas = leerArchivos.readLine();
-                if(Lineas == null)
-                {
-                    String[] Separador = AuxLinea.split("\\|");
-                    MaxRepeticiones = Separador[1];
-                }
+                String[] Separador = AuxLinea.split("\\|");
+                MaxRepeticiones = Separador[1];
             }
+        }
 
-            Descriptor_Bitacora Nuevo = new Descriptor_Bitacora("Usuarios",Fecha.toString(),
-            Acceso.RellenarCaracteres(UsuarioActivo, 0) ,Fecha.toString(),Acceso.RellenarCaracteres(UsuarioActivo, 0),
-            Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),MaxRepeticiones); 
-            Acceso.DescriptorBitacoraUsuario(Nuevo);     
+        Descriptor_Bitacora Nuevo = new Descriptor_Bitacora("Bitacora_Usuarios",Fecha.toString(),
+                Acceso.RellenarCaracteres(UsuarioActivo, 0) ,Fecha.toString(),Acceso.RellenarCaracteres(UsuarioActivo, 0),
+                Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos),MaxRepeticiones); 
+        
+        Acceso.DescriptorBitacoraUsuario(Nuevo);     
     }   
     
    public static String md5(String clear) throws Exception {
