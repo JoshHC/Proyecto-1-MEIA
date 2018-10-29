@@ -336,7 +336,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             while(Linea != null)
             {
               Auxiliar = Linea.split("\\|");
-              if(NombreLista.equals(Auxiliar[0].trim()))
+              if(Acceso.RellenarCaracteres(NombreLista, 1).equals(Auxiliar[0]))
               {
               NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
               Listas.add(NuevaLista);

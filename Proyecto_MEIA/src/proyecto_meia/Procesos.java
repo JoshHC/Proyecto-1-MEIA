@@ -1268,6 +1268,7 @@ public class Procesos {
                 Leer.close();
                 leerArchivo.close();
                 
+                // Vacia el archivo
                 FileOutputStream writer = new FileOutputStream(Archivo);
                 writer.write(("").getBytes());
                 writer.close(); 
