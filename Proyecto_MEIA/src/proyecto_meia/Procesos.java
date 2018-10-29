@@ -1276,10 +1276,7 @@ public class Procesos {
                 BufferedWriter bw = new BufferedWriter(Escritor);
                 
                 for (String line : Lineas)
-                {
-                    bw.write(line);
-                    System.lineSeparator();
-                }
+                    bw.write(line + System.lineSeparator());
                 
                 Leer.close();
                 bw.close();
@@ -1317,10 +1314,7 @@ public class Procesos {
             BufferedWriter bw = new BufferedWriter(Escritor);
 
             for (String line : Lineas)
-            {
-                bw.write(line);
-                System.lineSeparator();
-            }
+                bw.write(line + System.lineSeparator());
 
             Leer.close();
             bw.close();
