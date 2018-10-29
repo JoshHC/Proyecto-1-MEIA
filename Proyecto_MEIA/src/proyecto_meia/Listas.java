@@ -1108,7 +1108,7 @@ public class Listas extends javax.swing.JFrame {
                 {
                     if(i+1 <= Listas.size())
                     {
-                        if(Listas.get(i).Siguiente.equals("0") == true)
+                        //if(Listas.get(i).Siguiente.equals("0") == true)
                         if(i != 0)
                         Listas.get(i-1).Siguiente = Listas.get(i).NoRegistro;
                     }
