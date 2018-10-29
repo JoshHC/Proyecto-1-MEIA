@@ -314,7 +314,7 @@ public class Procesos {
             ArchivoSustitucion.writeBytes(Sustitucion);
             
             ArchivoSustitucion.readLine();
-            Sustitucion = "No. Registros"+"|"+Descriptor.NumerodeRegistros;
+            Sustitucion = "Numero de Registros"+"|"+Descriptor.NumerodeRegistros;
             ArchivoSustitucion.writeBytes(Sustitucion);
             
             ArchivoSustitucion.readLine();
