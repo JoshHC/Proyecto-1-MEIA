@@ -94,6 +94,44 @@ public class Procesos {
             return "No Existe";
     }
     
+    // Metodo que indica en que archivo se encuentra el usuario enviado.
+    public Boolean AdicionExiste(String Lista, String Usuario) throws FileNotFoundException, IOException
+    {
+        boolean Existe = false;
+        
+        String pathRuta;
+        File Archivo;
+        FileReader Leer;
+        BufferedReader leerArchivo;
+        String Linea;
+        
+        try
+        {
+            pathRuta = "C:\\MEIA\\ListaUsuario.txt";
+            Archivo = new File(pathRuta);
+            Leer = new FileReader(Archivo);
+            leerArchivo = new BufferedReader(Leer);
+            Linea = leerArchivo.readLine();
+            
+            while(Linea != null && Existe == false)
+            {
+                if(Linea.contains(Lista) && Linea.contains(Usuario))
+                    Existe = true;
+
+                Linea = leerArchivo.readLine();
+            } 
+            
+            leerArchivo.close();
+            Leer.close();
+        }
+        catch(IOException ex)
+        {
+            
+        }
+        
+        return Existe;
+    }
+    
      public String BuscarUsuario(String user) throws FileNotFoundException, IOException
     {
         boolean ExisteUsuarios = false;
