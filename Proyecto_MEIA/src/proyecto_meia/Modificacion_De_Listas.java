@@ -335,9 +335,12 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             
             while(Linea != null)
             {
-              Auxiliar = Linea.split("\\|"); 
+              Auxiliar = Linea.split("\\|");
+              if(NombreLista.equals(Auxiliar[0].trim()))
+              {
               NuevaLista = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
               Listas.add(NuevaLista);
+              }
               Linea = Leer.readLine();
             }
             
@@ -922,6 +925,7 @@ public class Modificacion_De_Listas extends javax.swing.JFrame {
             }
             bs.close();
             Escritor.close();
+            ContadorListaIndizada = ObtenerPosicionContador();
             AsignarSiguiente();
             DescriptorListaIndizada();
             bw.close();
