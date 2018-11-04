@@ -13,8 +13,8 @@ public class Node {
     String FechaTransaccion;
     String Asunto;
     String Mensaje;
-    String Asunto;
-    String Status
+    String Adjunto;
+    String Status;
     
     private int Numero;
     private char Caracter;
@@ -49,7 +49,6 @@ public class Node {
         Caracter = '\0';
         left = null;
         right = null;
-        coding = "";
     }
 
     public Node(char caracter, int repeticiones)
@@ -58,7 +57,6 @@ public class Node {
         Caracter = caracter;
         left = null;
         right = null;
-        coding = "";
     }
 
 }

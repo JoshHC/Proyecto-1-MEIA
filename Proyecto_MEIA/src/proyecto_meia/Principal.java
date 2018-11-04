@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,6 +17,8 @@ import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -29,12 +32,15 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import static proyecto_meia.Nuevo_Usuario.fichero;
 import org.apache.commons.io.FileUtils;
+import static proyecto_meia.Modificacion_De_Listas.ContadorListaIndizada;
+import static proyecto_meia.Modificacion_De_Listas.Usuario;
 
 public class Principal extends javax.swing.JFrame {
 
     Procesos procesos = new Procesos();
     static String Usuario;
     static String Rol;
+    static String Comienzo;
     
     public Principal(String usuario, String Rol) throws IOException {
         initComponents();
@@ -490,6 +496,9 @@ public class Principal extends javax.swing.JFrame {
             
             Actualizador.DescriptorBitácora();
             Actualizador.DescriptorUsuario();
+            
+            ReasignarIndices();
+            DescriptorListaIndizada();
 
         } 
         catch (IOException ex) 
@@ -557,9 +566,145 @@ public class Principal extends javax.swing.JFrame {
         btnMenudeAdministracion1.show();
     }//GEN-LAST:event_lblFondoMouseClicked
 
+    private void ReasignarIndices() throws FileNotFoundException, IOException
+    {
+        String path = "C:\\MEIA\\ListaUsuarioIndizada.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        List<ListaIndizada> Listas = new ArrayList<ListaIndizada>();
+        int contador = 1;
+        
+        while(Linea != null)
+        {
+           String [] Auxiliar = Linea.split("\\|");
+           String Posicion = "1"+"."+(contador);
+           ListaIndizada Nueva = new ListaIndizada(String.valueOf(contador),Posicion,Auxiliar[2],Auxiliar[3],Auxiliar[4],"0",Auxiliar[6]);
+           Listas.add(Nueva);
+           Linea = leerArchivo.readLine();
+           contador++;
+        }
+        Leer.close();
+        leerArchivo.close();
+        
+        Collections.sort(Listas, new Comparator<ListaIndizada>(){
+                @Override
+                public int compare(ListaIndizada p1, ListaIndizada p2) {
+		int resultado = p1.Nombre_Lista.compareTo(p2.Nombre_Lista);
+                if ( resultado != 0 ) { return resultado;}
+                
+                resultado = p1.Usuario.compareTo(p2.Usuario);
+                if ( resultado != 0 ) { return resultado;}
+                
+                resultado = p1.Usuario_Asociado.compareTo(p2.Usuario_Asociado);
+                if ( resultado != 0 ) { return resultado;}
+                
+                return resultado;
+                }
+                });
+                
+                if(Listas.size() != 0)
+                {
+                Comienzo = Listas.get(0).NoRegistro;
+                
+                for(int i = 0; i<Listas.size();i++)
+                {
+                    if(i+1 <= Listas.size())
+                    {
+                        //if(Listas.get(i).Siguiente.equals("0") == true)
+                        if(i != 0)
+                        Listas.get(i-1).Siguiente = Listas.get(i).NoRegistro;
+                    }
+                    else
+                    {
+                        Listas.get(i).Siguiente = "0";
+                    }
+                }
+                
+                
+                 Leer = new FileReader(Archivo);
+                 leerArchivo = new BufferedReader(Leer);
+                 Linea = leerArchivo.readLine();
+                 
+                 while(Linea != null)
+                {
+                    String [] Auxiliar = Linea.split("\\|");
+                    ListaIndizada Nueva = new ListaIndizada(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5],Auxiliar[6]);
+                    if(Nueva.Status.equals("0"))
+                    Listas.add(Nueva);
+                    Linea = leerArchivo.readLine();
+                }
+                Leer.close();
+                leerArchivo.close();
+                
+                Collections.sort(Listas, new Comparator<ListaIndizada>(){
+                @Override
+                public int compare(ListaIndizada p1, ListaIndizada p2) {
+                return p1.NoRegistro.compareTo(p2.NoRegistro);
+                }
+                });
+                
+                FileOutputStream writer = new FileOutputStream(Archivo);
+                writer.write(("").getBytes());
+                writer.close();     
+               
+                FileWriter Escritor = new FileWriter(Archivo);
+                BufferedWriter bs = new BufferedWriter(Escritor);
+                
+                for(int i= 0;i<Listas.size();i++)
+                {
+                    bs.write(Listas.get(i).NoRegistro+"|"+Listas.get(i).Posicion+"|"+Listas.get(i).Nombre_Lista+"|"+Listas.get(i).Usuario+"|"+Listas.get(i).Usuario_Asociado+"|"+Listas.get(i).Siguiente+"|"+Listas.get(i).Status);
+                    bs.write(System.lineSeparator());
+                }
+                bs.close();
+                Escritor.close();      
+                }
+    }
     /**
      * @param args the command line arguments
      */
+    
+    
+     //método donde se crea el Descriptor de Lista y se Actualiza
+    public void DescriptorListaIndizada() throws FileNotFoundException, IOException
+    {
+        Procesos Acceso = new Procesos();
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\ListaUsuarioIndizada.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;
+        
+        //Se compara en la posicion 6 porque en esa posicion se encontrara el status a la hora de hacer el split y separarlo.
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[6].equals("1"))
+            {
+                Activos++;
+            }
+            else if (Auxiliar[6].equals("0") == true)
+            {
+                Inactivos++;
+            }
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        Descriptor_ListaUsuarioIndizada Nuevo = new Descriptor_ListaUsuarioIndizada("Lista Indizada",Fecha.toString(),Usuario,Fecha.toString(),Usuario,Comienzo,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        Acceso.DescriptorListaIndizada(Nuevo);
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
