@@ -77,6 +77,11 @@ public class Principal extends javax.swing.JFrame {
         panel1 = new java.awt.Panel();
         panel2 = new java.awt.Panel();
         btnMenudeAdministracion1 = new javax.swing.JButton();
+        btnEnviar = new javax.swing.JButton();
+        btnBandejaEntrada = new javax.swing.JButton();
+        btnBandejaEnviados = new javax.swing.JButton();
+        btnEnviarListaDifusion = new javax.swing.JButton();
+        btnEnviarUsuario = new javax.swing.JButton();
         lblFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -119,7 +124,7 @@ public class Principal extends javax.swing.JFrame {
                 btnBackupActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBackup, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 350, 230, 50));
+        getContentPane().add(btnBackup, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 350, 230, 50));
 
         btnMenudeAdministracion.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         btnMenudeAdministracion.setText("Administracion de Usuarios");
@@ -128,7 +133,7 @@ public class Principal extends javax.swing.JFrame {
                 btnMenudeAdministracionActionPerformed(evt);
             }
         });
-        getContentPane().add(btnMenudeAdministracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, 230, 50));
+        getContentPane().add(btnMenudeAdministracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 230, 230, 50));
 
         lblMenu.setFont(new java.awt.Font("Calibri Light", 0, 36)); // NOI18N
         lblMenu.setForeground(new java.awt.Color(255, 255, 255));
@@ -143,7 +148,7 @@ public class Principal extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 400, 100, 30));
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 420, 100, 30));
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -178,106 +183,159 @@ public class Principal extends javax.swing.JFrame {
                 btnMenudeAdministracion1ActionPerformed(evt);
             }
         });
-        getContentPane().add(btnMenudeAdministracion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 230, 50));
+        getContentPane().add(btnMenudeAdministracion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, 230, 50));
+
+        btnEnviar.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        btnEnviar.setText("Enviar Correo");
+        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnEnviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, 230, 50));
+
+        btnBandejaEntrada.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        btnBandejaEntrada.setText("Bandeja de Entrada");
+        btnBandejaEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBandejaEntradaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBandejaEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, 230, 50));
+
+        btnBandejaEnviados.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        btnBandejaEnviados.setText("Bandeja de Enviados");
+        btnBandejaEnviados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBandejaEnviadosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBandejaEnviados, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, 230, 50));
+
+        btnEnviarListaDifusion.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        btnEnviarListaDifusion.setText("Enviar a Lista de Difusion");
+        btnEnviarListaDifusion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarListaDifusionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnEnviarListaDifusion, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 230, 50));
+
+        btnEnviarUsuario.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        btnEnviarUsuario.setText("Enviar a un Usuario");
+        btnEnviarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarUsuarioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnEnviarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 230, 50));
 
         lblFondo.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
-        getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 450));
+        lblFondo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblFondoMouseClicked(evt);
+            }
+        });
+        getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 470));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void LlenarDatos() throws FileNotFoundException, IOException
     {
-            String Ubicacion = "";
-            Ubicacion = procesos.EncontrarUsuario(Usuario);
-            
-            if (Ubicacion.equals("Usuarios"))
-            {
-                String pathRuta = "C:\\MEIA\\Usuarios.txt";
-                File Archivo = new File(pathRuta);
-                FileReader Leer = new FileReader(Archivo);
-                BufferedReader leerArchivo = new BufferedReader(Leer);
-                String Linea = leerArchivo.readLine();
-                
-                while(Linea != null)
-                {
-                    if(Linea.contains(Usuario))
-                    {                    
-                        String[] SegmentosInfo = Linea.split("\\|");
-                        
-                        String pathImagen = SegmentosInfo[8];
-                        
-                        ImageIcon icon = new ImageIcon(pathImagen);
-                        Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
-                        lblFoto.setText(null);
-                        lblFoto.setIcon( icono );
-                        
-                        lblBienvenido.setText("Bienvenido " + SegmentosInfo[1]);
-                        lblUsuario.setText("Usuario: " + SegmentosInfo[0]);
-                        
-                        if(SegmentosInfo[4].equals("1"))
-                        {
-                            lblNiveldeAcceso.setText("Nivel de acceso ➙ Maestro");
-                            lblRol.setText("Rol → Administrador");
-                            Rol = "Administrador";
-                        }
-                        else
-                        {
-                            lblNiveldeAcceso.setText("Nivel de acceso ➙ Estandar");
-                            lblRol.setText("Rol → Usuario");
-                            Rol = "Usuario";
-                        }
-                    }
+        btnEnviarListaDifusion.hide();
+        btnEnviarUsuario.hide();
+        
+        String Ubicacion = "";
+        Ubicacion = procesos.EncontrarUsuario(Usuario);
+        
+        if (Ubicacion.equals("Usuarios"))
+        {
+            String pathRuta = "C:\\MEIA\\Usuarios.txt";
+            File Archivo = new File(pathRuta);
+            FileReader Leer = new FileReader(Archivo);
+            BufferedReader leerArchivo = new BufferedReader(Leer);
+            String Linea = leerArchivo.readLine();
 
-                    Linea = leerArchivo.readLine();
-                } 
-                leerArchivo.close();
-                Leer.close();
-            }
-            else if (Ubicacion.equals("Bitacora_Usuarios"))
+            while(Linea != null)
             {
-                String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
-                File Archivo = new File(pathRuta);
-                FileReader Leer = new FileReader(Archivo);
-                BufferedReader leerArchivo = new BufferedReader(Leer);
-                String Linea = leerArchivo.readLine();
-                
-                while(Linea != null)
-                {
-                    if(Linea.contains(Usuario))
+                if(Linea.contains(Usuario))
+                {                    
+                    String[] SegmentosInfo = Linea.split("\\|");
+
+                    String pathImagen = SegmentosInfo[8];
+
+                    ImageIcon icon = new ImageIcon(pathImagen);
+                    Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+                    lblFoto.setText(null);
+                    lblFoto.setIcon( icono );
+
+                    lblBienvenido.setText("Bienvenido " + SegmentosInfo[1]);
+                    lblUsuario.setText("Usuario: " + SegmentosInfo[0]);
+
+                    if(SegmentosInfo[4].equals("1"))
                     {
-                        String[] SegmentosInfo = Linea.split("\\|");
-                        
-                        String pathImagen = SegmentosInfo[8];
-                        
-                        ImageIcon icon = new ImageIcon(pathImagen);
-                        Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
-                        lblFoto.setText(null);
-                        lblFoto.setIcon( icono );
-                        
-                        lblBienvenido.setText("Bienvenido " + SegmentosInfo[1]);
-                        lblUsuario.setText("Usuario: " + SegmentosInfo[0]);
-                        
-                        if(SegmentosInfo[4].equals("1"))
-                        {
-                            lblNiveldeAcceso.setText("Nivel de acceso ➙ Maestro");
-                            lblRol.setText("Rol → Administrador");
-                            Rol = "Administrador";
-                        }
-                        else
-                        {
-                            lblNiveldeAcceso.setText("Nivel de acceso ➙ Estandar");
-                            lblRol.setText("Rol → Usuario");
-                            Rol = "Usuario";
-                        }
+                        lblNiveldeAcceso.setText("Nivel de acceso ➙ Maestro");
+                        lblRol.setText("Rol → Administrador");
+                        Rol = "Administrador";
                     }
+                    else
+                    {
+                        lblNiveldeAcceso.setText("Nivel de acceso ➙ Estandar");
+                        lblRol.setText("Rol → Usuario");
+                        Rol = "Usuario";
+                    }
+                }
 
-                    Linea = leerArchivo.readLine();
-                } 
-                leerArchivo.close();
-                Leer.close();
-            }
+                Linea = leerArchivo.readLine();
+            } 
+            leerArchivo.close();
+            Leer.close();
+        }
+        else if (Ubicacion.equals("Bitacora_Usuarios"))
+        {
+            String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
+            File Archivo = new File(pathRuta);
+            FileReader Leer = new FileReader(Archivo);
+            BufferedReader leerArchivo = new BufferedReader(Leer);
+            String Linea = leerArchivo.readLine();
+
+            while(Linea != null)
+            {
+                if(Linea.contains(Usuario))
+                {
+                    String[] SegmentosInfo = Linea.split("\\|");
+
+                    String pathImagen = SegmentosInfo[8];
+
+                    ImageIcon icon = new ImageIcon(pathImagen);
+                    Icon icono = new ImageIcon(icon.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+                    lblFoto.setText(null);
+                    lblFoto.setIcon( icono );
+
+                    lblBienvenido.setText("Bienvenido " + SegmentosInfo[1]);
+                    lblUsuario.setText("Usuario: " + SegmentosInfo[0]);
+
+                    if(SegmentosInfo[4].equals("1"))
+                    {
+                        lblNiveldeAcceso.setText("Nivel de acceso ➙ Maestro");
+                        lblRol.setText("Rol → Administrador");
+                        Rol = "Administrador";
+                    }
+                    else
+                    {
+                        lblNiveldeAcceso.setText("Nivel de acceso ➙ Estandar");
+                        lblRol.setText("Rol → Usuario");
+                        Rol = "Usuario";
+                    }
+                }
+
+                Linea = leerArchivo.readLine();
+            } 
+            leerArchivo.close();
+            Leer.close();
+        }
     }
     
     private void btnBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackupActionPerformed
@@ -459,6 +517,46 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnMenudeAdministracion1ActionPerformed
 
+    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
+        btnEnviarListaDifusion.show();
+        btnEnviarUsuario.show();
+        
+        btnBackup.hide();
+        btnEnviar.hide();
+        btnBandejaEntrada.hide();
+        btnBandejaEnviados.hide();
+        btnMenudeAdministracion.hide();
+        btnMenudeAdministracion1.hide();
+    }//GEN-LAST:event_btnEnviarActionPerformed
+
+    private void btnBandejaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBandejaEntradaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBandejaEntradaActionPerformed
+
+    private void btnBandejaEnviadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBandejaEnviadosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBandejaEnviadosActionPerformed
+
+    private void btnEnviarListaDifusionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarListaDifusionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEnviarListaDifusionActionPerformed
+
+    private void btnEnviarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEnviarUsuarioActionPerformed
+
+    private void lblFondoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFondoMouseClicked
+        btnEnviarListaDifusion.hide();
+        btnEnviarUsuario.hide();
+        
+        btnBackup.show();
+        btnEnviar.show();
+        btnBandejaEntrada.show();
+        btnBandejaEnviados.show();
+        btnMenudeAdministracion.show();
+        btnMenudeAdministracion1.show();
+    }//GEN-LAST:event_lblFondoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -497,6 +595,11 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBackup;
+    private javax.swing.JButton btnBandejaEntrada;
+    private javax.swing.JButton btnBandejaEnviados;
+    private javax.swing.JButton btnEnviar;
+    private javax.swing.JButton btnEnviarListaDifusion;
+    private javax.swing.JButton btnEnviarUsuario;
     private javax.swing.JButton btnMenudeAdministracion;
     private javax.swing.JButton btnMenudeAdministracion1;
     private javax.swing.JButton btnSalir;
