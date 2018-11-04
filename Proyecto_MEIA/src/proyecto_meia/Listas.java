@@ -521,7 +521,7 @@ public class Listas extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, 270, 120));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 750, 590));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 750, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

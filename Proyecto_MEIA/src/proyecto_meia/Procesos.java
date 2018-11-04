@@ -467,6 +467,9 @@ public class Procesos {
             
             // Max 200 caracteres
             case 3: cantidad = 200 - Texto.length(); break;
+            
+            // Max 80 caracteres
+            case 4: cantidad = 80 - Texto.length(); break;
         }
         
         for (int i = 0; i < cantidad; i++)

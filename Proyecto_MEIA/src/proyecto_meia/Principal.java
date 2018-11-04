@@ -42,13 +42,13 @@ public class Principal extends javax.swing.JFrame {
     static String Rol;
     static String Comienzo;
     
-    public Principal(String usuario, String Rol) throws IOException {
+    public Principal(String Usuario, String Rol) throws IOException {
         initComponents();
         
         if(Rol.equals(""))
             this.Rol = Rol;
         
-        this.Usuario = procesos.EliminarCaracteres(usuario);
+        this.Usuario = procesos.EliminarCaracteres(Usuario);
         
         LlenarDatos();
         if(this.Rol.equals("Administrador"))
@@ -547,11 +547,43 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBandejaEnviadosActionPerformed
 
     private void btnEnviarListaDifusionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarListaDifusionActionPerformed
-        // TODO add your handling code here:
+        
+        EnviarMensaje enviarMensaje;
+        
+        try 
+        {
+            
+            enviarMensaje = new EnviarMensaje("Lista", Usuario, Rol);
+            enviarMensaje.setLocationRelativeTo(null);
+            enviarMensaje.show();
+            this.dispose();
+            
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }//GEN-LAST:event_btnEnviarListaDifusionActionPerformed
 
     private void btnEnviarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarUsuarioActionPerformed
-        // TODO add your handling code here:
+        
+        EnviarMensaje enviarMensaje;
+        
+        try 
+        {
+            enviarMensaje = new EnviarMensaje("Usuario", Usuario, Rol);
+            enviarMensaje.setLocationRelativeTo(null);
+            enviarMensaje.show();
+            this.dispose();
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }//GEN-LAST:event_btnEnviarUsuarioActionPerformed
 
     private void lblFondoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblFondoMouseClicked

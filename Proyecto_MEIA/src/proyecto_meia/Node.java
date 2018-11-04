@@ -16,45 +16,28 @@ public class Node {
     String Adjunto;
     String Status;
     
-    private int Numero;
-    private char Caracter;
-    
     Node left;
     Node right;
-    
-    public int getNumero() {
-        return Numero;
-    }
-
-    public void setNumero(int numero) {
-        Numero = numero;
-    }
-
-    public char getCaracter() {
-        return Caracter;
-    }
-
-    public void setCaracter(char caracter) {
-        Caracter = caracter;
-    }
 
     public boolean isLeaf ()
     {
         return left == null && right == null;
     }
 
+    //TENGO QUE CONSTRUIR EL CONSTRUCTOR JAJA
+    
     public Node()
     {
-        Numero = 0;
-        Caracter = '\0';
+        
+        
         left = null;
         right = null;
     }
 
     public Node(char caracter, int repeticiones)
     {
-        Numero = repeticiones;
-        Caracter = caracter;
+        
+        
         left = null;
         right = null;
     }
