@@ -1,9 +1,11 @@
 package proyecto_meia;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import static proyecto_meia.Modificacion_De_Listas.NombreLista;
 
 /**
  *
@@ -52,7 +56,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
         lblMenu = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTFAsunto = new javax.swing.JTextField();
         jBtnAdjuntar = new javax.swing.JButton();
         jCBDestinatario = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
@@ -83,8 +87,8 @@ public class EnviarMensaje extends javax.swing.JFrame {
         jLabel2.setText("Mensaje");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
 
-        jTextField1.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 570, -1));
+        jTFAsunto.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
+        getContentPane().add(jTFAsunto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 570, -1));
 
         jBtnAdjuntar.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
         jBtnAdjuntar.setText("Adjuntar Archivo");
@@ -110,6 +114,11 @@ public class EnviarMensaje extends javax.swing.JFrame {
 
         jBtnEnviar.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
         jBtnEnviar.setText("Enviar");
+        jBtnEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEnviarActionPerformed(evt);
+            }
+        });
         getContentPane().add(jBtnEnviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 350, -1, -1));
 
         jBtnDescartar.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
@@ -144,6 +153,68 @@ public class EnviarMensaje extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jBtnDescartarActionPerformed
+
+    private void jBtnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnviarActionPerformed
+        String Para = jCBDestinatario.getSelectedItem().toString();
+        String Asunto = jTFAsunto.getText();
+        String Mensaje = jTAMensaje.getText();
+        
+        if (Mensaje.length() > 200)
+        {
+            JOptionPane.showMessageDialog(this,"El mensaje que intentas enviar es muy largo","      Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (Asunto.length() > 80)
+        {
+            JOptionPane.showMessageDialog(this,"El asunto del mensaje que intentas enviar es muy largo","      Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try
+        {
+            Date Fecha = new Date();
+            String pathRuta = "C:\\MEIA\\ArbolMensajes.txt";
+            File Archivo = new File(pathRuta);
+            FileWriter Escritor = new FileWriter(Archivo,true);
+            BufferedWriter bw = new BufferedWriter(Escritor);
+
+            Usuario = procesos.RellenarCaracteres(Usuario, 0);
+            
+            String[] DestinoVerdadero = Para.split("-");
+            Para = DestinoVerdadero[0];
+            
+            Para = procesos.RellenarCaracteres(Para, 0);
+            Asunto = procesos.RellenarCaracteres(Asunto, 4);
+            Mensaje = procesos.RellenarCaracteres(Mensaje, 3);
+            
+            Correo Nuevo;
+
+            if(ArbolVacio())
+            {
+                Nuevo = new Correo("  ", "  ", Usuario, Para, Fecha.toString(), Asunto, Mensaje, 
+                        procesos.RellenarCaracteres("", 3), "1");
+                bw.write(Nuevo.Izq+"|"+Nuevo.Der+"|"+Nuevo.UsuarioEmisor+"|"+Nuevo.UsuarioReceptor+"|"+
+                        Nuevo.FechaTransaccion+"|"+Nuevo.Asunto+"|"+Nuevo.Mensaje+"|"+Nuevo.Adjunto+"|"+Nuevo.Estatus);
+                bw.write(System.lineSeparator());
+            }
+            else
+            {
+                // QUE BUSQUE DONDE TIENE QUE IR EL NUEVO
+                // QUE MODIFIQUE LOS INDICES IZQ DER
+            }
+
+            bw.close();
+            Escritor.close();
+            DescriptorArbolMensajes();
+            JOptionPane.showMessageDialog(this,"El Usuario se ha Ingresado Exitosamente","Ingreso Exitoso", JOptionPane.INFORMATION_MESSAGE);        
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(Modificacion_De_Listas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jBtnEnviarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -303,6 +374,55 @@ public class EnviarMensaje extends javax.swing.JFrame {
             Linea = Leer.readLine();
         }
     }
+    
+    private boolean ArbolVacio() throws FileNotFoundException, IOException
+    {
+        String path = "C:\\MEIA\\ArbolMensajes.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        
+        while(Linea != null)
+            return false;
+        
+        return true;
+    }
+    
+    //método donde se crea el Descriptor del Arbol y se Actualiza
+    public void DescriptorArbolMensajes() throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\ArbolMensajes.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 8 porque en esa posicion se encontrara el status
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[8].equals("1"))
+                Activos++;
+            else if (Auxiliar[6].equals("0") == true)
+                Inactivos++;
+
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        Descriptor_ArbolMensajes Nuevo = new Descriptor_ArbolMensajes("ArbolMensajes",Fecha.toString(),Usuario,Fecha.toString(),Usuario,"01",Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+        procesos.DescriptorArbolMensajes(Nuevo);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnAdjuntar;
@@ -315,7 +435,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTAMensaje;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTFAsunto;
     private javax.swing.JLabel lblMenu;
     // End of variables declaration//GEN-END:variables
 }
