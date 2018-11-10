@@ -34,6 +34,15 @@ import static proyecto_meia.Nuevo_Usuario.fichero;
 import org.apache.commons.io.FileUtils;
 import static proyecto_meia.Modificacion_De_Listas.ContadorListaIndizada;
 import static proyecto_meia.Modificacion_De_Listas.Usuario;
+import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
+import com.amazonaws.services.sqs.model.AmazonSQSException;
+import com.amazonaws.services.sqs.model.CreateQueueRequest;
+import com.amazonaws.services.sqs.model.SendMessageRequest;
+import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
+import com.amazonaws.services.sqs.model.AmazonSQSException;
+import com.amazonaws.services.sqs.model.CreateQueueRequest;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -44,6 +53,8 @@ public class Principal extends javax.swing.JFrame {
     
     public Principal(String Usuario, String Rol) throws IOException {
         initComponents();
+        
+        
         
         if(Rol.equals(""))
             this.Rol = Rol;
@@ -62,6 +73,12 @@ public class Principal extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private void ConexionBD()
+    {
+        
+       
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -539,7 +556,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnviarActionPerformed
 
     private void btnBandejaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBandejaEntradaActionPerformed
-        // TODO add your handling code here:
+       ConexionBD();
     }//GEN-LAST:event_btnBandejaEntradaActionPerformed
 
     private void btnBandejaEnviadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBandejaEnviadosActionPerformed
