@@ -1,5 +1,6 @@
 package proyecto_meia;
 
+import java.awt.Menu;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,8 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,11 +32,18 @@ public class EnviarMensaje extends javax.swing.JFrame {
     private String Usuario;
     private String Rol;
     
+    private int InicioArbol;
+    String[] Arbol;
+    
     List<Usuario> ListaUsuarios;
     List<Lista> ListaListas;
+    List<String> IntegrantesLista;
     
+    // CONSTRUCTOR
     public EnviarMensaje(String destinatario, String usuario, String rol) throws IOException {
         initComponents();
+        
+        lblEncabezado.setText("Enviar Mensaje");
         
         this.Destinatario = destinatario;
         this.Usuario = usuario;
@@ -40,10 +51,19 @@ public class EnviarMensaje extends javax.swing.JFrame {
                 
         ListaUsuarios = new ArrayList<Usuario>();
         ListaListas = new ArrayList<Lista>();
+        IntegrantesLista = new ArrayList<String>();
         
         RellenarCampos();
     }
-
+    
+    // CONSTRUCTOR
+    public EnviarMensaje(String usuario, String rol, String Para, String Asutno, String Mensaje) throws IOException {
+        initComponents();
+        
+        
+    }
+    
+    // CONSTRUCTOR
     private EnviarMensaje() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -53,7 +73,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblMenu = new javax.swing.JLabel();
+        lblEncabezado = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTFAsunto = new javax.swing.JTextField();
@@ -71,11 +91,11 @@ public class EnviarMensaje extends javax.swing.JFrame {
         setAutoRequestFocus(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblMenu.setFont(new java.awt.Font("Calibri Light", 0, 36)); // NOI18N
-        lblMenu.setForeground(new java.awt.Color(255, 255, 255));
-        lblMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblMenu.setText("Enviar Mensaje");
-        getContentPane().add(lblMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        lblEncabezado.setFont(new java.awt.Font("Calibri Light", 0, 36)); // NOI18N
+        lblEncabezado.setForeground(new java.awt.Color(255, 255, 255));
+        lblEncabezado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEncabezado.setText("Enviar Mensaje");
+        getContentPane().add(lblEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -141,7 +161,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
         Principal Menu;
         
         try 
-        {
+        { 
             Menu = new Principal(Usuario, Rol);
             Menu.setLocationRelativeTo(null);
             Menu.show();
@@ -165,12 +185,55 @@ public class EnviarMensaje extends javax.swing.JFrame {
             return;
         }
         
-        if (Asunto.length() > 80)
+        if (Asunto.length() > 20)
         {
             JOptionPane.showMessageDialog(this,"El asunto del mensaje que intentas enviar es muy largo","      Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
+        if(Destinatario.equals("Usuario"))
+        {
+            try 
+            {
+                EnviarPersona(Para, Asunto, Mensaje);
+            
+                JOptionPane.showMessageDialog(this,"El correo ha sido enviado", "Envío Exitoso", JOptionPane.INFORMATION_MESSAGE);        
+
+                Principal Menu = new Principal(Usuario, Rol);
+                Menu.setLocationRelativeTo(null);
+                Menu.show();
+                this.dispose();
+                
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else
+        {
+            try 
+            {
+                EnviarLista(Para, Asunto, Mensaje);
+                
+                JOptionPane.showMessageDialog(this,"Los correos han sido enviados", "Envío Exitoso", JOptionPane.INFORMATION_MESSAGE);        
+
+                Principal Menu = new Principal(Usuario, Rol);
+                Menu.setLocationRelativeTo(null);
+                Menu.show();
+                this.dispose();
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+            
+
+    }//GEN-LAST:event_jBtnEnviarActionPerformed
+
+    private void EnviarPersona(String Para, String Asunto, String Mensaje)
+    {
         try
         {
             Date Fecha = new Date();
@@ -185,37 +248,51 @@ public class EnviarMensaje extends javax.swing.JFrame {
             Para = DestinoVerdadero[0];
             
             Para = procesos.RellenarCaracteres(Para, 0);
-            Asunto = procesos.RellenarCaracteres(Asunto, 4);
+            Asunto = procesos.RellenarCaracteres(Asunto, 0);
             Mensaje = procesos.RellenarCaracteres(Mensaje, 3);
             
             Correo Nuevo;
 
-            if(ArbolVacio())
-            {
-                Nuevo = new Correo("  ", "  ", Usuario, Para, Fecha.toString(), Asunto, Mensaje, 
-                        procesos.RellenarCaracteres("", 3), "1");
-                bw.write(Nuevo.Izq+"|"+Nuevo.Der+"|"+Nuevo.UsuarioEmisor+"|"+Nuevo.UsuarioReceptor+"|"+
-                        Nuevo.FechaTransaccion+"|"+Nuevo.Asunto+"|"+Nuevo.Mensaje+"|"+Nuevo.Adjunto+"|"+Nuevo.Estatus);
-                bw.write(System.lineSeparator());
-            }
-            else
-            {
-                // QUE BUSQUE DONDE TIENE QUE IR EL NUEVO
-                // QUE MODIFIQUE LOS INDICES IZQ DER
-            }
+            Nuevo = new Correo("  ", "  ", Usuario, Para, Fecha.toString(), Asunto, Mensaje, 
+                    procesos.RellenarCaracteres("", 3), "1");
+            bw.write(Nuevo.Izq+"|"+Nuevo.Der+"|"+Nuevo.UsuarioEmisor+"|"+Nuevo.UsuarioReceptor+"|"+
+                    Nuevo.FechaTransaccion+"|"+Nuevo.Asunto+"|"+Nuevo.Mensaje+"|"+Nuevo.Adjunto+"|"+Nuevo.Estatus);
+            bw.write(System.lineSeparator());
 
             bw.close();
             Escritor.close();
-            DescriptorArbolMensajes();
-            JOptionPane.showMessageDialog(this,"El Usuario se ha Ingresado Exitosamente","Ingreso Exitoso", JOptionPane.INFORMATION_MESSAGE);        
+            
+            
+            DescriptorArbolMensajes(false);
+            
+            ObtenerIncio();
+            ObtenerArbol();
+
+            try
+            {
+                ActualizarIndicesArbol(Nuevo);
+            }
+            catch(Exception e)
+            {
+                
+            }
         }
         catch (IOException ex)
         {
             Logger.getLogger(Modificacion_De_Listas.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private void EnviarLista(String Para, String Asunto, String Mensaje) throws IOException
+    {
+        ObtenerIntegrantesLista("C:\\MEIA\\ListaUsuarioIndizada.txt", Para);
+        
+        IntegrantesLista.forEach((Integrante) -> {
+            EnviarPersona(Integrante, Asunto, Mensaje);
+        });
 
-    }//GEN-LAST:event_jBtnEnviarActionPerformed
-
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -250,6 +327,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
             }
         });
     }
+
     
     // Rellena el ComboBox con los usuarios o con las listas
     private void RellenarCampos() throws IOException
@@ -280,9 +358,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
                 String Texto = procesos.EliminarCaracteres(item.Nombre_lista);
                 
                 jCBDestinatario.addItem(Texto);
-            }
-            
-            return;
+            }            
         }
     }
     
@@ -365,7 +441,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
         {
             Auxiliar = Linea.split("\\|");
 
-            if(Auxiliar[5].equals("1"))
+            if(Auxiliar[5].equals("1") && procesos.EliminarCaracteres(Auxiliar[1]).equals(this.Usuario))
             {
                 Nuevo = new Lista(Auxiliar[0],Auxiliar[1],Auxiliar[2],Auxiliar[3],Auxiliar[4],Auxiliar[5]);
                 ListaListas.add(Nuevo);
@@ -375,22 +451,44 @@ public class EnviarMensaje extends javax.swing.JFrame {
         }
     }
     
-    private boolean ArbolVacio() throws FileNotFoundException, IOException
+    private void ObtenerIntegrantesLista(String path, String Lista) throws FileNotFoundException, IOException
     {
-        String path = "C:\\MEIA\\ArbolMensajes.txt";
-        File Archivo = new File(path);
-        FileReader Leer = new FileReader(Archivo);
-        BufferedReader leerArchivo = new BufferedReader(Leer);
-        String Linea = leerArchivo.readLine();
-        
+        String pathRuta = path;
+        File Archivo = new File(pathRuta);
+
+        FileReader Lectura = null;
+
+        try 
+        {
+            Lectura = new FileReader(Archivo);
+        } 
+        catch (FileNotFoundException ex) 
+        {
+            Logger.getLogger(Menu_de_Administracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        BufferedReader Leer = new BufferedReader(Lectura);
+        String Linea = Leer.readLine();
+        String [] Auxiliar;
+
         while(Linea != null)
-            return false;
-        
-        return true;
+        {
+            Auxiliar = Linea.split("\\|");
+
+            if(procesos.EliminarCaracteres(Auxiliar[2]).equals(Lista) && 
+                    procesos.EliminarCaracteres(Auxiliar[3]).equals(this.Usuario))
+            {
+                IntegrantesLista.add(procesos.EliminarCaracteres(Auxiliar[4]));
+            }
+
+            Linea = Leer.readLine();
+        }
     }
     
     //método donde se crea el Descriptor del Arbol y se Actualiza
-    public void DescriptorArbolMensajes() throws FileNotFoundException, IOException
+    // TRUE SI SE MODIFICA EL VALOR DE INICIO
+    // FALSE SI NO
+    public void DescriptorArbolMensajes(boolean Desicion) throws FileNotFoundException, IOException
     {
         Date Fecha = new Date();
         String path = "C:\\MEIA\\ArbolMensajes.txt";
@@ -409,7 +507,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
             
             if(Auxiliar[8].equals("1"))
                 Activos++;
-            else if (Auxiliar[6].equals("0") == true)
+            else if (Auxiliar[8].equals("0") == true)
                 Inactivos++;
 
             Linea = leerArchivo.readLine();
@@ -421,8 +519,172 @@ public class EnviarMensaje extends javax.swing.JFrame {
         
         
         Descriptor_ArbolMensajes Nuevo = new Descriptor_ArbolMensajes("ArbolMensajes",Fecha.toString(),Usuario,Fecha.toString(),Usuario,"01",Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
-        procesos.DescriptorArbolMensajes(Nuevo);
+        
+        if (!Desicion)
+            procesos.DescriptorArbolMensajes(Nuevo, false, 0);
+        else
+            // Alguna otra cosa, saber que
+            return;
     }
+    
+    private void ActualizarIndicesArbol(Correo Nuevo) throws IOException
+    {
+        String Siguiente = String.valueOf(InicioArbol);
+        boolean Procesando = true;
+        
+        while(Procesando)
+        {
+            String[] Row = Arbol[Integer.valueOf(Siguiente) -1].split("\\|");
+        
+            Correo Temp = new Correo(Row[0], Row[1], Row[2], Row[3], Row[4], Row[5], Row[6], Row[7], Row[8]);
+            int ResultadoComparar = Ordenar(Nuevo, Temp);
+            
+            if (ResultadoComparar < 0)
+            {
+                if(Row[0].equals("  "))
+                {
+                    Row[0] = String.valueOf(Arbol.length);
+                    if (Row[0].length() == 1)
+                        Row[0] = "0" + Row[0];
+
+                    String Actualizacion = Row[0]+"|"+Row[1]+"|"+Row[2]+"|"+Row[3]+"|"+Row[4]+"|"+Row[5]+"|"+Row[6]+"|"+Row[7]+"|"+Row[8];
+                    Arbol[Integer.valueOf(Siguiente) -1] = Actualizacion;
+                    
+                    Procesando = false;
+                }
+                else
+                {
+                    Siguiente = Row[0];
+                }
+            }
+            else if (ResultadoComparar > 0)
+            {
+                if(Row[1].equals("  "))
+                {
+                    Row[1] = String.valueOf(Arbol.length);
+                    if (Row[1].length() == 1)
+                        Row[1] = "0" + Row[1];
+
+                    String Actualizacion = Row[0]+"|"+Row[1]+"|"+Row[2]+"|"+Row[3]+"|"+Row[4]+"|"+Row[5]+"|"+Row[6]+"|"+Row[7]+"|"+Row[8];
+                    Arbol[Integer.valueOf(Siguiente) -1] = Actualizacion;
+                    
+                    Procesando = false;
+                }
+                else
+                {
+                    Siguiente = Row[1];
+                }
+            }
+            else
+            {
+                //Se comparó a si mismo
+                // Quiere decir que se acaba de ingresar el primer mensaje
+                Procesando = false;
+            }
+        }
+        
+        ModificarArbol();
+    }
+   
+    private int Ordenar(Correo p1, Correo p2)
+    {
+        int resultado = p1.UsuarioEmisor.compareTo(p2.UsuarioEmisor);
+        if ( resultado != 0 ) { return resultado;}
+
+        resultado = p1.UsuarioReceptor.compareTo(p2.UsuarioReceptor);
+        if ( resultado != 0 ) { return resultado;}
+
+        resultado = p1.FechaTransaccion.compareTo(p2.FechaTransaccion);
+        if ( resultado != 0 ) { return resultado;}
+
+        return resultado;
+    }
+    
+    
+    // Obtiene el contenido del Arbol
+    private void ObtenerArbol() throws FileNotFoundException, IOException
+    {
+        List<String> ListaArbol = new ArrayList<String>();
+        
+        String pathRuta = "C:\\MEIA\\ArbolMensajes.txt";
+        File Archivo = new File(pathRuta);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        
+        while (Linea != null)
+        {
+            ListaArbol.add(Linea);
+            Linea = leerArchivo.readLine();
+        }
+        
+        int tamaño = ListaArbol.size();
+        
+        this.Arbol = new String[tamaño];
+        
+        for (int i = 0; i < tamaño; i++) {
+            this.Arbol[i] = ListaArbol.remove(0);
+        }
+        
+        Leer.close();
+        leerArchivo.close();
+    }
+    
+    // Obtiene el inicio del Arbol
+    private void ObtenerIncio() throws FileNotFoundException, IOException
+    {
+        String pathRuta = "C:\\MEIA\\desc_ArbolMensajes.txt";
+        File Archivo = new File(pathRuta);
+        
+        if (Archivo.exists())
+        {
+            FileReader Leer = new FileReader(Archivo);
+            BufferedReader leerArchivo = new BufferedReader(Leer);
+            String Linea = "";
+
+            for (int i = 0; i < 6; i++)
+                Linea = leerArchivo.readLine();
+
+            String[] Segmentos = Linea.split("\\|");
+
+            InicioArbol = Integer.valueOf(Segmentos[1]);
+            
+            Leer.close();
+            leerArchivo.close();
+        }
+    }
+    
+    private void ModificarArbol() throws FileNotFoundException, IOException
+    {
+        String pathRuta = "C:\\MEIA\\ArbolMensajes.txt";
+        File Archivo = new File(pathRuta);
+        RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+        
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        
+        String Auxiliar;
+        
+        int cont = 0;
+        
+        while (Linea != null)
+        {
+            if (!Linea.equals(Arbol[cont]))
+            {
+                ArchivoSustitucion.writeBytes(Arbol[cont]);
+            }
+            
+            Linea = leerArchivo.readLine();
+            Auxiliar = ArchivoSustitucion.readLine();
+            cont++;
+        }
+        
+        leerArchivo.close();
+        Leer.close();
+        ArchivoSustitucion.close();
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnAdjuntar;
@@ -436,6 +698,10 @@ public class EnviarMensaje extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTAMensaje;
     private javax.swing.JTextField jTFAsunto;
-    private javax.swing.JLabel lblMenu;
+    private javax.swing.JLabel lblEncabezado;
     // End of variables declaration//GEN-END:variables
+
+    private Date SimpleDateFormat(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

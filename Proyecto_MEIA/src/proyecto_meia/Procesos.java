@@ -1282,12 +1282,12 @@ public class Procesos {
     }
     
     // DESCRIPTOR DEL ARCHIVO ARBOL
-    public void DescriptorArbolMensajes(Descriptor_ArbolMensajes Descriptor) throws IOException
+    public void DescriptorArbolMensajes(Descriptor_ArbolMensajes Descriptor, boolean ModificarInicio, int NuevoInicio) throws IOException
     {
         String pathRuta = "C:\\MEIA\\desc_ArbolMensajes.txt";
         File Archivo = new File(pathRuta);
         RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
-        String Auxiliar = ArchivoSustitucion.readLine();        
+        String Auxiliar = ArchivoSustitucion.readLine();
         
         if(Auxiliar == null)
         {
@@ -1328,8 +1328,18 @@ public class Procesos {
             ArchivoSustitucion.writeBytes(Sustitucion);
             
             ArchivoSustitucion.readLine();
-            Sustitucion = "Registro de Inicio"+"|"+Descriptor.RegistrodeInicio;
-            ArchivoSustitucion.writeBytes(Sustitucion);
+            
+            if (ModificarInicio == true)
+            {
+                String InicioNuevo = Integer.toString(NuevoInicio);
+                
+                if(InicioNuevo.length() == 1)
+                    InicioNuevo = "0" + InicioNuevo;
+                
+                ArchivoSustitucion.readLine();
+                Sustitucion = "Registro de Inicio"+"|"+InicioNuevo;
+                ArchivoSustitucion.writeBytes(Sustitucion);
+            }
             
             ArchivoSustitucion.readLine();
             Sustitucion = "Numero de Registros"+"|"+Descriptor.NumerodeRegistros;

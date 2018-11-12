@@ -225,7 +225,7 @@ public class Principal extends javax.swing.JFrame {
                 btnEnviarListaDifusionActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEnviarListaDifusion, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 230, 50));
+        getContentPane().add(btnEnviarListaDifusion, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 290, 230, 50));
 
         btnEnviarUsuario.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         btnEnviarUsuario.setText("Enviar a un Usuario");
@@ -234,7 +234,7 @@ public class Principal extends javax.swing.JFrame {
                 btnEnviarUsuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEnviarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, 230, 50));
+        getContentPane().add(btnEnviarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, 230, 50));
 
         lblFondo.setFont(new java.awt.Font("Calibri Light", 0, 20)); // NOI18N
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
@@ -539,11 +539,35 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEnviarActionPerformed
 
     private void btnBandejaEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBandejaEntradaActionPerformed
-        // TODO add your handling code here:
+        
+        try 
+        {
+            BandejaES BandejaEntrada = new BandejaES("Entrada", Usuario, Rol);
+            BandejaEntrada.setLocationRelativeTo(null);
+            BandejaEntrada.show();
+            this.dispose();
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnBandejaEntradaActionPerformed
 
     private void btnBandejaEnviadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBandejaEnviadosActionPerformed
-        // TODO add your handling code here:
+        
+        try 
+        {
+            BandejaES BandejaSalida = new BandejaES("Enviados", Usuario, Rol);
+            BandejaSalida.setLocationRelativeTo(null);
+            BandejaSalida.show();
+            this.dispose();
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnBandejaEnviadosActionPerformed
 
     private void btnEnviarListaDifusionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarListaDifusionActionPerformed
