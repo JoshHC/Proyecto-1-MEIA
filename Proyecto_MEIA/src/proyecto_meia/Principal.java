@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +23,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.apache.commons.io.FileUtils;
+import static proyecto_meia.Modificacion_De_Listas.ContadorListaIndizada;
+import static proyecto_meia.Modificacion_De_Listas.Usuario;
+
 
 public class Principal extends javax.swing.JFrame {
 
@@ -50,14 +54,7 @@ public class Principal extends javax.swing.JFrame {
 
     Principal() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void ConexionBD()
-    {
-        
-       
-    }
-    
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -500,6 +497,10 @@ public class Principal extends javax.swing.JFrame {
         catch (IOException ex) 
         {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         if (JOptionPane.showConfirmDialog(null, "Quieres Salir de Mail", "Confirmar Salida", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
@@ -525,7 +526,7 @@ public class Principal extends javax.swing.JFrame {
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
         btnEnviarListaDifusion.show();
         btnEnviarUsuario.show();
-        
+        BDD Nueva = new BDD();
         btnBackup.hide();
         btnEnviar.hide();
         btnBandejaEntrada.hide();
@@ -548,7 +549,6 @@ public class Principal extends javax.swing.JFrame {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-       ConexionBD();
     }//GEN-LAST:event_btnBandejaEntradaActionPerformed
 
     private void btnBandejaEnviadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBandejaEnviadosActionPerformed

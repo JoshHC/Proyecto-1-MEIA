@@ -5,6 +5,8 @@
  */
 package proyecto_meia;
 
+import java.sql.SQLException;
+
 /**
  *
  * @author josue
@@ -14,7 +16,7 @@ public class Proyecto_MEIA {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Login MenuPrincipal = new Login();
         MenuPrincipal.setLocationRelativeTo(null);
         MenuPrincipal.show();

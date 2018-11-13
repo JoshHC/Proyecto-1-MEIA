@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.security.MessageDigest;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -305,10 +306,23 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCargarFotoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        Login Principal = new Login();
-        Principal.setLocationRelativeTo(null);
-        Principal.show();
-        this.dispose();
+        
+        try 
+        {
+            Login Principal = new Login();
+            Principal.setLocationRelativeTo(null);
+            Principal.show();
+            this.dispose();
+        } 
+        catch (ClassNotFoundException ex) 
+        {
+            Logger.getLogger(Nuevo_Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(Nuevo_Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
@@ -511,6 +525,10 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
         catch (IOException ex) 
         {
             Logger.getLogger(Nuevo_Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Nuevo_Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Nuevo_Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
        
     }//GEN-LAST:event_btnCrearActionPerformed
@@ -710,7 +728,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     }
     
     //Ingresa el usuario al archivo bitacora_usuarios
-    public void IngresarUsuarioBitacora(Usuario Nuevo) throws FileNotFoundException, IOException
+    public void IngresarUsuarioBitacora(Usuario Nuevo) throws FileNotFoundException, IOException, ClassNotFoundException, SQLException
     {
         String pathRuta = "C:\\MEIA\\Bitacora_Usuarios.txt";
         
@@ -779,7 +797,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     }
     
     //método donde se crea el Descriptor del Usuario y se Actualiza
-    public void DescriptorUsuario() throws FileNotFoundException, IOException
+    public void DescriptorUsuario() throws FileNotFoundException, IOException, ClassNotFoundException, SQLException
     {
         Date Fecha = new Date();
         Login ObtenerDatos = new Login();
@@ -825,7 +843,7 @@ public class Nuevo_Usuario extends javax.swing.JFrame {
     }
     
     //método donde se crea el Descriptor de la Bitacora y se Actualiza
-    public void DescriptorBitácora() throws FileNotFoundException, IOException
+    public void DescriptorBitácora() throws FileNotFoundException, IOException, ClassNotFoundException, SQLException
     {
         Date Fecha = new Date();
         Login ObtenerDatos = new Login();

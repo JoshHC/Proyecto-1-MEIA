@@ -5,6 +5,10 @@
  */
 package proyecto_meia;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author josue
@@ -92,9 +96,22 @@ public class ReestablecerPassword extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-         Login Principal = new Login();
-         Principal.show();
-         this.dispose();
+         
+        try 
+        {
+            Login Principal = new Login();
+            Principal.show();
+            this.dispose();
+        } 
+        catch (ClassNotFoundException ex) 
+        {
+            Logger.getLogger(ReestablecerPassword.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(ReestablecerPassword.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**
