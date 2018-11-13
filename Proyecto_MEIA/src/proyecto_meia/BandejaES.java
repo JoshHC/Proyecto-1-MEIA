@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -70,11 +71,30 @@ public class BandejaES extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         lblBandeja = new javax.swing.JLabel();
         jBtnDescartar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jLstBandeja = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
+
+        jMenuItem1.setText("Visualizar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Eliminar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -95,13 +115,14 @@ public class BandejaES extends javax.swing.JFrame {
         getContentPane().add(jBtnDescartar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 340, -1, -1));
 
         jLstBandeja.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        jLstBandeja.setComponentPopupMenu(jPopupMenu1);
         jScrollPane1.setViewportView(jLstBandeja);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 460, 230));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
         jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 500));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 390));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -121,6 +142,50 @@ public class BandejaES extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jBtnDescartarActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        
+        String[] Campos = jLstBandeja.getSelectedValue().split("\\|");
+        
+        if (this.Bandeja.equals("Entrada"))
+        {
+            try 
+            {
+                EnviarMensaje Mensaje = new EnviarMensaje("Correo Recibido", this.Usuario, this.Rol,
+                        procesos.EliminarCaracteres(Campos[0]), procesos.EliminarCaracteres(Campos[1]), 
+                        procesos.EliminarCaracteres(Campos[2]));
+                Mensaje.setLocationRelativeTo(null);
+                Mensaje.show();
+                this.dispose();
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(BandejaES.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else
+        {
+            try 
+            {
+                EnviarMensaje Mensaje = new EnviarMensaje("Correo Enviado", this.Usuario, this.Rol,
+                        procesos.EliminarCaracteres(Campos[0]), procesos.EliminarCaracteres(Campos[1]), 
+                        procesos.EliminarCaracteres(Campos[2]));
+                Mensaje.setLocationRelativeTo(null);
+                Mensaje.show();
+                this.dispose();
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(BandejaES.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // Eliminar
+        JOptionPane.showMessageDialog(null, "Aca se debe de Eliminar");
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -226,6 +291,9 @@ public class BandejaES extends javax.swing.JFrame {
     private javax.swing.JButton jBtnDescartar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jLstBandeja;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBandeja;
     // End of variables declaration//GEN-END:variables

@@ -57,10 +57,31 @@ public class EnviarMensaje extends javax.swing.JFrame {
     }
     
     // CONSTRUCTOR
-    public EnviarMensaje(String usuario, String rol, String Para, String Asutno, String Mensaje) throws IOException {
+    public EnviarMensaje(String Encabezado, String usuario, String rol, String Para, String Asutno, String Fecha) throws IOException {
         initComponents();
         
+        lblEncabezado.setText(Encabezado);
         
+        if(Encabezado.equals("Correo Recibido"))
+        {
+            jLblPara.setText("De");
+        }
+        
+        jCBDestinatario.enable(false);
+        jTFAsunto.enable(false);
+        jTAMensaje.enable(false);
+        
+        this.Usuario = usuario;
+        this.Rol = rol;
+                
+        jCBDestinatario.removeItemAt(0);
+        jCBDestinatario.addItem(Para);
+        
+        jTFAsunto.setText(Asutno);
+        jTAMensaje.setText(ObtenerMensaje(this.Usuario, Para, Fecha));
+        
+        jBtnDescartar.hide();
+        jBtnEnviar.setText("Regresar");
     }
     
     // CONSTRUCTOR
@@ -79,7 +100,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
         jTFAsunto = new javax.swing.JTextField();
         jBtnAdjuntar = new javax.swing.JButton();
         jCBDestinatario = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
+        jLblPara = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTAMensaje = new javax.swing.JTextArea();
         jBtnEnviar = new javax.swing.JButton();
@@ -118,10 +139,10 @@ public class EnviarMensaje extends javax.swing.JFrame {
         jCBDestinatario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -" }));
         getContentPane().add(jCBDestinatario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 410, -1));
 
-        jLabel3.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Para");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
+        jLblPara.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        jLblPara.setForeground(new java.awt.Color(255, 255, 255));
+        jLblPara.setText("Para");
+        getContentPane().add(jLblPara, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         jTAMensaje.setColumns(20);
         jTAMensaje.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
@@ -175,6 +196,37 @@ public class EnviarMensaje extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnDescartarActionPerformed
 
     private void jBtnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnviarActionPerformed
+        if (lblEncabezado.getText().equals("Correo Recibido"))
+        {
+            try 
+            {
+                BandejaES BandejaEntrada = new BandejaES("Entrada", this.Usuario, this.Rol);
+                BandejaEntrada.setLocationRelativeTo(null);
+                BandejaEntrada.show();
+                this.dispose();
+                return;
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if(lblEncabezado.getText().equals("Correo Enviado"))
+        {
+            try 
+            {
+                BandejaES BandejaEntrada = new BandejaES("Salida", this.Usuario, this.Rol);
+                BandejaEntrada.setLocationRelativeTo(null);
+                BandejaEntrada.show();
+                this.dispose();
+                return;
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         String Para = jCBDestinatario.getSelectedItem().toString();
         String Asunto = jTFAsunto.getText();
         String Mensaje = jTAMensaje.getText();
@@ -684,6 +736,28 @@ public class EnviarMensaje extends javax.swing.JFrame {
         Leer.close();
         ArchivoSustitucion.close();
     }
+    
+    private String ObtenerMensaje(String De, String Para, String Fecha) throws FileNotFoundException, IOException
+    {
+        String pathRuta = "C:\\MEIA\\ArbolMensajes.txt";
+        File Archivo = new File(pathRuta);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        
+        while(Linea != null)
+        {
+            if (Linea.contains(De) && Linea.contains(Para) && Linea.contains(Fecha))
+            {
+                String[] Row = Linea.split("\\|");
+                return Row[6];
+            }
+            
+            Linea = leerArchivo.readLine();
+        }
+        
+        return "";
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -693,8 +767,8 @@ public class EnviarMensaje extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCBDestinatario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLblPara;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTAMensaje;
     private javax.swing.JTextField jTFAsunto;
