@@ -18,7 +18,6 @@ import java.sql.Statement;
 public class BDD {
     
     //DEBEN LLAMAR A LA INSTANCIA DE BASE DE DATOS DESDE SU FORMULARIO DE LOGIN, EJEMPLO: BDD.getInstancia.conexion();
-    
     private static BDD instancia;
     private static Connection ConexionP; 
     private static Connection Conexion;
@@ -54,8 +53,8 @@ public class BDD {
     }
     
     //MODIFICAR
-    public void Insert(int grupoEmisor,int grupoReceptor, String emisor, String receptor, String Asunto, String mensaje, boolean Recibido, boolean Existente, boolean Confirmado ) throws SQLException{
-        String sql = "INSERT INTO solicitud(grupoEmisor, grupoReceptor,emisor, receptor, fecha, asunto, mensaje, recibido, existente, confirmado) VALUES(" + grupoEmisor + " ," + grupoReceptor + ", '" + emisor + "','" + receptor + Asunto + "',current_timestamp,'" + mensaje + Recibido + Existente + Confirmado +"', false)";    
+    public void Insert(int grupoemisor,int gruporeceptor, String emisor, String receptor, String asunto, String mensaje) throws SQLException{
+        String sql = "INSERT INTO solicitud(grupoemisor, gruporeceptor, emisor, receptor, fecha, asunto, mensaje, aceptado) VALUES(" + grupoemisor + " ," + gruporeceptor + ", '" + emisor + "','" + receptor + "',current_timestamp,'" + asunto +"','"+mensaje +"', false)";    
         stmt.executeUpdate(sql);        
     }
     
@@ -67,6 +66,7 @@ public class BDD {
         }
     }
     
+    //NO ES NECESARIO UTILIZAR ESTA PARTE
     public void Delete(String id) throws SQLException{
         stmt.executeUpdate("DELETE FROM solicitud WHERE idSolicitud = " + id);
     }
