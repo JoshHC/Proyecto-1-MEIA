@@ -4,10 +4,9 @@
  * and open the template in the editor.
  */
 package proyecto_meia;
-
 /**
  *
- * @author josue
+ * @author Josue Higueros
  */
 
 import java.sql.Connection;
@@ -43,28 +42,29 @@ public class Listener extends Thread {
                 rs.close();
                 stmt.close();
 
-	       //recibe las notificaciones de JDBC
+	       //Recibe las notificaciones de JDBC
                 org.postgresql.PGNotification notifications[] = pgconn.getNotifications();
                 if (notifications != null) {
                     for (int i=0; i<notifications.length; i++) {
-                        //Descomponer el json que accion es en esta parte notifications[i] es cada una de las notificaciones de postgresql 
-                        String action = "";
+                        //Aca se recibe cada una de las notificaciones de Postgresql notifications[i] para luego descomponer el json que se recibe
+                        String parameter = notifications[i].getParameter().replace("\\","");
+                        String action = parameter.split("\\{")[1].split(",")[1].split(":")[1].substring(2,8);   
                                           
                         if(action.equals("INSERT")){
-                            //comprobar si es para mi
-                            
-                            id = "";
-                            GrupoReceptor = "";
-                            GrupoEmisor = "";                           
+                        //Se comprueba si el correo es para mi
+                            id = parameter.split("\\{")[2].replace("}","").split(",")[0].split(":")[1];
+                            GrupoEmisor = parameter.split("\\{")[2].replace("}","").split(",")[1].split(":")[1];  
+                            GrupoReceptor = parameter.split("\\{")[2].replace("}","").split(",")[2].split(":")[1];                 
                             boolean existe = false;
                             
                             if(GrupoReceptor.equals("1")){
-                                //si es para mi enviar el update con la respuesta
-                                BDD.getInstancia().setMensaje("El grupo " + GrupoReceptor + " te ha enviado un mensaje." );
+                                //si es para mi se envia el update con la respuesta
+                                BDD.getInstancia().setMensaje("El Grupo " + GrupoReceptor + " te ha enviado un Correo." );
                                 Not = new Notificacion();
                                 Not.setVisible(true);
                              
                                 //si es para mi enviar el update con la respuesta de que el usuario existe
+                                //Deben de validar cada uno si el usuario existe o no en su ordenador y enviar la respuesta de esta forma al servidor
                                 if(existe){
                                     BDD.getInstancia().Update(id, existe);
                                 }else{
@@ -76,30 +76,32 @@ public class Listener extends Thread {
                             
                             //comprobar si yo fui el que envie la solicitud
                             //Descomponer id, grupo emisor y grupo receptor en esta parte
-                            id = "";
-                            GrupoEmisor = "";
-                            GrupoReceptor = "";
+                            id = parameter.split("\\{")[2].replace("}","").split(",")[0].split(":")[1];
+                            GrupoEmisor = parameter.split("\\{")[2].replace("}","").split(",")[1].split(":")[1];
+                            GrupoReceptor = parameter.split("\\{")[2].replace("}","").split(",")[2].split(":")[1];
                             
+                            //Aca deben de colocar su numero de Grupo 
                             if(GrupoEmisor.equals("1")){
-								 //comprobar si el update fue true or false descomponiendo el json
-								 String respuesta = "";
-								 //Comprobar cual fue la respuesta
-								 if(respuesta.equals("false")){
-									BDD.getInstancia().setMensaje("El grupo " + GrupoReceptor + " no encontro el usuario." );
-									Not = new Notificacion();
-									Not.setVisible(true);
-								 }else{
-									BDD.getInstancia().setMensaje("El grupo " + GrupoReceptor + " ha recibido el mensaje." );
-									Not = new Notificacion();
-									Not.setVisible(true);
-								 }
-								 //Eliminar la solicitud
-								 BDD.getInstancia().Delete(id);
+				
+                                String respuesta = parameter.split("\\{")[2].replace("}","").split(",")[7].split(":")[1];
+                                 //Comprobar cual fue la respuesta
+                                 if(respuesta.equals("false")){
+                                    BDD.getInstancia().setMensaje("El grupo " + GrupoReceptor + " no ha encontrado el usuario al cual enviaste el correo." );
+                                    Not = new Notificacion();
+                                    Not.setVisible(true);
+                                 }else{
+                                    BDD.getInstancia().setMensaje("El grupo " + GrupoReceptor + " ha recibido el mensaje." );
+                                    Not = new Notificacion();
+                                    Not.setVisible(true);
+                                 }
+                                 
+                                 //Para Eliminar la solicitud
+                                 BDD.getInstancia().Delete(id);
                             }
                         }                                             
                     }
                 }
-                //Espera para la siguiente notifiacion
+            //Espera para la siguiente Notificacion
                 Thread.sleep(500);
             } catch (SQLException | InterruptedException sqle) {
                     sqle.printStackTrace();

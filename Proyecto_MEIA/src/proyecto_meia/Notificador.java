@@ -10,8 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-
-//Desde aqui se manda la Notificacion, la Alerta
+/*Desde aca se manda la Alerta*/
 public class Notificador extends Thread {
 
     private Connection C1;
