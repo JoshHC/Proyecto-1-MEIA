@@ -23,6 +23,10 @@ public class Listener extends Thread {
     private String id;
     private String GrupoReceptor;
     private String GrupoEmisor;
+    private String Receptor;
+    private String Emisor;
+    private String Asunto;
+    private String Mensaje;
     private Notificacion Not;  
 
     Listener(Connection conn) throws SQLException {
@@ -54,7 +58,11 @@ public class Listener extends Thread {
                         //Se comprueba si el correo es para mi
                             id = parameter.split("\\{")[2].replace("}","").split(",")[0].split(":")[1];
                             GrupoEmisor = parameter.split("\\{")[2].replace("}","").split(",")[1].split(":")[1];  
-                            GrupoReceptor = parameter.split("\\{")[2].replace("}","").split(",")[2].split(":")[1];                 
+                            GrupoReceptor = parameter.split("\\{")[2].replace("}","").split(",")[2].split(":")[1];
+                            Emisor = parameter.split("\\{")[2].replace("}","").split(",")[3].split(":")[1];
+                            Receptor = parameter.split("\\{")[2].replace("}","").split(",")[4].split(":")[1];
+                            Asunto = parameter.split("\\{")[2].replace("}","").split(",")[6].split(":")[1];
+                            Mensaje = parameter.split("\\{")[2].replace("}","").split(",")[7].split(":")[1];
                             boolean existe = false;
                             
                             if(GrupoReceptor.equals("1")){
@@ -63,6 +71,8 @@ public class Listener extends Thread {
                                 Not = new Notificacion();
                                 Not.setVisible(true);
                              
+                                //ACA USTEDES DEBEN GESTIONAR A DONDE ENVIAR LOS DATOS OBTENIDOS DE LA NOTIFICACION PARA MOSTRARLOS EN LA BANDEJA DE ENTRADA
+                                
                                 //si es para mi enviar el update con la respuesta de que el usuario existe
                                 //Deben de validar cada uno si el usuario existe o no en su ordenador y enviar la respuesta de esta forma al servidor
                                 if(existe){
@@ -79,6 +89,10 @@ public class Listener extends Thread {
                             id = parameter.split("\\{")[2].replace("}","").split(",")[0].split(":")[1];
                             GrupoEmisor = parameter.split("\\{")[2].replace("}","").split(",")[1].split(":")[1];
                             GrupoReceptor = parameter.split("\\{")[2].replace("}","").split(",")[2].split(":")[1];
+                            Emisor = parameter.split("\\{")[2].replace("}","").split(",")[3].split(":")[1];
+                            Receptor = parameter.split("\\{")[2].replace("}","").split(",")[4].split(":")[1];
+                            Asunto = parameter.split("\\{")[2].replace("}","").split(",")[6].split(":")[1];
+                            Mensaje = parameter.split("\\{")[2].replace("}","").split(",")[7].split(":")[1];
                             
                             //Aca deben de colocar su numero de Grupo 
                             if(GrupoEmisor.equals("1")){
@@ -95,7 +109,7 @@ public class Listener extends Thread {
                                     Not.setVisible(true);
                                  }
                                  
-                                 //Para Eliminar la solicitud
+                                 //Para Eliminar la solicitud (NO ES NECESARIO, OPCIONAL)
                                  BDD.getInstancia().Delete(id);
                             }
                         }                                             

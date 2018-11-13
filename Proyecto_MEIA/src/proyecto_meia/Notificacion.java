@@ -14,7 +14,7 @@ import net.sf.jcarrierpigeon.WindowPosition;
 
 /**
  *
- * @author Derek
+ * @author Josue Higueros
  */
 public class Notificacion extends javax.swing.JFrame {
 
