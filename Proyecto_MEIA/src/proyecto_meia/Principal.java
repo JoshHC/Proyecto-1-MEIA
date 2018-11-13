@@ -9,31 +9,19 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import static proyecto_meia.Nuevo_Usuario.fichero;
 import org.apache.commons.io.FileUtils;
-import static proyecto_meia.Modificacion_De_Listas.ContadorListaIndizada;
-import static proyecto_meia.Modificacion_De_Listas.Usuario;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -44,6 +32,8 @@ public class Principal extends javax.swing.JFrame {
     
     public Principal(String Usuario, String Rol) throws IOException {
         initComponents();
+        
+        
         
         if(Rol.equals(""))
             this.Rol = Rol;
@@ -62,6 +52,12 @@ public class Principal extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private void ConexionBD()
+    {
+        
+       
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -552,6 +548,7 @@ public class Principal extends javax.swing.JFrame {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+       ConexionBD();
     }//GEN-LAST:event_btnBandejaEntradaActionPerformed
 
     private void btnBandejaEnviadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBandejaEnviadosActionPerformed
