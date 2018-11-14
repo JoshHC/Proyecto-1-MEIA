@@ -100,7 +100,7 @@ public class EnviarMensajeRed extends javax.swing.JFrame {
                 jCBDestinatarioActionPerformed(evt);
             }
         });
-        getContentPane().add(jCBDestinatario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 40, -1));
+        getContentPane().add(jCBDestinatario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 50, -1));
 
         jTFAsunto.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
         jTFAsunto.addActionListener(new java.awt.event.ActionListener() {
@@ -175,9 +175,9 @@ public class EnviarMensajeRed extends javax.swing.JFrame {
     private void jBtnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnviarActionPerformed
 
        int idGrupoReceptor = Integer.parseInt(jCBDestinatario.getSelectedItem().toString());
-       String Receptor = txtNombre.toString();
-       String Asunto = jTFAsunto.toString();
-       String Mensaje = jTAMensaje.toString();
+       String Receptor = txtNombre.getText();
+       String Asunto = jTFAsunto.getText();
+       String Mensaje = jTAMensaje.getText();
        Date Fecha = new Date();
        
         try {
