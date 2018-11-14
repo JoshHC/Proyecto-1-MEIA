@@ -82,6 +82,9 @@ public class Listener extends Thread {
                                 }else{
                                     existe = true;
                                     BDD.getInstancia().Update(id, existe);
+                                    Emisor = Emisor.replaceAll("\"", "");
+                                    Asunto = Asunto.replaceAll("\"", "");
+                                    Mensaje = Mensaje.replaceAll("\"", "");
                                     EnviarMensaje Nuevo = new EnviarMensaje("UsuarioRed",Emisor,"Administrador");
                                     Nuevo.EnviarPersona(Receptor, Asunto, Mensaje);        
                                 }                                        
@@ -114,6 +117,10 @@ public class Listener extends Thread {
                                     Not.setVisible(true);
                                     //Se Arma el correo y se inserta en la bandeja de salida
                                     Date Fecha = new Date();
+                                    Emisor = Emisor.replaceAll("\"", "");
+                                    Asunto = Asunto.replaceAll("\"", "");
+                                    Mensaje = Mensaje.replaceAll("\"", "");
+                                    Receptor = Receptor.replaceAll("\"", "");
                                     EnviarMensaje Nuevo = new EnviarMensaje("UsuarioRed",Emisor,"Administrador");
                                     Nuevo.EnviarPersona(Receptor, Asunto, Mensaje);
                                  }
