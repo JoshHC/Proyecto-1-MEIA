@@ -82,8 +82,8 @@ public class Listener extends Thread {
                                 }else{
                                     existe = true;
                                     BDD.getInstancia().Update(id, existe);
-                                    Correo Nuevo = new Correo("  ", "  ", Emisor, Receptor,Fecha.toString(),Asunto,Mensaje," "," ");
-                                    //Insertar el Correo a la Bandeja de Entrada
+                                    EnviarMensaje Nuevo = new EnviarMensaje("UsuarioRed",Emisor,"Administrador");
+                                    Nuevo.EnviarPersona(Receptor, Asunto, Mensaje);        
                                 }                                        
                             }
                         }else{
@@ -114,7 +114,8 @@ public class Listener extends Thread {
                                     Not.setVisible(true);
                                     //Se Arma el correo y se inserta en la bandeja de salida
                                     Date Fecha = new Date();
-                                    Correo Nuevo = new Correo("  ", "  ", Emisor, Receptor,Fecha.toString(),Asunto,Mensaje," "," ");
+                                    EnviarMensaje Nuevo = new EnviarMensaje("UsuarioRed",Emisor,"Administrador");
+                                    Nuevo.EnviarPersona(Receptor, Asunto, Mensaje);
                                  }
                                  
                                  //Para Eliminar la solicitud (NO ES NECESARIO, OPCIONAL)
