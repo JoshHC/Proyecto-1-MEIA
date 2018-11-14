@@ -313,7 +313,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFAsuntoActionPerformed
 
-    private void EnviarPersona(String Para, String Asunto, String Mensaje)
+    public void EnviarPersona(String Para, String Asunto, String Mensaje)
     {
         try
         {
