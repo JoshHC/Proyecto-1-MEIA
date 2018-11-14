@@ -5,10 +5,12 @@ package proyecto_meia;
  * @author Josue Higueros
  */
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,7 +28,7 @@ public class Listener extends Thread {
     private Notificacion Not;  
 
     Listener(Connection conn) throws SQLException {
-		this.Conexion = conn;
+                this.Conexion = conn;
 		this.pgconn = (org.postgresql.PGConnection)conn;
 		Statement stmt = conn.createStatement();
 		stmt.execute("LISTEN q_event");
@@ -67,14 +69,21 @@ public class Listener extends Thread {
                                 Not = new Notificacion();
                                 Not.setVisible(true);
                              
+                                Receptor = Receptor.replaceAll("\"", "");
+                                Procesos Funciones = new Procesos();
+                                String Validacion = Funciones.EncontrarUsuario(Receptor);
+                                Date Fecha = new Date();
                                 //ACA USTEDES DEBEN GESTIONAR A DONDE ENVIAR LOS DATOS OBTENIDOS DE LA NOTIFICACION PARA MOSTRARLOS EN LA BANDEJA DE ENTRADA
-                                
                                 //si es para mi enviar el update con la respuesta de que el usuario existe
                                 //Deben de validar cada uno si el usuario existe o no en su ordenador y enviar la respuesta de esta forma al servidor
-                                if(existe){
+                                if(Validacion.equals("No Existe")){
+                                    existe = false;
                                     BDD.getInstancia().Update(id, existe);
                                 }else{
+                                    existe = true;
                                     BDD.getInstancia().Update(id, existe);
+                                    Correo Nuevo = new Correo("  ", "  ", Emisor, Receptor,Fecha.toString(),Asunto,Mensaje," "," ");
+                                    //Insertar el Correo a la Bandeja de Entrada
                                 }                                        
                             }
                         }else{
@@ -103,6 +112,9 @@ public class Listener extends Thread {
                                     BDD.getInstancia().setMensaje("El grupo " + GrupoReceptor + " ha recibido el mensaje." );
                                     Not = new Notificacion();
                                     Not.setVisible(true);
+                                    //Se Arma el correo y se inserta en la bandeja de salida
+                                    Date Fecha = new Date();
+                                    Correo Nuevo = new Correo("  ", "  ", Emisor, Receptor,Fecha.toString(),Asunto,Mensaje," "," ");
                                  }
                                  
                                  //Para Eliminar la solicitud (NO ES NECESARIO, OPCIONAL)
@@ -116,6 +128,8 @@ public class Listener extends Thread {
             } catch (SQLException | InterruptedException sqle) {
                     sqle.printStackTrace();
             } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(Listener.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
