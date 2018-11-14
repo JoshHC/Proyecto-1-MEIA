@@ -639,12 +639,23 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblFondoMouseClicked
 
     private void btnEnviarRedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarRedActionPerformed
-        EnviarMensajeRed enviarMensaje;
         
-        enviarMensaje = new EnviarMensajeRed(this.Usuario, this.Rol);
-        enviarMensaje.setLocationRelativeTo(null);
-        enviarMensaje.show();
-        this.dispose();
+        try 
+        {
+            EnviarMensajeRed enviarMensaje = new EnviarMensajeRed(this.Usuario, this.Rol);
+            enviarMensaje.setLocationRelativeTo(null);
+            enviarMensaje.show();
+            this.dispose();
+        } 
+        catch (ClassNotFoundException ex) 
+        {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
     }//GEN-LAST:event_btnEnviarRedActionPerformed
 
