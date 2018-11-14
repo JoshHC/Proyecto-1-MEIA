@@ -189,6 +189,19 @@ public class EnviarMensajeRed extends javax.swing.JFrame {
         }
         
         JOptionPane.showMessageDialog(null, "El Correo Ha Sido Enviado");
+        
+        try 
+        {
+            Principal Menu = new Principal(this.Usuario, this.Rol);
+            Menu.setLocationRelativeTo(null);
+            Menu.show();
+            this.dispose();
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(EnviarMensajeRed.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jBtnEnviarActionPerformed
 
     private void jBtnDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDescartarActionPerformed
