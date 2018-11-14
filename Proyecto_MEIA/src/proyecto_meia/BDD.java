@@ -28,8 +28,8 @@ public class BDD {
         if(instancia == null){
             instancia = new BDD();
             Class.forName("org.postgresql.Driver");
-            ConexionP = DriverManager.getConnection("jdbc:postgresql://elmer.db.elephantsql.com:5432/hhcqazfe", "hhcqazfe", "IKl7cEQJItZ5qHuVkW9piuexcAn-v8TU");
-            Conexion = DriverManager.getConnection("jdbc:postgresql://elmer.db.elephantsql.com:5432/hhcqazfe", "hhcqazfe", "IKl7cEQJItZ5qHuVkW9piuexcAn-v8TU");
+            ConexionP = DriverManager.getConnection("jdbc:postgresql://pellefant.db.elephantsql.com:5432/zukrpshu", "zukrpshu", "6JrLoCHHOKEDVAuAqLpm-GYFepB0X7s0");
+            Conexion = DriverManager.getConnection("jdbc:postgresql://pellefant.db.elephantsql.com:5432/zukrpshu", "zukrpshu", "6JrLoCHHOKEDVAuAqLpm-GYFepB0X7s0");
             stmt = ConexionP.createStatement();
             DriverManager.setLogWriter(new PrintWriter(System.out, true));            
             Listener listener = new Listener(ConexionP);

@@ -94,6 +94,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         lblEncabezado = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -107,6 +108,9 @@ public class EnviarMensaje extends javax.swing.JFrame {
         jBtnDescartar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
+        jCheckBoxMenuItem1.setSelected(true);
+        jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Enviar Mensaje");
         setAutoRequestFocus(false);
@@ -116,7 +120,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
         lblEncabezado.setForeground(new java.awt.Color(255, 255, 255));
         lblEncabezado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblEncabezado.setText("Enviar Mensaje");
-        getContentPane().add(lblEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        getContentPane().add(lblEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 10, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -129,14 +133,29 @@ public class EnviarMensaje extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
 
         jTFAsunto.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
+        jTFAsunto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTFAsuntoActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTFAsunto, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 570, -1));
 
         jBtnAdjuntar.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
         jBtnAdjuntar.setText("Adjuntar Archivo");
+        jBtnAdjuntar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnAdjuntarActionPerformed(evt);
+            }
+        });
         getContentPane().add(jBtnAdjuntar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 80, -1, -1));
 
         jCBDestinatario.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
         jCBDestinatario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -" }));
+        jCBDestinatario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBDestinatarioActionPerformed(evt);
+            }
+        });
         getContentPane().add(jCBDestinatario, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 410, -1));
 
         jLblPara.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
@@ -172,117 +191,127 @@ public class EnviarMensaje extends javax.swing.JFrame {
         getContentPane().add(jBtnDescartar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, -1, -1));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proyecto_meia/Fondo1.png"))); // NOI18N
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 700, 410));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 410));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBtnDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDescartarActionPerformed
-        
-        Principal Menu;
-        
-        try 
-        { 
-            Menu = new Principal(Usuario, Rol);
-            Menu.setLocationRelativeTo(null);
-            Menu.show();
-            this.dispose();
-        } 
-        catch (IOException ex) 
-        {
-            Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }//GEN-LAST:event_jBtnDescartarActionPerformed
-
     private void jBtnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnviarActionPerformed
         if (lblEncabezado.getText().equals("Correo Recibido"))
         {
-            try 
+            try
             {
                 BandejaES BandejaEntrada = new BandejaES("Entrada", this.Usuario, this.Rol);
                 BandejaEntrada.setLocationRelativeTo(null);
                 BandejaEntrada.show();
                 this.dispose();
                 return;
-            } 
-            catch (IOException ex) 
+            }
+            catch (IOException ex)
             {
                 Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else if(lblEncabezado.getText().equals("Correo Enviado"))
         {
-            try 
+            try
             {
                 BandejaES BandejaEntrada = new BandejaES("Salida", this.Usuario, this.Rol);
                 BandejaEntrada.setLocationRelativeTo(null);
                 BandejaEntrada.show();
                 this.dispose();
                 return;
-            } 
-            catch (IOException ex) 
+            }
+            catch (IOException ex)
             {
                 Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         String Para = jCBDestinatario.getSelectedItem().toString();
         String Asunto = jTFAsunto.getText();
         String Mensaje = jTAMensaje.getText();
-        
+
         if (Mensaje.length() > 200)
         {
             JOptionPane.showMessageDialog(this,"El mensaje que intentas enviar es muy largo","      Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         if (Asunto.length() > 20)
         {
             JOptionPane.showMessageDialog(this,"El asunto del mensaje que intentas enviar es muy largo","      Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         if(Destinatario.equals("Usuario"))
         {
-            try 
+            try
             {
                 EnviarPersona(Para, Asunto, Mensaje);
-            
-                JOptionPane.showMessageDialog(this,"El correo ha sido enviado", "Envío Exitoso", JOptionPane.INFORMATION_MESSAGE);        
+
+                JOptionPane.showMessageDialog(this,"El correo ha sido enviado", "Envío Exitoso", JOptionPane.INFORMATION_MESSAGE);
 
                 Principal Menu = new Principal(Usuario, Rol);
                 Menu.setLocationRelativeTo(null);
                 Menu.show();
                 this.dispose();
-                
-            } 
-            catch (IOException ex) 
+
+            }
+            catch (IOException ex)
             {
                 Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else
         {
-            try 
+            try
             {
                 EnviarLista(Para, Asunto, Mensaje);
-                
-                JOptionPane.showMessageDialog(this,"Los correos han sido enviados", "Envío Exitoso", JOptionPane.INFORMATION_MESSAGE);        
+
+                JOptionPane.showMessageDialog(this,"Los correos han sido enviados", "Envío Exitoso", JOptionPane.INFORMATION_MESSAGE);
 
                 Principal Menu = new Principal(Usuario, Rol);
                 Menu.setLocationRelativeTo(null);
                 Menu.show();
                 this.dispose();
-            } 
-            catch (IOException ex) 
+            }
+            catch (IOException ex)
             {
                 Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-            
-
     }//GEN-LAST:event_jBtnEnviarActionPerformed
+
+    private void jBtnDescartarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnDescartarActionPerformed
+
+        Principal Menu;
+
+        try
+        {
+            Menu = new Principal(Usuario, Rol);
+            Menu.setLocationRelativeTo(null);
+            Menu.show();
+            this.dispose();
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jBtnDescartarActionPerformed
+
+    private void jCBDestinatarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBDestinatarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBDestinatarioActionPerformed
+
+    private void jBtnAdjuntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAdjuntarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnAdjuntarActionPerformed
+
+    private void jTFAsuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFAsuntoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTFAsuntoActionPerformed
 
     private void EnviarPersona(String Para, String Asunto, String Mensaje)
     {
@@ -765,6 +794,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
     private javax.swing.JButton jBtnDescartar;
     private javax.swing.JButton jBtnEnviar;
     private javax.swing.JComboBox<String> jCBDestinatario;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
