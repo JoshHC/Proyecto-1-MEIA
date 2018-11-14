@@ -37,7 +37,13 @@ public class Principal extends javax.swing.JFrame {
     public Principal(String Usuario, String Rol) throws IOException {
         initComponents();
         
-        
+        try {
+            BDD.getInstancia().conexion();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EnviarMensajeRed.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(EnviarMensajeRed.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         if(Rol.equals(""))
             this.Rol = Rol;

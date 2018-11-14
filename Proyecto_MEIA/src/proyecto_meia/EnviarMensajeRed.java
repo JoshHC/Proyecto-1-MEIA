@@ -37,6 +37,13 @@ public class EnviarMensajeRed extends javax.swing.JFrame {
         initComponents();
         this.Usuario = usuario;
         this.Rol = rol;
+        try {
+            BDD.getInstancia().conexion();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EnviarMensajeRed.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(EnviarMensajeRed.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private EnviarMensajeRed() {

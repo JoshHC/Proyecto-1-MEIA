@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +44,14 @@ public class EnviarMensaje extends javax.swing.JFrame {
     public EnviarMensaje(String destinatario, String usuario, String rol) throws IOException {
         initComponents();
         
+        try {
+            BDD.getInstancia().conexion();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EnviarMensajeRed.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(EnviarMensajeRed.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         lblEncabezado.setText("Enviar Mensaje");
         
         this.Destinatario = destinatario;
@@ -59,6 +68,14 @@ public class EnviarMensaje extends javax.swing.JFrame {
     // CONSTRUCTOR
     public EnviarMensaje(String Encabezado, String usuario, String rol, String Para, String Asutno, String Fecha) throws IOException {
         initComponents();
+        
+        try {
+            BDD.getInstancia().conexion();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EnviarMensajeRed.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(EnviarMensajeRed.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         lblEncabezado.setText(Encabezado);
         
