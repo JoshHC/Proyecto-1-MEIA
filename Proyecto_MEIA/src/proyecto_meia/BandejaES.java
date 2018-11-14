@@ -235,7 +235,7 @@ public class BandejaES extends javax.swing.JFrame {
         while (Row != null)
         {
             if (procesos.EliminarCaracteres(Linea[3]).equals(this.Usuario))
-                CorreosRecibidos.addElement(Linea[3] +"|"+ Linea[5] +"|"+ Linea[4]);
+                CorreosRecibidos.addElement(Linea[2] +"|"+ Linea[5] +"|"+ Linea[4]);
             
             try
             {
