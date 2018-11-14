@@ -33,8 +33,10 @@ public class EnviarMensajeRed extends javax.swing.JFrame {
     private String Usuario;
     private String Rol;
     
-    public EnviarMensajeRed(String usuario, String rol) {
+    public EnviarMensajeRed(String usuario, String rol) throws ClassNotFoundException, SQLException {
         initComponents();
+        
+        BDD.getInstancia().conexion();
         this.Usuario = usuario;
         this.Rol = rol;
     }

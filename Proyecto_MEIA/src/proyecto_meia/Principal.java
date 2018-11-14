@@ -606,7 +606,7 @@ public class Principal extends javax.swing.JFrame {
         
         try 
         {
-            enviarMensaje = new EnviarMensaje("Usuario", Usuario, Rol);
+            enviarMensaje = new EnviarMensaje("Usuario", this.Usuario, this.Rol);
             enviarMensaje.setLocationRelativeTo(null);
             enviarMensaje.show();
             this.dispose();
@@ -633,7 +633,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_lblFondoMouseClicked
 
     private void btnEnviarRedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarRedActionPerformed
-        // TODO add your handling code here:
+        EnviarMensajeRed enviarMensaje;
+        
+        enviarMensaje = new EnviarMensajeRed(this.Usuario, this.Rol);
+        enviarMensaje.setLocationRelativeTo(null);
+        enviarMensaje.show();
+        this.dispose();
+        
     }//GEN-LAST:event_btnEnviarRedActionPerformed
 
     private void ReasignarIndices() throws FileNotFoundException, IOException
