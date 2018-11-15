@@ -1440,5 +1440,10 @@ public class Procesos {
 
     }
     
+    public String ObtenerExtension(String Path)
+    {
+        String[] Bloques = Path.split("\\.");
+        return Bloques[Bloques.length - 1];
+    }
     
 }

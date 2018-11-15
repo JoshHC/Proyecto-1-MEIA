@@ -1,5 +1,7 @@
 package proyecto_meia;
 
+import java.awt.Desktop;
+import java.awt.Image;
 import java.awt.Menu;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -9,6 +11,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,7 +22,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.commons.io.FileUtils;
 import static proyecto_meia.Modificacion_De_Listas.NombreLista;
 
 /**
@@ -32,6 +41,9 @@ public class EnviarMensaje extends javax.swing.JFrame {
     private String Destinatario;
     private String Usuario;
     private String Rol;
+    
+    File Fichero;
+    String PathAdjuntoMEIA = "";
     
     private int InicioArbol;
     String[] Arbol;
@@ -84,15 +96,17 @@ public class EnviarMensaje extends javax.swing.JFrame {
             jLblPara.setText("De");
         }
         
-        jCBDestinatario.enable(false);
-        jTFAsunto.enable(false);
-        jTAMensaje.enable(false);
+        jCBDestinatario.setEditable(false);
+        jTFAsunto.setEditable(false);
+        jTAMensaje.setEditable(false);
         
         this.Usuario = usuario;
         this.Rol = rol;
                 
         jCBDestinatario.removeItemAt(0);
         jCBDestinatario.addItem(Para);
+        
+        jBtnAdjuntar.setText("Ver Adjunto");
         
         jTFAsunto.setText(Asutno);
         jTAMensaje.setText(ObtenerMensaje(this.Usuario, Para, Fecha));
@@ -214,6 +228,21 @@ public class EnviarMensaje extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnviarActionPerformed
+        if (Fichero != null)
+        {
+            PathAdjuntoMEIA = "C:\\MEIA\\Adjuntos\\" + ObtenerCantAdjuntos() + "." + procesos.ObtenerExtension(Fichero.getAbsolutePath());
+            File Destino = new File(PathAdjuntoMEIA);
+            
+            try 
+            {
+                FileUtils.copyFile(Fichero, Destino);
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         if (lblEncabezado.getText().equals("Correo Recibido"))
         {
             try
@@ -249,7 +278,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
         String Asunto = jTFAsunto.getText();
         String Mensaje = jTAMensaje.getText();
 
-        if (Mensaje.length() > 200)
+        if (Mensaje.length() > 80)
         {
             JOptionPane.showMessageDialog(this,"El mensaje que intentas enviar es muy largo","      Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -323,9 +352,44 @@ public class EnviarMensaje extends javax.swing.JFrame {
     }//GEN-LAST:event_jCBDestinatarioActionPerformed
 
     private void jBtnAdjuntarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAdjuntarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnAdjuntarActionPerformed
+        
+        if(lblEncabezado.getText().equals("Correo Recibido") || lblEncabezado.getText().equals("Correo Enviado"))
+        {
+            try 
+            {
+                File Adjunto = new File(PathAdjuntoMEIA);
+                Desktop.getDesktop().open(Adjunto);
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(EnviarMensaje.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return;
+        }
+        
+        int resultado;
+        
+        CargarFoto ventana = new CargarFoto();
+        resultado = ventana.jfchCargarFoto.showOpenDialog(null);
+        
+        if (JFileChooser.APPROVE_OPTION == resultado)
+        {
+            Fichero = ventana.jfchCargarFoto.getSelectedFile();
+            
+            JOptionPane.showMessageDialog(null, "El adjunto se ha cargado correctamente");
+        }
 
+    }//GEN-LAST:event_jBtnAdjuntarActionPerformed
+    
+    private int ObtenerCantAdjuntos()
+    {
+        String path = "C:\\MEIA\\Adjuntos";
+        File Carpeta = new File(path);
+        
+        File[] ListaElementos = Carpeta.listFiles();
+        return ListaElementos.length;
+    }
+    
     private void jTFAsuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFAsuntoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFAsuntoActionPerformed
@@ -347,12 +411,12 @@ public class EnviarMensaje extends javax.swing.JFrame {
             
             Para = procesos.RellenarCaracteres(Para, 0);
             Asunto = procesos.RellenarCaracteres(Asunto, 0);
-            Mensaje = procesos.RellenarCaracteres(Mensaje, 3);
+            Mensaje = procesos.RellenarCaracteres(Mensaje, 4);
             
             Correo Nuevo;
 
             Nuevo = new Correo("  ", "  ", Usuario, Para, Fecha.toString(), Asunto, Mensaje, 
-                    procesos.RellenarCaracteres("", 3), "1");
+                    procesos.RellenarCaracteres(PathAdjuntoMEIA, 1), "1");
             bw.write(Nuevo.Izq+"|"+Nuevo.Der+"|"+Nuevo.UsuarioEmisor+"|"+Nuevo.UsuarioReceptor+"|"+
                     Nuevo.FechaTransaccion+"|"+Nuevo.Asunto+"|"+Nuevo.Mensaje+"|"+Nuevo.Adjunto+"|"+Nuevo.Estatus);
             bw.write(System.lineSeparator());
@@ -796,6 +860,12 @@ public class EnviarMensaje extends javax.swing.JFrame {
             if (Linea.contains(De) && Linea.contains(Para) && Linea.contains(Fecha))
             {
                 String[] Row = Linea.split("\\|");
+                
+                if(Row[7].trim().equals(""))
+                    jBtnAdjuntar.setEnabled(false);
+                else
+                    PathAdjuntoMEIA = procesos.EliminarCaracteres(Row[7]);                    
+                
                 return Row[6];
             }
             
