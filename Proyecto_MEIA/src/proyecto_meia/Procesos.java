@@ -1282,7 +1282,7 @@ public class Procesos {
     }
     
     // DESCRIPTOR DEL ARCHIVO ARBOL
-    public void DescriptorArbolMensajes(Descriptor_ArbolMensajes Descriptor, boolean ModificarInicio, int NuevoInicio) throws IOException
+    public void DescriptorArbolMensajes(Descriptor_ArbolMensajes Descriptor) throws IOException
     {
         String pathRuta = "C:\\MEIA\\desc_ArbolMensajes.txt";
         File Archivo = new File(pathRuta);
@@ -1326,20 +1326,10 @@ public class Procesos {
             ArchivoSustitucion.readLine();
             Sustitucion = "Usuario que lo Modifico"+"|"+Descriptor.Usuario_Modificacion;
             ArchivoSustitucion.writeBytes(Sustitucion);
-            
+                        
             ArchivoSustitucion.readLine();
-            
-            if (ModificarInicio == true)
-            {
-                String InicioNuevo = Integer.toString(NuevoInicio);
-                
-                if(InicioNuevo.length() == 1)
-                    InicioNuevo = "0" + InicioNuevo;
-                
-                ArchivoSustitucion.readLine();
-                Sustitucion = "Registro de Inicio"+"|"+InicioNuevo;
-                ArchivoSustitucion.writeBytes(Sustitucion);
-            }
+            Sustitucion = "Registro de Inicio"+"|"+Descriptor.RegistrodeInicio;
+            ArchivoSustitucion.writeBytes(Sustitucion);
             
             ArchivoSustitucion.readLine();
             Sustitucion = "Numero de Registros"+"|"+Descriptor.NumerodeRegistros;
@@ -1354,6 +1344,64 @@ public class Procesos {
             ArchivoSustitucion.writeBytes(Sustitucion);
         }
         
+    }
+    
+    // Retorna cual es el inicio del Arbol
+    public String ObtenerInicioArbol() throws FileNotFoundException, IOException
+    {
+        String path = "C:\\MEIA\\ArbolMensajes.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        
+        List<String> Indices = new ArrayList<String>();
+         
+        int contElementos = 0;
+        
+        while (Linea != null)
+        {
+            String[] Row = Linea.split("\\|");
+            
+            String P0 = Row[0];
+            if (P0.length() < 2)
+                P0 = "0" + P0;
+            String P1 = Row[1];
+            if (P1.length() < 2)
+                P1 = "0" + P1;
+            
+            if (P0.equals("-1"))
+            {
+                String Aux = String.valueOf(contElementos +1);
+                
+                if (Aux.length() < 2)
+                    Aux = "0" + Aux;
+                
+                Indices.add(Aux);
+            }
+                
+            
+            if (!P0.equals("-1") && !P0.equals("  "))
+                Indices.add(P0);
+            if (!P1.equals("-1") && !P1.equals("  "))
+                Indices.add(P1);
+            
+            contElementos++;
+            Linea = leerArchivo.readLine();
+        }
+        
+        for(int i = 1; i <= contElementos; i++)
+        {
+            String j = String.valueOf(i);
+            
+            if(j.length() < 2)
+                j = "0" + j;
+            
+            if (!Indices.contains(j))
+                return j;
+        }
+        
+        return "";
     }
       
     public void Reorganizacion() throws FileNotFoundException, IOException

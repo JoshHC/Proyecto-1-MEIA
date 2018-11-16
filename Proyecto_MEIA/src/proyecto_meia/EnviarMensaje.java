@@ -425,7 +425,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
             Escritor.close();
             
             
-            DescriptorArbolMensajes(false);
+            DescriptorArbolMensajes();
             
             ObtenerIncio();
             ObtenerArbol();
@@ -648,9 +648,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
     }
     
     //método donde se crea el Descriptor del Arbol y se Actualiza
-    // TRUE SI SE MODIFICA EL VALOR DE INICIO
-    // FALSE SI NO
-    public void DescriptorArbolMensajes(boolean Desicion) throws FileNotFoundException, IOException
+    public void DescriptorArbolMensajes() throws FileNotFoundException, IOException
     {
         Date Fecha = new Date();
         String path = "C:\\MEIA\\ArbolMensajes.txt";
@@ -680,13 +678,10 @@ public class EnviarMensaje extends javax.swing.JFrame {
         leerArchivo.close();
         
         
-        Descriptor_ArbolMensajes Nuevo = new Descriptor_ArbolMensajes("ArbolMensajes",Fecha.toString(),Usuario,Fecha.toString(),Usuario,"01",Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
-        
-        if (!Desicion)
-            procesos.DescriptorArbolMensajes(Nuevo, false, 0);
-        else
-            // Alguna otra cosa, saber que
-            return;
+        String Inicio = procesos.ObtenerInicioArbol();
+        Descriptor_ArbolMensajes Nuevo = new Descriptor_ArbolMensajes("ArbolMensajes",Fecha.toString(),Usuario,Fecha.toString(),Usuario,Inicio,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+
+        procesos.DescriptorArbolMensajes(Nuevo);
     }
     
     private void ActualizarIndicesArbol(Correo Nuevo) throws IOException
@@ -847,7 +842,7 @@ public class EnviarMensaje extends javax.swing.JFrame {
         ArchivoSustitucion.close();
     }
     
-    private String ObtenerMensaje(String De, String Para, String Fecha) throws FileNotFoundException, IOException
+    public String ObtenerMensaje(String De, String Para, String Fecha) throws FileNotFoundException, IOException
     {
         String pathRuta = "C:\\MEIA\\ArbolMensajes.txt";
         File Archivo = new File(pathRuta);
