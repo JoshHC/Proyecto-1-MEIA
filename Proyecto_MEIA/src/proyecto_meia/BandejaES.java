@@ -198,7 +198,7 @@ public class BandejaES extends javax.swing.JFrame {
             
             EliminacionLogica(nEliminar);
             
-            JOptionPane.showMessageDialog(null, "Aca se debe de Eliminar");
+            JOptionPane.showMessageDialog(null, "Se ha eliminado el mensaje exitosamente", "Eliminacion Exitosa", JOptionPane.CLOSED_OPTION);
 
         } 
         catch (IOException ex) 

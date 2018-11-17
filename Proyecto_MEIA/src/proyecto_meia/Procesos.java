@@ -15,7 +15,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
 import static proyecto_meia.Nuevo_Usuario.fichero;
 
 /**
@@ -1494,4 +1497,115 @@ public class Procesos {
         return Bloques[Bloques.length - 1];
     }
     
+    public void ReorganizarArbol() throws IOException
+    {
+        List<String> ListArbol = ObtenerArbol();
+
+        int tamaño = ListArbol.size();
+        
+        String[] Arbol = new String[tamaño];
+        
+        for (int i = 0; i < tamaño; i++) {
+            Arbol[i] = ListArbol.remove(0);
+        }
+        
+        int cantEliminados = 0;
+        
+        for (int i = 0; i < Arbol.length; i++)
+        {
+            String[] Row = Arbol[i].split("\\|");
+            
+            if (!Row[0].equals("-1"))
+            {
+                Arbol[i - cantEliminados] = Arbol[i];
+                Arbol = ReemplazarSiguiente(Arbol, String.valueOf(i + 1), String.valueOf(i - cantEliminados + 1));
+            }
+            else
+            {
+                cantEliminados++;
+            }
+
+        }
+        
+        for (int i = (Arbol.length - cantEliminados); i < Arbol.length; i++)
+            Arbol[i] = "";
+        
+        ModificarArbol(Arbol);
+    }
+    
+    // Canbia el indice
+    // Donde encuentra el apuntador del que ya no está le pone el apuntador siguiente siguiente
+    // -> () ->
+    // ------->
+    private String[] ReemplazarSiguiente(String[] Arbol, String numero, String sustitucion) throws IOException
+    {
+        for (int i = 0; i < Arbol.length; i++)
+        {
+            String[] Row = Arbol[i].split("\\|");
+            
+            if(numero.length() < 2)
+                numero = "0" + numero;
+            if(sustitucion.length() < 2)
+                sustitucion = "0" + sustitucion;
+            
+            if (Row[0].equals(numero) || Row[1].equals(numero))
+            {
+                if (Row[0].equals(numero))
+                    Row[0] = sustitucion;
+                else if (Row[1].equals(numero))
+                    Row[1] = sustitucion;
+                
+                Arbol[i] =  Row[0] +"|"+ Row[1] +"|"+ Row[2] +"|"+ Row[3] +"|"+ Row[4] +"|"+ Row[5] +"|"+ 
+                        Row[6] +"|"+ Row[7] +"|"+ Row[8];
+                
+            }
+        }
+        
+        return Arbol;
+    }
+    
+    
+    private void ModificarArbol(String[] Arbol) throws FileNotFoundException, IOException
+    {
+        String pathRuta = "C:\\MEIA\\ArbolMensajes.txt";
+        File Archivo = new File(pathRuta);
+
+        FileOutputStream writer = new FileOutputStream(Archivo);
+        writer.write(("").getBytes());
+        writer.close();
+        
+        FileWriter Escritor = new FileWriter(Archivo,true);
+        BufferedWriter bw = new BufferedWriter(Escritor);
+
+        for (String line : Arbol)
+        {
+            if (!line.equals(""))
+                bw.write(line + System.lineSeparator());
+        }
+        
+        bw.close();
+        Escritor.close();
+    }
+    
+    private List<String> ObtenerArbol() throws FileNotFoundException, IOException
+    {
+        List<String> ListaArbol = new ArrayList<String>();
+        
+        String pathRuta = "C:\\MEIA\\ArbolMensajes.txt";
+        File Archivo = new File(pathRuta);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        
+        while (Linea != null)
+        {
+            ListaArbol.add(Linea);
+            Linea = leerArchivo.readLine();
+        }
+
+        Leer.close();
+        leerArchivo.close();
+        
+        return ListaArbol;
+    }
 }

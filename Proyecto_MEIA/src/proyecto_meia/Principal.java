@@ -498,18 +498,23 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         Nuevo_Usuario Actualizador = new Nuevo_Usuario();
-
+        
+        
         try 
         {
+            BandejaES Bandeja = new BandejaES("Entrada", this.Usuario, this.Rol);
+            
             procesos.Reorganizar();
             procesos.Reorganizacion();
+            procesos.ReorganizarArbol();
             
             Actualizador.DescriptorBitácora();
             Actualizador.DescriptorUsuario();
+            Bandeja.DescriptorArbolMensajes();
             
             ReasignarIndices();
             DescriptorListaIndizada();
-
+            
         } 
         catch (IOException ex) 
         {
