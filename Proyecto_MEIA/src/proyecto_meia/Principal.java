@@ -83,10 +83,12 @@ public class Principal extends javax.swing.JFrame {
         panel2 = new java.awt.Panel();
         btnMenudeAdministracion1 = new javax.swing.JButton();
         btnEnviar = new javax.swing.JButton();
-        btnBandejaEntrada = new javax.swing.JButton();
         btnEnviarUsuario = new javax.swing.JButton();
+        btnBandejaEntrada = new javax.swing.JButton();
         btnBandejaEnviados = new javax.swing.JButton();
         btnEnviarListaDifusion = new javax.swing.JButton();
+        btnBandejas = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         btnEnviarRed = new javax.swing.JButton();
         lblFondo = new javax.swing.JLabel();
 
@@ -200,15 +202,6 @@ public class Principal extends javax.swing.JFrame {
         });
         getContentPane().add(btnEnviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, 230, 50));
 
-        btnBandejaEntrada.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
-        btnBandejaEntrada.setText("Bandeja de Entrada");
-        btnBandejaEntrada.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBandejaEntradaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnBandejaEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, 230, 50));
-
         btnEnviarUsuario.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         btnEnviarUsuario.setText("Enviar a un Usuario");
         btnEnviarUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -218,6 +211,15 @@ public class Principal extends javax.swing.JFrame {
         });
         getContentPane().add(btnEnviarUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 240, 50));
 
+        btnBandejaEntrada.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        btnBandejaEntrada.setText("Bandeja de Entrada");
+        btnBandejaEntrada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBandejaEntradaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBandejaEntrada, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 230, 50));
+
         btnBandejaEnviados.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         btnBandejaEnviados.setText("Bandeja de Enviados");
         btnBandejaEnviados.addActionListener(new java.awt.event.ActionListener() {
@@ -225,7 +227,7 @@ public class Principal extends javax.swing.JFrame {
                 btnBandejaEnviadosActionPerformed(evt);
             }
         });
-        getContentPane().add(btnBandejaEnviados, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, 230, 50));
+        getContentPane().add(btnBandejaEnviados, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 320, 230, 50));
 
         btnEnviarListaDifusion.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         btnEnviarListaDifusion.setText("Enviar a Lista de Difusion");
@@ -235,6 +237,24 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnEnviarListaDifusion, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 350, 240, 50));
+
+        btnBandejas.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        btnBandejas.setText("Bandejas Entrada / Salida");
+        btnBandejas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBandejasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBandejas, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, 230, 50));
+
+        btnBuscar.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
+        btnBuscar.setText("Buscar Correo");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 350, 230, 50));
 
         btnEnviarRed.setFont(new java.awt.Font("Calibri Light", 0, 18)); // NOI18N
         btnEnviarRed.setLabel("Enviar a un Usuario (RED)");
@@ -262,6 +282,8 @@ public class Principal extends javax.swing.JFrame {
         btnEnviarListaDifusion.hide();
         btnEnviarUsuario.hide();
         btnEnviarRed.hide();
+        btnBandejaEntrada.hide();
+        btnBandejaEnviados.hide();
         
         String Ubicacion = "";
         Ubicacion = procesos.EncontrarUsuario(Usuario);
@@ -550,6 +572,8 @@ public class Principal extends javax.swing.JFrame {
         btnEnviarUsuario.show();
         btnEnviarRed.show();
         
+        btnBandejas.hide();
+        btnBuscar.hide();
         btnBackup.hide();
         btnEnviar.hide();
         btnBandejaEntrada.hide();
@@ -634,11 +658,13 @@ public class Principal extends javax.swing.JFrame {
         btnEnviarListaDifusion.hide();
         btnEnviarUsuario.hide();
         btnEnviarRed.hide();
+        btnBandejaEntrada.hide();
+        btnBandejaEnviados.hide();
         
         btnBackup.show();
         btnEnviar.show();
-        btnBandejaEntrada.show();
-        btnBandejaEnviados.show();
+        btnBuscar.show();
+        btnBandejas.show();
         btnMenudeAdministracion.show();
         btnMenudeAdministracion1.show();
     }//GEN-LAST:event_lblFondoMouseClicked
@@ -663,6 +689,36 @@ public class Principal extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnEnviarRedActionPerformed
+
+    private void btnBandejasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBandejasActionPerformed
+        btnBandejaEntrada.show();
+        btnBandejaEnviados.show();
+        
+        btnBandejas.hide();
+        btnBuscar.hide();
+        btnEnviarListaDifusion.hide();
+        btnEnviarUsuario.hide();
+        btnEnviarRed.hide();
+        btnBackup.hide();
+        btnEnviar.hide();
+        btnMenudeAdministracion.hide();
+        btnMenudeAdministracion1.hide();
+    }//GEN-LAST:event_btnBandejasActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        
+        try 
+        {
+            BuscarCorreo busqueda = new BuscarCorreo(Usuario, Rol);
+            busqueda.setLocationRelativeTo(null);
+            busqueda.show();
+            this.dispose();
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void ReasignarIndices() throws FileNotFoundException, IOException
     {
@@ -840,6 +896,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton btnBackup;
     private javax.swing.JButton btnBandejaEntrada;
     private javax.swing.JButton btnBandejaEnviados;
+    private javax.swing.JButton btnBandejas;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEnviar;
     private javax.swing.JButton btnEnviarListaDifusion;
     private javax.swing.JButton btnEnviarRed;
