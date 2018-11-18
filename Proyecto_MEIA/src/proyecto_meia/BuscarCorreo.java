@@ -16,7 +16,8 @@ import javax.swing.DefaultListModel;
  * @author Admin
  */
 public class BuscarCorreo extends javax.swing.JFrame {
-
+    Procesos procesos = new Procesos();
+    
     private String[] Arbol;
     
     DefaultListModel CorreosEncontrados;
@@ -49,12 +50,22 @@ public class BuscarCorreo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         lblEncabezado = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jLstBusqueda = new javax.swing.JList<>();
         jTFParametros = new javax.swing.JTextField();
         jBtnDescartar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+
+        jMenuItem1.setText("Visualizar Correo");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -66,6 +77,8 @@ public class BuscarCorreo extends javax.swing.JFrame {
         getContentPane().add(lblEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jLstBusqueda.setFont(new java.awt.Font("Calibri Light", 0, 14)); // NOI18N
+        jLstBusqueda.setComponentPopupMenu(jPopupMenu1);
+        jLstBusqueda.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(jLstBusqueda);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 460, 220));
@@ -162,6 +175,43 @@ public class BuscarCorreo extends javax.swing.JFrame {
         Buscar();
     }//GEN-LAST:event_jTFParametrosKeyReleased
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        String[] Campos = jLstBusqueda.getSelectedValue().split("\\|");
+        
+        if (procesos.EliminarCaracteres(this.Usuario).equals(procesos.EliminarCaracteres(Campos[0])))
+        {
+            try 
+            {
+                EnviarMensaje Mensaje = new EnviarMensaje("Correo Enviado", this.Usuario, this.Rol,
+                        procesos.EliminarCaracteres(Campos[0]), procesos.EliminarCaracteres(Campos[1]), 
+                        procesos.EliminarCaracteres(Campos[2]));
+                Mensaje.setLocationRelativeTo(null);
+                Mensaje.show();
+                this.dispose();
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(BandejaES.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else
+        {
+            try 
+            {
+                EnviarMensaje Mensaje = new EnviarMensaje("Correo Recibido", this.Usuario, this.Rol,
+                        procesos.EliminarCaracteres(Campos[0]), procesos.EliminarCaracteres(Campos[1]), 
+                        procesos.EliminarCaracteres(Campos[2]));
+                Mensaje.setLocationRelativeTo(null);
+                Mensaje.show();
+                this.dispose();
+            } 
+            catch (IOException ex) 
+            {
+                Logger.getLogger(BandejaES.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     private void Buscar()
     {
         String Busqueda = jTFParametros.getText();
@@ -220,6 +270,8 @@ public class BuscarCorreo extends javax.swing.JFrame {
     private javax.swing.JButton jBtnDescartar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jLstBusqueda;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTFParametros;
     private javax.swing.JLabel lblEncabezado;
