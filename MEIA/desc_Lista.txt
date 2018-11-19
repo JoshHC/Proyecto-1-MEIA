@@ -1,0 +1,8 @@
+Nombre Simbolico|Descriptor Lista
+Fecha de Creacion|Mon Oct 29 08:25:49 CST 2018
+Usuario que lo creo|pAlvarado
+Fecha de Modificacion|Mon Oct 29 08:29:17 CST 2018
+Usuario que lo Modifico|pAlvarado
+Numero de Registros|0
+Registros Activos|0
+Registros Inactivos|0

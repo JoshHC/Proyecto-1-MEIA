@@ -1,0 +1,2 @@
+Familia                       |pAlvarado           |La familia                              |3|Mon Oct 29 08:25:20 CST 2018|1
+Amigos                        |pAlvarado           |Los amigos                              |2|Mon Oct 29 08:25:29 CST 2018|1

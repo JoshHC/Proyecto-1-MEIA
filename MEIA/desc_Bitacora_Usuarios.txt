@@ -1,0 +1,9 @@
+Nombre Simbolico|Bitacora_Usuarios
+Fecha de Creacion|Sun Oct 28 21:34:46 CST 2018
+Usuario que lo creo|pAlvarado           
+Fecha de Modificacion|Mon Nov 19 07:24:15 CST 2018
+Usuario que lo Modifico|pAlvarado           
+Numero de Registros|0
+Registros Activos|0
+Registros Inactivos|0
+Max. Reorganizacion|5

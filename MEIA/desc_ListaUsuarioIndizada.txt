@@ -1,0 +1,9 @@
+Nombre Simbolico|Lista
+Fecha de Creacion|Mon Oct 29 08:25:49 CST 2018
+Usuario que lo creo|pAlvarado
+Fecha de Modificacion|Mon Nov 19 07:24:15 CST 2018
+Usuario que lo Modifico|pAlvarado
+Registro de Inicio|4
+Numero de Registros|5
+Registros Activos|5
+Registros Inactivos|0

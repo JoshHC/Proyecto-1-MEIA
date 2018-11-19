@@ -1,0 +1,5 @@
+Familia                       |pAlvarado           |hAlvarado           |La familia                              |Mon Oct 29 08:25:49 CST 2018|1
+Familia                       |pAlvarado           |aAlvarado           |La familia                              |Mon Oct 29 08:25:49 CST 2018|1
+Familia                       |pAlvarado           |jHigueros           |La familia                              |Mon Oct 29 08:25:49 CST 2018|1
+Amigos                        |pAlvarado           |pGrajeda            |Los amigos                              |Mon Oct 29 08:26:16 CST 2018|1
+Amigos                        |pAlvarado           |aAlvarado           |Los amigos                              |Mon Oct 29 08:26:16 CST 2018|1

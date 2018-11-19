@@ -1,0 +1,9 @@
+Nombre Simbolico|ArbolMensajes
+Fecha de Creacion|Mon Nov 19 07:21:42 CST 2018
+Usuario que lo creo|pAlvarado           
+Fecha de Modificacion|Mon Nov 19 07:24:15 CST 2018
+Usuario que lo Modifico|pAlvarado           
+Registro de Inicio|01
+Numero de Registros|3
+Registros Activos|3
+Registros Inactivos|0
