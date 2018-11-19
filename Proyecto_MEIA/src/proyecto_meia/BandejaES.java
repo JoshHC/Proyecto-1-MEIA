@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +24,8 @@ public class BandejaES extends javax.swing.JFrame {
     Procesos procesos = new Procesos();
     
     private String Bandeja;
+    
+    private String[] Arbol;
     
     DefaultListModel CorreosRecibidos;
     DefaultListModel CorreosEnviados;
@@ -182,11 +186,134 @@ public class BandejaES extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    // Eliminar
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // Eliminar
-        JOptionPane.showMessageDialog(null, "Aca se debe de Eliminar");
+                
+        try 
+        {
+            String[] Campos = jLstBandeja.getSelectedValue().split("\\|");
+            int nEliminar = ObtenerPosicion(this.Usuario, Campos[0], Campos[2]);
+            
+            ObtenerArbol();
+            
+            EliminacionLogica(nEliminar);
+            
+            JOptionPane.showMessageDialog(null, "Se ha eliminado el mensaje exitosamente", "Eliminacion Exitosa", JOptionPane.CLOSED_OPTION);
+
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(BandejaES.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void EliminacionLogica(int PosicionEliminar) throws IOException
+    {
+        String[] Linea = Arbol[PosicionEliminar - 1].split("\\|");
+        
+        // caso sin hijos y casos con un hijo
+        if (Linea[0].equals("  ") && Linea[0].equals("  "))
+        {
+            Arbol[PosicionEliminar - 1] = "-1|-1" +"|"+ Linea[2] +"|"+ Linea[3] +"|"+ Linea[4] 
+                    +"|"+ Linea[5] +"|"+ Linea[6] +"|"+ Linea[7] +"|0";
+            
+            ReemplazarSiguiente(String.valueOf(PosicionEliminar), "  ");
+        }
+        else if (!Linea[0].equals("  ") && Linea[1].equals("  "))
+        {
+            Arbol[PosicionEliminar - 1] = "-1|-1" +"|"+ Linea[2] +"|"+ Linea[3] +"|"+ Linea[4] 
+                    +"|"+ Linea[5] +"|"+ Linea[6] +"|"+ Linea[7] +"|0";
+            
+            ReemplazarSiguiente(String.valueOf(PosicionEliminar), Linea[0]);
+        }
+        else if (Linea[0].equals("  ") && !Linea[1].equals("  "))
+        {
+            Arbol[PosicionEliminar - 1] = "-1|-1" +"|"+ Linea[2] +"|"+ Linea[3] +"|"+ Linea[4] 
+                    +"|"+ Linea[5] +"|"+ Linea[6] +"|"+ Linea[7] +"|0";
+            
+            ReemplazarSiguiente(String.valueOf(PosicionEliminar), Linea[1]);
+        }
+        
+        if (!Linea[0].equals("  ") && !Linea[0].equals("  "))
+        {
+            int NodoSucesor = ObtenerSustituto(PosicionEliminar);
+           
+            // GUARDA EL HIJO IZQUIERDO DE QUIEN VA A SUBIR
+            String[] Temp = Arbol[NodoSucesor - 1].split("\\|");
+            String tempIzq = Temp[0];
+            
+            String Sucesor = String.valueOf(NodoSucesor);
+            if (Sucesor.length() < 2)
+                Sucesor = "0" + Sucesor;
+            
+            String[] Sustitucion = Arbol[NodoSucesor - 1].split("\\|");
+            if(!Sucesor.equals(Linea[0]))
+                Sustitucion[0] = Linea[0];
+            Sustitucion[1] = Linea[1];
+            
+            
+            ReemplazarSiguiente(String.valueOf(NodoSucesor), tempIzq);
+            ReemplazarSiguiente(String.valueOf(PosicionEliminar), String.valueOf(NodoSucesor));
+            
+            Arbol[NodoSucesor - 1] = Sustitucion[0] +"|"+ Sustitucion[1] +"|"+ Sustitucion[2] +"|"+ Sustitucion[3] +"|"+ 
+                    Sustitucion[4] +"|"+ Sustitucion[5] +"|"+ Sustitucion[6] +"|"+ Sustitucion[7] +"|" + Sustitucion[8];
+            
+            Arbol[PosicionEliminar - 1] = "-1|-1" +"|"+ Linea[2] +"|"+ Linea[3] +"|"+ Linea[4] 
+                    +"|"+ Linea[5] +"|"+ Linea[6] +"|"+ Linea[7] +"|0";
+        }
+        
+        ModificarArbol();
+        DescriptorArbolMensajes();
+    }
+    
+    // Canbia el indice
+    // Donde encuentra el apuntador del que ya no está le pone el apuntador siguiente siguiente
+    // -> () ->
+    // ------->
+    private void ReemplazarSiguiente(String numero, String sustitucion)
+    {
+        for (int i = 0; i < Arbol.length; i++)
+        {
+            String[] Row = Arbol[i].split("\\|");
+            
+            if(numero.length() < 2)
+                numero = "0" + numero;
+            if(sustitucion.length() < 2)
+                sustitucion = "0" + sustitucion;
+            
+            if (Row[0].equals(numero) || Row[1].equals(numero))
+            {
+                if (Row[0].equals(numero))
+                    Row[0] = sustitucion;
+                else if (Row[1].equals(numero))
+                    Row[1] = sustitucion;
+                
+                Arbol[i] =  Row[0] +"|"+ Row[1] +"|"+ Row[2] +"|"+ Row[3] +"|"+ Row[4] +"|"+ Row[5] +"|"+ 
+                        Row[6] +"|"+ Row[7] +"|"+ Row[8];
+                
+                return;
+            }
+            
+        }
+    }
+    
+    // Obtiene el mas a la derecha del hijo izquierdo
+    private int ObtenerSustituto(int nEliminar)
+    {
+        String[] Linea = Arbol[nEliminar - 1].split("\\|");
+        
+        int siguiente = Integer.valueOf(Linea[0]);
+        Linea = Arbol[siguiente - 1].split("\\|");
+        
+        while(!Linea[1].equals("  "))
+        {
+            siguiente = Integer.valueOf(Linea[1]);
+            Linea = Arbol[siguiente - 1].split("\\|");
+        }
+        
+        return siguiente;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -235,7 +362,7 @@ public class BandejaES extends javax.swing.JFrame {
         while (Row != null)
         {
             if (procesos.EliminarCaracteres(Linea[3]).equals(this.Usuario))
-                CorreosRecibidos.addElement(Linea[3] +"|"+ Linea[5] +"|"+ Linea[4]);
+                CorreosRecibidos.addElement(Linea[2] +"|"+ Linea[5] +"|"+ Linea[4] +"|"+Linea[8]);
             
             try
             {
@@ -267,7 +394,7 @@ public class BandejaES extends javax.swing.JFrame {
         while (Row != null)
         {
             if (procesos.EliminarCaracteres(Linea[2]).equals(this.Usuario))
-                CorreosEnviados.addElement(Linea[3] +"|"+ Linea[5] +"|"+ Linea[4]);
+                CorreosEnviados.addElement(Linea[3] +"|"+ Linea[5] +"|"+ Linea[4] +"|"+ Linea[8]);
             
             try
             {
@@ -286,6 +413,145 @@ public class BandejaES extends javax.swing.JFrame {
         return CorreosEnviados;
     }
     
+    public int ObtenerPosicion(String Remitente, String Destinatario, String Fecha) throws FileNotFoundException, IOException
+    {
+        String pathRuta = "C:\\MEIA\\ArbolMensajes.txt";
+        File Archivo = new File(pathRuta);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        
+        int cont = 1;
+        
+        while(Linea != null)
+        {
+            if (Linea.contains(Remitente) && Linea.contains(Destinatario) && Linea.contains(Fecha))
+                return cont;   
+
+            Linea = leerArchivo.readLine();
+            cont++;
+        }
+        
+        return -1;
+    }
+    
+    // Obtiene el contenido del Arbol
+    private void ObtenerArbol() throws FileNotFoundException, IOException
+    {
+        List<String> ListaArbol = new ArrayList<String>();
+        
+        String pathRuta = "C:\\MEIA\\ArbolMensajes.txt";
+        File Archivo = new File(pathRuta);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        
+        while (Linea != null)
+        {
+            ListaArbol.add(Linea);
+            Linea = leerArchivo.readLine();
+        }
+        
+        int tamaño = ListaArbol.size();
+        
+        this.Arbol = new String[tamaño];
+        
+        for (int i = 0; i < tamaño; i++) {
+            this.Arbol[i] = ListaArbol.remove(0);
+        }
+        
+        Leer.close();
+        leerArchivo.close();
+    }
+    
+    private void ModificarArbol() throws FileNotFoundException, IOException
+    {
+        String pathRuta = "C:\\MEIA\\ArbolMensajes.txt";
+        File Archivo = new File(pathRuta);
+        RandomAccessFile ArchivoSustitucion = new RandomAccessFile(Archivo,"rw");
+        
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        
+        String Auxiliar;
+        
+        int cont = 0;
+        
+        while (Linea != null)
+        {
+            if (!Linea.equals(Arbol[cont]))
+            {
+                ArchivoSustitucion.writeBytes(Arbol[cont]);
+            }
+            
+            Linea = leerArchivo.readLine();
+            Auxiliar = ArchivoSustitucion.readLine();
+            cont++;
+        }
+        
+        leerArchivo.close();
+        Leer.close();
+        ArchivoSustitucion.close();
+    }
+    
+    //método donde se crea el Descriptor del Arbol y se Actualiza
+    public void DescriptorArbolMensajes() throws FileNotFoundException, IOException
+    {
+        Date Fecha = new Date();
+        String path = "C:\\MEIA\\ArbolMensajes.txt";
+        File Archivo = new File(path);
+        FileReader Leer = new FileReader(Archivo);
+        BufferedReader leerArchivo = new BufferedReader(Leer);
+        String Linea = leerArchivo.readLine();
+        int NoRegistros = 0;
+        int Activos = 0;
+        int Inactivos = 0;        
+        
+        //Se compara en la posicion 8 porque en esa posicion se encontrara el status
+        while(Linea != null)
+        {
+            String [] Auxiliar = Linea.split("\\|");
+            
+            if(Auxiliar[8].equals("1"))
+                Activos++;
+            else if (Auxiliar[8].equals("0") == true)
+                Inactivos++;
+
+            Linea = leerArchivo.readLine();
+            NoRegistros++;
+        }
+        
+        Leer.close();
+        leerArchivo.close();
+        
+        
+        String Inicio = procesos.ObtenerInicioArbol();
+        Descriptor_ArbolMensajes Nuevo = new Descriptor_ArbolMensajes("ArbolMensajes",Fecha.toString(),Usuario,Fecha.toString(),Usuario,Inicio,Integer.toString(NoRegistros),Integer.toString(Activos),Integer.toString(Inactivos));
+
+        procesos.DescriptorArbolMensajes(Nuevo);
+        
+        if (this.Bandeja.equals("Entrada"))
+        {
+            CorreosRecibidos.clear();
+            CorreosRecibidos.addElement("De                        |Asunto                  |Fecha");
+            lblBandeja.setText("Bandeja de Entrada");
+            
+            ObtenerRecibidos();
+            jLstBandeja.setModel(CorreosRecibidos);
+            
+        }
+        else 
+        {
+            CorreosEnviados.clear();
+            CorreosEnviados.addElement("Para                     |Asunto                  |Fecha");
+            lblBandeja.setText("Bandeja de Salida");
+            
+            ObtenerEnviados();
+            jLstBandeja.setModel(CorreosEnviados);
+        }
+        
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnDescartar;
